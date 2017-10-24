@@ -9,12 +9,12 @@ $info = Health_Check_Debug_Data::debug_data();
 
 	<div class="notice notice-info inline">
 		<p>
-			<?php esc_html_e( 'The system information shown below can also be copied and pasted into support requests such as on the WordPress.org forums, or to your theme and plugin developers.', 'health-check' ); ?>
+			<?php esc_html_e( 'The system information shown below can also be copied and pasted into support requests such as on the WordPress.org forums, or to your theme and plugin developers.', 'mpat-health-check' ); ?>
 		</p>
 		<p>
-			<button type="button" class="button button-primary" onclick="document.getElementById('system-information-copy-wrapper').style.display = 'block'; this.style.display = 'none';"><?php esc_html_e( 'Show copy and paste field', 'health-check' ); ?></button>
+			<button type="button" class="button button-primary" onclick="document.getElementById('system-information-copy-wrapper').style.display = 'block'; this.style.display = 'none';"><?php esc_html_e( 'Show copy and paste field', 'mpat-health-check' ); ?></button>
 			<?php if ( 'en_US' !== get_locale() && version_compare( get_bloginfo( 'version' ), '4.7', '>=' ) ) : ?>
-				<button type="button" class="button" onclick="document.getElementById('system-information-english-copy-wrapper').style.display = 'block'; this.style.display = 'none';"><?php esc_html_e( 'Show copy and paste field in English', 'health-check' ); ?></button>
+				<button type="button" class="button" onclick="document.getElementById('system-information-english-copy-wrapper').style.display = 'block'; this.style.display = 'none';"><?php esc_html_e( 'Show copy and paste field in English', 'mpat-health-check' ); ?></button>
 			<?php endif; ?>
 		</p>
 
@@ -54,9 +54,9 @@ $info = Health_Check_Debug_Data::debug_data();
 						?>
 `</textarea>
 			<p>
-				<?php esc_html_e( 'Some information may be filtered out from the list you are about to copy, this is information that may be considers private, and is not meant to be shared in a public forum.', 'health-check' ); ?>
+				<?php esc_html_e( 'Some information may be filtered out from the list you are about to copy, this is information that may be considers private, and is not meant to be shared in a public forum.', 'mpat-health-check' ); ?>
 				<br>
-				<button type="button" class="button button-primary" onclick="document.getElementById('system-information-english-copy-field').select();"><?php esc_html_e( 'Mark field for copying', 'health-check' ); ?></button>
+				<button type="button" class="button button-primary" onclick="document.getElementById('system-information-english-copy-field').select();"><?php esc_html_e( 'Mark field for copying', 'mpat-health-check' ); ?></button>
 			</p>
 		</div>
 
@@ -93,15 +93,15 @@ $info = Health_Check_Debug_Data::debug_data();
 				?>
 `</textarea>
 			<p>
-				<?php esc_html_e( 'Some information may be filtered out from the list you are about to copy, this is information that may be considers private, and is not meant to be shared in a public forum.', 'health-check' ); ?>
+				<?php esc_html_e( 'Some information may be filtered out from the list you are about to copy, this is information that may be considers private, and is not meant to be shared in a public forum.', 'mpat-health-check' ); ?>
 				<br>
-				<button type="button" class="button button-primary" onclick="document.getElementById('system-information-copy-field').select();"><?php esc_html_e( 'Mark field for copying', 'health-check' ); ?></button>
+				<button type="button" class="button button-primary" onclick="document.getElementById('system-information-copy-field').select();"><?php esc_html_e( 'Mark field for copying', 'mpat-health-check' ); ?></button>
 			</p>
 		</div>
 	</div>
 
 	<h2 id="system-information-table-of-contents">
-		<?php esc_html_e( 'Table of contents', 'health-check' ); ?>
+		<?php esc_html_e( 'Table of contents', 'mpat-health-check' ); ?>
 	</h2>
 	<div>
 		<?php
@@ -153,9 +153,31 @@ foreach ( $info AS $section => $details ) {
 		<tbody>
 		<?php
 		foreach ( $details['fields'] AS $field ) {
+			$label = $field['label'];
+			if(strpos($label, 'MPAT')!==false){
+				$label ='<span style="color: #25c1b2;">'.esc_html($field['label']).'</strong>';
+				printf(
+					'<tr><td>%s</td><td>%s</td></tr>',
+					 $label ,
+					esc_html( $field['value'] )
+				);
+			}
+		
+		}
+		?>
+		</tbody>
+	</table>
+	<table class="widefat striped health-check-table">
+		<tbody>
+		<?php
+		foreach ( $details['fields'] AS $field ) {
+			$label = $field['label'];
+			if(strpos($label, 'MPAT')!==false){
+				$label ='<span style="color: #25c1b2;">'.esc_html($field['label']).'</strong>';
+			}
 			printf(
 				'<tr><td>%s</td><td>%s</td></tr>',
-				esc_html( $field['label'] ),
+				 $label ,
 				esc_html( $field['value'] )
 			);
 		}
@@ -163,7 +185,7 @@ foreach ( $info AS $section => $details ) {
 		</tbody>
 	</table>
 	<span style="display: block; width: 100%; text-align: <?php echo ( is_rtl() ? 'left' : 'right' ); ?>">
-		<a href="#system-information-table-of-contents" class="health-check-toc"><?php esc_html_e( 'Return to table of contents', 'health-check' ); ?></a>
+		<a href="#system-information-table-of-contents" class="health-check-toc"><?php esc_html_e( 'Return to table of contents', 'mpat-health-check' ); ?></a>
 	</span>
 	<?php
 }

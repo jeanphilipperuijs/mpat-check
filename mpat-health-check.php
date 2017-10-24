@@ -1,12 +1,12 @@
 <?php
 /*
-	Plugin Name: Health Check
-	Plugin URI: http://wordpress.org/plugins/health-check/
+	Plugin Name: MPAT MPAT Health Check
+	Plugin URI: https://github.com/jeanphilipperuijs/mpat-health-check
 	Description: Checks the health of your WordPress install.
 	Author: The WordPress.org community
 	Version: 0.5.0
-	Author URI: http://wordpress.org/plugins/health-check/
-	Text Domain: health-check
+	Author URI: https://github.com/jeanphilipperuijs/mpat-health-check
+	Text Domain: mpat-health-check
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you can not directly access this file.' );
@@ -33,28 +33,35 @@ class HealthCheck {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueues' ) );
 	}
 
+    
+    function load_js() {
+        /* we need the wordpress api */
+        wp_enqueue_script('wp-api');
+        
+	}
+	
 	public function load_i18n() {
-		load_plugin_textdomain( 'health-check', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'mpat-health-check', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
 
 	public function enqueues() {
 		// Don't enqueue anything unless we're on the health check page
-		if ( ! isset( $_GET['page'] ) || 'health-check' !== $_GET['page'] ) {
+		if ( ! isset( $_GET['page'] ) || 'mpat-health-check' !== $_GET['page'] ) {
 			return;
 		}
 
-		wp_enqueue_style( 'health-check', plugins_url( '/assets/css/health-check.css', __FILE__ ), array(), HEALTH_CHECK_PLUGIN_VERSION );
+		wp_enqueue_style( 'mpat-health-check', plugins_url( '/assets/css/health-check.css', __FILE__ ), array(), HEALTH_CHECK_PLUGIN_VERSION );
 
-		wp_enqueue_script( 'health-check', plugins_url( '/assets/javascript/health-check.js', __FILE__ ), array( 'jquery' ), HEALTH_CHECK_PLUGIN_VERSION, true );
+		wp_enqueue_script( 'mpat-health-check', plugins_url( '/assets/javascript/health-check.js', __FILE__ ), array( 'jquery' ), HEALTH_CHECK_PLUGIN_VERSION, true );
 	}
 
 	public function action_admin_menu() {
-		add_dashboard_page( __( 'Health Check', 'health-check' ), __( 'Health Check', 'health-check' ), 'manage_options', 'health-check', array( $this, 'dashboard_page' ) );
+		add_dashboard_page( __( 'MPAT Health Check', 'mpat-health-check' ), __( 'MPAT Health Check', 'mpat-health-check' ), 'manage_options', 'mpat-health-check', array( $this, 'dashboard_page' ) );
 	}
 
 	public function settings_link( $meta, $name ) {
 		if ( plugin_basename( __FILE__ ) === $name ) {
-			$meta[] = sprintf( '<a href="%s">' . __( 'Health Check', 'health-check' ) . '</a>', menu_page_url( 'health-check', false ) );
+			$meta[] = sprintf( '<a href="%s">' . __( 'MPAT Health Check', 'mpat-health-check' ) . '</a>', menu_page_url( 'mpat-health-check', false ) );
 		}
 
 		return $meta;
@@ -64,17 +71,17 @@ class HealthCheck {
 		?>
 		<div class="wrap">
 			<h1>
-				<?php _e( 'Health Check', 'health-check' ); ?>
+				<?php _e( 'MPAT Health Check', 'mpat-health-check' ); ?>
 			</h1>
 
 			<?php
 			$tabs = array(
-				'health-check' => esc_html__( 'Health Check', 'health-check' ),
-				'debug' => esc_html__( 'Debug information', 'health-check' ),
-				'phpinfo' => esc_html__( 'PHP Information', 'health-check' )
+				'mpat-health-check' => esc_html__( 'MPAT Health Check', 'mpat-health-check' ),
+				'debug' => esc_html__( 'Debug information', 'mpat-health-check' ),
+				'phpinfo' => esc_html__( 'PHP Information', 'mpat-health-check' )
 			);
 
-			$current_tab = ( isset( $_GET['tab'] ) ? $_GET['tab'] : 'health-check' );
+			$current_tab = ( isset( $_GET['tab'] ) ? $_GET['tab'] : 'mpat-health-check' );
 			?>
 
 			<h2 class="nav-tab-wrapper wp-clearfix">
@@ -84,7 +91,7 @@ class HealthCheck {
 						'<a href="%s" class="nav-tab %s">%s</a>',
 						sprintf(
 							'%s&tab=%s',
-							menu_page_url( 'health-check', false ),
+							menu_page_url( 'mpat-health-check', false ),
 							$tab
 						),
 						( $current_tab === $tab ? 'nav-tab-active' : '' ),
@@ -102,7 +109,7 @@ class HealthCheck {
 				case 'phpinfo':
 					include_once( dirname( __FILE__ ) . '/pages/phpinfo.php' );
 					break;
-				case 'health-check':
+				case 'mpat-health-check':
 				default:
 					include_once( dirname( __FILE__ ) . '/pages/health-check.php' );
 			}

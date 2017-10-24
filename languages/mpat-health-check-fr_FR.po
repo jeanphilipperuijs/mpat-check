@@ -1,0 +1,755 @@
+# Copyright (C) 2017 MPAT MPAT Health Check
+# This file is distributed under the same license as the MPAT MPAT Health Check package.
+msgid ""
+msgstr ""
+"Project-Id-Version: MPAT MPAT Health Check 0.5.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/health-check\n"
+"POT-Creation-Date: 2017-10-24 16:25+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2017-10-24 16:25+0200\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.11\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_FR\n"
+
+#: includes/class-health-check-auto-updates.php:42
+#: includes/class-health-check-auto-updates.php:54
+#: includes/class-health-check-auto-updates.php:66
+msgid "The %s constant is defined and enabled."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:78
+msgid "A plugin has prevented updates by disabling %s."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:90
+msgid "The %s filter is enabled."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:106
+msgid ""
+"A previous automatic background update ended with a critical failure, so "
+"updates are now disabled."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:107
+#: includes/class-health-check-auto-updates.php:121
+msgid "You would have received an email because of this."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:108
+msgid ""
+"When you've been able to update using the \"Update Now\" button on Dashboard "
+"> Updates, we'll clear this error for future update attempts."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:110
+#: includes/class-health-check-auto-updates.php:126
+msgid "The error code was %s."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:119
+msgid "A previous automatic background update could not occur."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:124
+msgid "We'll try again with the next release."
+msgstr ""
+
+#. translators: %1$s: Folder name. %2$s: Version control directory. %3$s:
+#. Filter name.
+#: includes/class-health-check-auto-updates.php:168
+msgid ""
+"The folder %1$s was detected as being under version control (%2$s), but the "
+"%3$s filter is allowing updates."
+msgstr ""
+
+#. translators: %1$s: Folder name. %2$s: Version control directory.
+#: includes/class-health-check-auto-updates.php:181
+msgid "The folder %1$s was detected as being under version control (%2$s)."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:190
+msgid "No version control systems were detected."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:205
+msgid ""
+"Your installation of WordPress prompts for FTP credentials to perform "
+"updates."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:206
+msgid ""
+"(Your site is performing updates over FTP due to file ownership. Talk to "
+"your hosting company.)"
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:215
+msgid ""
+"Your installation of WordPress doesn't require FTP credentials to perform "
+"updates."
+msgstr ""
+
+#. translators: %s: WordPress version
+#: includes/class-health-check-auto-updates.php:249
+msgid "Couldn't retrieve a list of the checksums for WordPress %s."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:252
+msgid "This could mean that connections are failing to WordPress.org."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:278
+msgid "Some files are not writable by WordPress:"
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:283
+msgid "All of your WordPress files are writable."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:299
+msgid "WordPress development updates are blocked by the %s constant."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:309
+msgid "WordPress development updates are blocked by the %s filter."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:321
+msgid "WordPress security and maintenance releases are blocked by %s."
+msgstr ""
+
+#: includes/class-health-check-auto-updates.php:331
+msgid ""
+"WordPress security and maintenance releases are blocked by the %s filter."
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:23
+msgid "WordPress"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:26
+#: includes/class-health-check-debug-data.php:479
+msgid "Version"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:30
+msgid "Language"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:34
+msgid "Home URL"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:39
+msgid "Site URL"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:44
+msgid "Permalink structure"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:48
+msgid "Is this site using HTTPS?"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:49
+#: includes/class-health-check-debug-data.php:53
+#: includes/class-health-check-debug-data.php:61
+#: includes/class-health-check-debug-data.php:328
+#: includes/class-health-check-debug-data.php:333
+msgid "Yes"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:49
+#: includes/class-health-check-debug-data.php:53
+#: includes/class-health-check-debug-data.php:61
+#: includes/class-health-check-debug-data.php:328
+#: includes/class-health-check-debug-data.php:333
+msgid "No"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:52
+msgid "Can anyone register on this site?"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:56
+msgid "Default comment status"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:60
+msgid "Is this a multisite?"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:66
+msgid "Drop-ins"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:67
+msgid ""
+"Drop-ins are single files that replace or enhance WordPress features in ways "
+"that are not possible for traditional plugins"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:71
+msgid "Active theme"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:75
+msgid "Other themes"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:80
+msgid "Must Use Plugins"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:85
+msgid "MPAT Active Plugins"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:90
+msgid "MPAT Inactive Plugins"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:95
+msgid "Active Plugins"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:100
+msgid "Inactive Plugins"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:105
+msgid "Server"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:106
+msgid ""
+"The options shown below relate to your server setup. If changes are "
+"required, you may need your web host's assistance."
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:110
+msgid "Database"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:114
+msgid "WordPress constants"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:115
+msgid ""
+"These values represent values set in your websites code which affect "
+"WordPress in various ways that may be of importance when seeking help with "
+"your site."
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:119
+#: includes/class-health-check-debug-data.php:123
+#: includes/class-health-check-debug-data.php:127
+#: includes/class-health-check-debug-data.php:131
+#: includes/class-health-check-debug-data.php:135
+#: includes/class-health-check-debug-data.php:139
+#: includes/class-health-check-debug-data.php:143
+#: includes/class-health-check-debug-data.php:147
+#: includes/class-health-check-debug-data.php:151
+#: includes/class-health-check-debug-data.php:155
+#: includes/class-health-check-debug-data.php:159
+#: includes/class-health-check-debug-data.php:163
+#: includes/class-health-check-debug-data.php:167
+#: includes/class-health-check-debug-data.php:488
+msgid "Undefined"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:131
+#: includes/class-health-check-debug-data.php:139
+#: includes/class-health-check-debug-data.php:143
+#: includes/class-health-check-debug-data.php:147
+#: includes/class-health-check-debug-data.php:151
+#: includes/class-health-check-debug-data.php:155
+#: includes/class-health-check-debug-data.php:159
+#: includes/class-health-check-debug-data.php:163
+#: includes/class-health-check-debug-data.php:167
+msgid "Enabled"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:131
+#: includes/class-health-check-debug-data.php:139
+#: includes/class-health-check-debug-data.php:143
+#: includes/class-health-check-debug-data.php:147
+#: includes/class-health-check-debug-data.php:151
+#: includes/class-health-check-debug-data.php:155
+#: includes/class-health-check-debug-data.php:159
+#: includes/class-health-check-debug-data.php:163
+#: includes/class-health-check-debug-data.php:167
+msgid "Disabled"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:172
+msgid "Filesystem permissions"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:173
+msgid ""
+"The status of various locations WordPress needs to write files in various "
+"scenarios."
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:176
+msgid "The main WordPress directory"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:177
+#: includes/class-health-check-debug-data.php:181
+#: includes/class-health-check-debug-data.php:185
+#: includes/class-health-check-debug-data.php:189
+#: includes/class-health-check-debug-data.php:193
+#: includes/class-health-check-debug-data.php:539
+msgid "Writable"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:177
+#: includes/class-health-check-debug-data.php:181
+#: includes/class-health-check-debug-data.php:185
+#: includes/class-health-check-debug-data.php:189
+#: includes/class-health-check-debug-data.php:193
+#: includes/class-health-check-debug-data.php:539
+msgid "Not writable"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:180
+msgid "The wp-content directory"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:184
+msgid "The uploads directory"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:188
+msgid "The plugins directory"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:192
+msgid "The themes directory"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:215
+#: includes/class-health-check-debug-data.php:230
+msgid "User Count"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:219
+msgid "Site Count"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:223
+msgid "Network Count"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:239
+#: includes/class-health-check-debug-data.php:246 pages/health-check.php:242
+msgid "Communication with WordPress.org"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:241
+msgid "WordPress.org is reachable"
+msgstr ""
+
+#. translators: %1$s: The IP address WordPress.org resolves to. %2$s: The error
+#. returned by the lookup.
+#: includes/class-health-check-debug-data.php:249 pages/health-check.php:257
+msgid "Unable to reach WordPress.org at %1$s: %2$s"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:268
+msgid "Server architecture"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:269
+msgid "Unable to determine server architecture"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:272 pages/health-check.php:46
+msgid "PHP Version"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:273
+msgid "Unable to determine PHP version"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:276
+msgid "(Supports 64bit values)"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:281
+msgid "PHP SAPI"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:282
+msgid "Unable to determine PHP SAPI"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:287
+msgid "Server settings"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:288
+msgid ""
+"Unable to determine some settings as the ini_get() function has been disabled"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:292
+msgid "PHP max input variables"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:296
+msgid "PHP time limit"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:300
+msgid "PHP memory limit"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:304
+msgid "Upload max filesize"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:308
+msgid "PHP post max size"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:316
+#: includes/class-health-check-debug-data.php:321
+msgid "cURL Version"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:322
+msgid "Your server does not support cURL"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:327
+msgid "SUHOSIN installed"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:332
+msgid "Is the Imagick library available"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:370
+msgid "Extension"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:374
+msgid "Server version"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:378
+msgid "Client version"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:382
+msgid "Database user"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:387
+msgid "Database host"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:392
+msgid "Database table"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:397
+msgid "Database prefix"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:409
+#: includes/class-health-check-debug-data.php:440
+#: includes/class-health-check-debug-data.php:512
+msgid "No version or author information available"
+msgstr ""
+
+#. translators: %1$s: Plugin version number. %2$s: Plugin author name.
+#. translators: %1$s: Theme version number. %2$s: Theme author name.
+#: includes/class-health-check-debug-data.php:413
+#: includes/class-health-check-debug-data.php:444
+#: includes/class-health-check-debug-data.php:516
+msgid "version %1$s by %2$s"
+msgstr ""
+
+#. translators: %s: Plugin author name.
+#. translators: %s: Theme author name.
+#: includes/class-health-check-debug-data.php:417
+#: includes/class-health-check-debug-data.php:448
+#: includes/class-health-check-debug-data.php:520
+msgid "By %s"
+msgstr ""
+
+#. translators: %s: Plugin version number.
+#. translators: %s: Theme version number.
+#: includes/class-health-check-debug-data.php:421
+#: includes/class-health-check-debug-data.php:452
+#: includes/class-health-check-debug-data.php:524
+msgid "Version %s"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:475
+msgid "Name"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:483
+msgid "Author"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:487
+msgid "Author website"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:491
+msgid "Parent theme"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:492
+msgid "Not a child theme"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:495
+msgid "Supported theme features"
+msgstr ""
+
+#. translators: %1$s: Theme name. %2$s: Theme slug.
+#: includes/class-health-check-debug-data.php:530
+msgid "%1$s (%2$s)"
+msgstr ""
+
+#: includes/class-health-check-debug-data.php:538
+msgid "The Must Use Plugins directory"
+msgstr ""
+
+#: includes/class-health-check-wp-cron.php:27
+msgid "No scheduled events exist on this site."
+msgstr ""
+
+#: mpat-health-check.php:59 mpat-health-check.php:64 mpat-health-check.php:74
+#: mpat-health-check.php:79
+msgid "MPAT Health Check"
+msgstr ""
+
+#: mpat-health-check.php:80
+msgid "Debug information"
+msgstr ""
+
+#: mpat-health-check.php:81
+msgid "PHP Information"
+msgstr ""
+
+#: pages/debug-data.php:12
+msgid ""
+"The system information shown below can also be copied and pasted into "
+"support requests such as on the WordPress.org forums, or to your theme and "
+"plugin developers."
+msgstr ""
+
+#: pages/debug-data.php:15
+msgid "Show copy and paste field"
+msgstr ""
+
+#: pages/debug-data.php:17
+msgid "Show copy and paste field in English"
+msgstr ""
+
+#: pages/debug-data.php:57 pages/debug-data.php:96
+msgid ""
+"Some information may be filtered out from the list you are about to copy, "
+"this is information that may be considers private, and is not meant to be "
+"shared in a public forum."
+msgstr ""
+
+#: pages/debug-data.php:59 pages/debug-data.php:98
+msgid "Mark field for copying"
+msgstr ""
+
+#: pages/debug-data.php:104
+msgid "Table of contents"
+msgstr ""
+
+#: pages/debug-data.php:188
+msgid "Return to table of contents"
+msgstr ""
+
+#: pages/health-check.php:39
+msgid ""
+"The health check shows critical information about your WordPress "
+"configuration and items that require your attention."
+msgstr ""
+
+#. translators: %s: Recommended PHP version
+#: pages/health-check.php:56
+msgid ""
+"For performance and security reasons, we strongly recommend running PHP "
+"version %s or higher."
+msgstr ""
+
+#. translators: %1$s: Current PHP version. %2$s: Recommended PHP version. %3$s:
+#. Minimum PHP version.
+#: pages/health-check.php:65
+msgid ""
+"Your version of PHP, %1$s, is very outdated and no longer receiving security "
+"updates. You should contact your host for an upgrade, WordPress recommends "
+"using PHP version %2$s, but will work with version %3$s or newer."
+msgstr ""
+
+#: pages/health-check.php:90
+msgid "MySQL Server version"
+msgstr ""
+
+#: pages/health-check.php:93
+msgid "MariaDB Server version"
+msgstr ""
+
+#. translators: %1$s: The database engine in use (MySQL or MariaDB). %2$s:
+#. Database server recommended version number.
+#: pages/health-check.php:106
+msgid ""
+"For performance and security reasons, we strongly recommend running %1$s "
+"version %2$s or higher."
+msgstr ""
+
+#. translators: %1$s: The database engine in use (MySQL or MariaDB). %2$s:
+#. Database server minimum version number.
+#: pages/health-check.php:116
+msgid "WordPress 3.2+ requires %1$s version %2$s or higher."
+msgstr ""
+
+#. translators: %s: The database engine in use (MySQL or MariaDB).
+#: pages/health-check.php:124
+msgid ""
+"You are using a <code>wp-content/db.php</code> drop-in which might mean that "
+"a %s database is not being used."
+msgstr ""
+
+#: pages/health-check.php:141
+msgid "JSON Extension"
+msgstr ""
+
+#: pages/health-check.php:150
+msgid ""
+"The PHP install on your server has the JSON extension disabled and is "
+"therefore not compatible with WordPress 3.2 or newer."
+msgstr ""
+
+#: pages/health-check.php:156
+msgid "Your PHP install supports JSON."
+msgstr ""
+
+#: pages/health-check.php:164
+msgid "MySQL utf8mb4 support"
+msgstr ""
+
+#: pages/health-check.php:172
+msgid "WordPress' utf8mb4 support requires MySQL version %s or greater"
+msgstr ""
+
+#: pages/health-check.php:179
+msgid "Your MySQL version supports utf8mb4"
+msgstr ""
+
+#: pages/health-check.php:189
+msgid "WordPress' utf8mb4 support requires MariaDB version %s or greater"
+msgstr ""
+
+#: pages/health-check.php:197
+msgid "Your MariaDB version supports utf8mb4"
+msgstr ""
+
+#: pages/health-check.php:218 pages/health-check.php:230
+msgid ""
+"WordPress' utf8mb4 support requires MySQL client library (%1$s) version %2$s "
+"or newer."
+msgstr ""
+
+#: pages/health-check.php:249
+msgid "WordPress.org is reachable from your server."
+msgstr ""
+
+#: pages/health-check.php:268
+msgid "HTTPS status"
+msgstr ""
+
+#: pages/health-check.php:274
+msgid "You are accessing this website using HTTPS."
+msgstr ""
+
+#: pages/health-check.php:280
+msgid "You are not using HTTPS to access this website."
+msgstr ""
+
+#: pages/health-check.php:288
+msgid "Secure communication"
+msgstr ""
+
+#: pages/health-check.php:296
+msgid "Your WordPress install can communicate securely with other services."
+msgstr ""
+
+#: pages/health-check.php:302
+msgid ""
+"Your WordPress install cannot communicate securely with other services. Talk "
+"to your web host about OpenSSL support for PHP."
+msgstr ""
+
+#: pages/health-check.php:310
+msgid "Scheduled events"
+msgstr ""
+
+#. translators: %s: The name of the failed cron event.
+#: pages/health-check.php:327
+msgid ""
+"A scheduled event (%s) has failed to run. Your site still works, but this "
+"may indicate that scheduling posts or automated updates may not work as "
+"intended."
+msgstr ""
+
+#: pages/health-check.php:335
+msgid "No scheduled events have been missed."
+msgstr ""
+
+#: pages/health-check.php:344
+msgid "Background updates"
+msgstr ""
+
+#: pages/phpinfo.php:11
+msgid ""
+"The phpinfo() function has been disabled by your host. Please contact the "
+"host if you need more information about your setup."
+msgstr ""
+
+#: pages/phpinfo.php:19
+msgid ""
+"Some scenarios require you to look up more detailed server configurations "
+"than what is normally required. This page allows you to view all available "
+"configuration options for your PHP setup. Please be advised that WordPress "
+"does not guarantee that any information shown on this page may not be "
+"considered private."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "MPAT MPAT Health Check"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://github.com/jeanphilipperuijs/mpat-health-check"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Checks the health of your WordPress install."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "The WordPress.org community"
+msgstr ""
