@@ -1,6 +1,6 @@
 <?php
 
-class Health_Check_Debug_Data {
+class MPAT_CHECK_Debug_Data {
 	static function debug_data( $locale = null ) {
 		if ( ! empty( $locale ) ) {
 			// Change the language used for translations

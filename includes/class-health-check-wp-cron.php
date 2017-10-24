@@ -1,6 +1,6 @@
 <?php
 
-class Health_Check_WP_Cron {
+class MPAT_CHECK_WP_Cron {
 	public $schedules;
 	public $crons;
 	public $last_missed_cron = null;

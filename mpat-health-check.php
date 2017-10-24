@@ -1,6 +1,6 @@
 <?php
 /*
-	Plugin Name: MPAT MPAT Health Check
+	Plugin Name: MPAT Health Check
 	Plugin URI: https://github.com/jeanphilipperuijs/mpat-health-check
 	Description: Checks the health of your WordPress install.
 	Author: The WordPress.org community
@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you can not directly access this file.' );
 }
 
-define( 'HEALTH_CHECK_PHP_MIN_VERSION', '5.2.4' );
-define( 'HEALTH_CHECK_PHP_REC_VERSION', '7.0' );
-define( 'HEALTH_CHECK_MYSQL_MIN_VERSION', '5.0' );
-define( 'HEALTH_CHECK_MYSQL_REC_VERSION', '5.6' );
-define( 'HEALTH_CHECK_PLUGIN_VERSION', '0.5.0' );
+define( 'MPAT_CHECK_PHP_MIN_VERSION', '5.2.4' );
+define( 'MPAT_CHECK_PHP_REC_VERSION', '7.0' );
+define( 'MPAT_CHECK_MYSQL_MIN_VERSION', '5.0' );
+define( 'MPAT_CHECK_MYSQL_REC_VERSION', '5.6' );
+define( 'MPAT_CHECK_PLUGIN_VERSION', '0.5.0' );
 
 class HealthCheck {
 
@@ -33,13 +33,6 @@ class HealthCheck {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueues' ) );
 	}
 
-    
-    function load_js() {
-        /* we need the wordpress api */
-        wp_enqueue_script('wp-api');
-        
-	}
-	
 	public function load_i18n() {
 		load_plugin_textdomain( 'mpat-health-check', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
@@ -50,9 +43,16 @@ class HealthCheck {
 			return;
 		}
 
-		wp_enqueue_style( 'mpat-health-check', plugins_url( '/assets/css/health-check.css', __FILE__ ), array(), HEALTH_CHECK_PLUGIN_VERSION );
+        wp_enqueue_script('wp-api');
+		wp_enqueue_script('mpat-newpage-wizard', plugin_dir_url(__FILE__) . 'public/rui.js', array('wp-api'), 1.0, true );
+		//wp_enqueue_script('mpat-newpage-wizard', 'http://localhost:8000/rui.js', array('wp-api'), 1.0, true );
+		
+		wp_enqueue_style( 'mpat-health-check', plugins_url( '/assets/css/health-check.css', __FILE__ ), array(), MPAT_CHECK_PLUGIN_VERSION );
 
-		wp_enqueue_script( 'mpat-health-check', plugins_url( '/assets/javascript/health-check.js', __FILE__ ), array( 'jquery' ), HEALTH_CHECK_PLUGIN_VERSION, true );
+		wp_enqueue_script( 'mpat-health-check', plugins_url( '/assets/javascript/health-check.js', __FILE__ ), array( 'jquery' ), MPAT_CHECK_PLUGIN_VERSION, true );
+
+  
+
 	}
 
 	public function action_admin_menu() {
@@ -76,9 +76,11 @@ class HealthCheck {
 
 			<?php
 			$tabs = array(
-				'mpat-health-check' => esc_html__( 'MPAT Health Check', 'mpat-health-check' ),
-				'debug' => esc_html__( 'Debug information', 'mpat-health-check' ),
-				'phpinfo' => esc_html__( 'PHP Information', 'mpat-health-check' )
+				'mpat' => esc_html__( 'MPAT', 'mpat-health-check'),
+				/*'mpat-health-check' => esc_html__( 'MPAT Health Check', 'mpat-health-check' ),*/
+				'debug' => esc_html__( 'Debug information', 'mpat-health-check' )
+				/*,
+				'phpinfo' => esc_html__( 'PHP Information', 'mpat-health-check' )*/
 			);
 
 			$current_tab = ( isset( $_GET['tab'] ) ? $_GET['tab'] : 'mpat-health-check' );
@@ -105,13 +107,12 @@ class HealthCheck {
 			switch ( $current_tab ) {
 				case 'debug':
 					include_once( dirname( __FILE__ ) . '/pages/debug-data.php' );
-					break;
-				case 'phpinfo':
-					include_once( dirname( __FILE__ ) . '/pages/phpinfo.php' );
-					break;
-				case 'mpat-health-check':
+				break;
+				case 'mpat':
+					include_once( dirname( __FILE__ ) . '/pages/mpat.php' );
+				break;
 				default:
-					include_once( dirname( __FILE__ ) . '/pages/health-check.php' );
+						include_once( dirname( __FILE__ ) . '/pages/mpat.php' );
 			}
 			?>
 		</div>

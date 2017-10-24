@@ -1,6 +1,6 @@
 <?php
 
-class Health_Check_Auto_Updates {
+class MPAT_CHECK_Auto_Updates {
 	public function __construct() {
 		$this->init();
 	}
