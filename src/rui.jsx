@@ -249,12 +249,12 @@ class RUI extends React.PureComponent {
 
     blok(t, o) {
         try {
-            return (<div>
-                <h4>{o.length} {t}</h4>
+            return (<details>
+                <summary>{o.length} {t.toLowerCase()} </summary>
                 <ul>{o.map((l) => { return (<li>{l.id} {l.label || l.title.rendered}</li>) })} </ul>
                 <hr />
 
-            </div>);
+            </details>);
         } catch (err) {
 
         }
@@ -265,34 +265,32 @@ class RUI extends React.PureComponent {
         try {
             let keyz = Object.keys(o);
             keyz.sort();
-            return (<div>
-                <h4>{keyz.length} {t}</h4>
+            return (<details>
+                <summary>{keyz.length} {t.toLowerCase()}</summary>
                 <div>{
                     keyz.map((l) => {
-                        console.log('keyz map', l);
                         if (l.toLowerCase().indexOf('mpat') == 0
-                        || l.toLowerCase().indexOf('mpo') == 0
-                        || l.toLowerCase().indexOf('timeline') == 0
-                         || l.toLowerCase().indexOf('tooltips') == 0) {
-                           return this.kv(l,o[l],{ color: '#25c1b2' });
+                            || l.toLowerCase().indexOf('mpo') == 0
+                            || l.toLowerCase().indexOf('timeline') == 0
+                            || l.toLowerCase().indexOf('tooltips') == 0) {
+                            return this.kv(l, o[l], { color: '#25c1b2' });
                         }
                         else {
-                            return this.kv(l,o[l],{ color: 'gray' });
+                            return this.kv(l, o[l], { color: 'gray' });
                         }
                     })
                 }</div>
                 <hr />
-            </div>);
+            </details>);
         } catch (err) {
             console.log(err);
         }
     }
+
     kv(k, v, s) {
-     /*   if(typeof v ==='object') */
-            return (<details><summary><label style={s}>{k}</label></summary><pre style={{fontSize: '0.8em'}}>{JSON.stringify(v,null,3)}</pre></details>);
-/*        else
-                return (<div><label style={s}>{k}</label><span style={{float: 'right', fontSize: '0.8em'}}>{v}</span></div>);*/
+        return (<details><summary><label style={s}>{k}</label></summary><pre style={{ fontSize: '0.8em' }}>{JSON.stringify(v, null, 3)}</pre></details>);
     }
+
     render() {
 
         return (<div>

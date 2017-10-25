@@ -41,3 +41,13 @@ body.dashboard_page_health-check .error:before {
 	color: #dc3232;
 	font-family: dashicons;
 }
+details{
+	margin-top: 10px;
+}
+details details{
+	position: relative;
+	left: 30px;
+}
+li{
+	padding: 2px;
+}
