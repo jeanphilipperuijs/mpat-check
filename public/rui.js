@@ -10168,14 +10168,15 @@ var RUI = function (_React$PureComponent) {
         value: function blok(t, o) {
             try {
                 return _react2.default.createElement(
-                    'div',
+                    'details',
                     null,
                     _react2.default.createElement(
-                        'h4',
+                        'summary',
                         null,
                         o.length,
                         ' ',
-                        t
+                        t.toLowerCase(),
+                        ' '
                     ),
                     _react2.default.createElement(
                         'ul',
@@ -10205,20 +10206,19 @@ var RUI = function (_React$PureComponent) {
                 var keyz = Object.keys(o);
                 keyz.sort();
                 return _react2.default.createElement(
-                    'div',
+                    'details',
                     null,
                     _react2.default.createElement(
-                        'h4',
+                        'summary',
                         null,
                         keyz.length,
                         ' ',
-                        t
+                        t.toLowerCase()
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
                         keyz.map(function (l) {
-                            console.log('keyz map', l);
                             if (l.toLowerCase().indexOf('mpat') == 0 || l.toLowerCase().indexOf('mpo') == 0 || l.toLowerCase().indexOf('timeline') == 0 || l.toLowerCase().indexOf('tooltips') == 0) {
                                 return _this9.kv(l, o[l], { color: '#25c1b2' });
                             } else {
@@ -10235,7 +10235,6 @@ var RUI = function (_React$PureComponent) {
     }, {
         key: 'kv',
         value: function kv(k, v, s) {
-            /*   if(typeof v ==='object') */
             return _react2.default.createElement(
                 'details',
                 null,
@@ -10254,8 +10253,6 @@ var RUI = function (_React$PureComponent) {
                     JSON.stringify(v, null, 3)
                 )
             );
-            /*        else
-                            return (<div><label style={s}>{k}</label><span style={{float: 'right', fontSize: '0.8em'}}>{v}</span></div>);*/
         }
     }, {
         key: 'render',
