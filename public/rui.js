@@ -9824,8 +9824,6 @@ module.exports = canDefineProperty;
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(196);
@@ -10201,31 +10199,31 @@ var RUI = function (_React$PureComponent) {
     }, {
         key: 'blokoption',
         value: function blokoption(t, o) {
+            var _this9 = this;
+
             try {
+                var keyz = Object.keys(o);
+                keyz.sort();
                 return _react2.default.createElement(
                     'div',
                     null,
                     _react2.default.createElement(
                         'h4',
                         null,
-                        Object.keys(o).length,
+                        keyz.length,
                         ' ',
                         t
                     ),
                     _react2.default.createElement(
-                        'ul',
+                        'div',
                         null,
-                        Object.keys(o).forEach(function (l) {
-                            var v = o[l];
-                            var t = typeof v === 'undefined' ? 'undefined' : _typeof(v);
-                            console.log(l, t, v);
-                            return _react2.default.createElement(
-                                'li',
-                                null,
-                                l,
-                                ' ',
-                                v
-                            );
+                        keyz.map(function (l) {
+                            console.log('keyz map', l);
+                            if (l.toLowerCase().indexOf('mpat') == 0 || l.toLowerCase().indexOf('mpo') == 0 || l.toLowerCase().indexOf('timeline') == 0 || l.toLowerCase().indexOf('tooltips') == 0) {
+                                return _this9.kv(l, o[l], { color: '#25c1b2' });
+                            } else {
+                                return _this9.kv(l, o[l], { color: 'gray' });
+                            }
                         })
                     ),
                     _react2.default.createElement('hr', null)
@@ -10233,6 +10231,31 @@ var RUI = function (_React$PureComponent) {
             } catch (err) {
                 console.log(err);
             }
+        }
+    }, {
+        key: 'kv',
+        value: function kv(k, v, s) {
+            /*   if(typeof v ==='object') */
+            return _react2.default.createElement(
+                'details',
+                null,
+                _react2.default.createElement(
+                    'summary',
+                    null,
+                    _react2.default.createElement(
+                        'label',
+                        { style: s },
+                        k
+                    )
+                ),
+                _react2.default.createElement(
+                    'pre',
+                    { style: { fontSize: '0.8em' } },
+                    JSON.stringify(v, null, 3)
+                )
+            );
+            /*        else
+                            return (<div><label style={s}>{k}</label><span style={{float: 'right', fontSize: '0.8em'}}>{v}</span></div>);*/
         }
     }, {
         key: 'render',

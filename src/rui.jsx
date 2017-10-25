@@ -238,6 +238,7 @@ class RUI extends React.PureComponent {
                 });
             });
     }
+
     errorblock() {
         if (this.state.errMsg) {
             return (<div><h4>Errors</h4>
@@ -262,23 +263,36 @@ class RUI extends React.PureComponent {
 
     blokoption(t, o) {
         try {
+            let keyz = Object.keys(o);
+            keyz.sort();
             return (<div>
-                <h4>{Object.keys(o).length} {t}</h4>
-                <ul>{
-                    Object.keys(o).forEach((l) => {
-                        let v = o[l];
-                        let t = (typeof v);
-                        console.log(l, t, v);
-                        return (<li>{l} {v}</li>);
-                    })}</ul>
+                <h4>{keyz.length} {t}</h4>
+                <div>{
+                    keyz.map((l) => {
+                        console.log('keyz map', l);
+                        if (l.toLowerCase().indexOf('mpat') == 0
+                        || l.toLowerCase().indexOf('mpo') == 0
+                        || l.toLowerCase().indexOf('timeline') == 0
+                         || l.toLowerCase().indexOf('tooltips') == 0) {
+                           return this.kv(l,o[l],{ color: '#25c1b2' });
+                        }
+                        else {
+                            return this.kv(l,o[l],{ color: 'gray' });
+                        }
+                    })
+                }</div>
                 <hr />
-
             </div>);
         } catch (err) {
             console.log(err);
         }
     }
-
+    kv(k, v, s) {
+     /*   if(typeof v ==='object') */
+            return (<details><summary><label style={s}>{k}</label></summary><pre style={{fontSize: '0.8em'}}>{JSON.stringify(v,null,3)}</pre></details>);
+/*        else
+                return (<div><label style={s}>{k}</label><span style={{float: 'right', fontSize: '0.8em'}}>{v}</span></div>);*/
+    }
     render() {
 
         return (<div>
