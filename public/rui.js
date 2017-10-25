@@ -9824,6 +9824,8 @@ module.exports = canDefineProperty;
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(196);
@@ -10233,8 +10235,102 @@ var RUI = function (_React$PureComponent) {
             }
         }
     }, {
+        key: 'blokplugins',
+        value: function blokplugins(t, o) {
+            var _this10 = this;
+
+            try {
+                var keyz = Object.keys(o);
+                keyz.sort();
+                return _react2.default.createElement(
+                    'details',
+                    null,
+                    _react2.default.createElement(
+                        'summary',
+                        null,
+                        keyz.length,
+                        ' ',
+                        t.toLowerCase()
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        keyz.map(function (p) {
+                            var q = o[p];
+                            console.log(q);
+                            var l = q.Name;
+                            if (l.toLowerCase().indexOf('mpat') == 0 || l.toLowerCase().indexOf('mpo') == 0 || l.toLowerCase().indexOf('timeline') == 0 || l.toLowerCase().indexOf('tooltips') == 0) {
+                                return _this10.kv(q.Name + ' v' + q.Version, _this10.blokplugin(q), { color: '#25c1b2' });
+                            } else {
+                                return _this10.kv(q.Name + ' v' + q.Version, q);
+                            }
+                        })
+                    ),
+                    _react2.default.createElement('hr', null)
+                );
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }, {
+        key: 'blokplugin',
+        value: function blokplugin(q) {
+            return _react2.default.createElement(
+                'span',
+                null,
+                _react2.default.createElement(
+                    'blockquote',
+                    null,
+                    q.Description
+                ),
+                _react2.default.createElement(
+                    'ul',
+                    null,
+                    this.lv('PluginURI', _react2.default.createElement(
+                        'a',
+                        { href: q.PluginURI, target: '_blank' },
+                        q.PluginURI
+                    )),
+                    this.lv('Author', q.Author),
+                    this.lv('AuthorURI', _react2.default.createElement(
+                        'a',
+                        { href: q.AuthorURI, target: '_blank' },
+                        q.AuthorURI
+                    ))
+                )
+            );
+        }
+    }, {
+        key: 'lv',
+        value: function lv(l, v) {
+            return _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                    'label',
+                    null,
+                    l
+                ),
+                _react2.default.createElement(
+                    'span',
+                    { style: { float: 'right', paddingRight: '50px' } },
+                    v
+                )
+            );
+        }
+    }, {
         key: 'kv',
         value: function kv(k, v, s) {
+            var cnt = v;
+            if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') {
+                try {
+                    cnt = _react2.default.createElement(
+                        'pre',
+                        { style: { fontSize: '0.8em' } },
+                        JSON.stringify(v, null, 3)
+                    );
+                } catch (err) {}
+            }
             return _react2.default.createElement(
                 'details',
                 null,
@@ -10247,11 +10343,7 @@ var RUI = function (_React$PureComponent) {
                         k
                     )
                 ),
-                _react2.default.createElement(
-                    'pre',
-                    { style: { fontSize: '0.8em' } },
-                    JSON.stringify(v, null, 3)
-                )
+                cnt
             );
         }
     }, {
@@ -10265,7 +10357,8 @@ var RUI = function (_React$PureComponent) {
                 this.blok('Pages', this.state.availablePages),
                 this.blok('Layouts', this.state.availableLayouts),
                 this.blok('Models', this.state.availableModels),
-                this.blokoption('Options', this.state.availableOptions)
+                this.blokoption('Options', this.state.availableOptions),
+                this.blokplugins('Plugins', plugins)
             );
         }
     }]);

@@ -287,8 +287,56 @@ class RUI extends React.PureComponent {
         }
     }
 
+    blokplugins(t, o) {
+        try {
+            let keyz = Object.keys(o);
+            keyz.sort();
+            return (<details>
+                <summary>{keyz.length} {t.toLowerCase()}</summary>
+                <div>{
+                    keyz.map((p) => {
+                        let q = o[p];
+                        console.log(q);
+                        let l = q.Name;
+                        if (l.toLowerCase().indexOf('mpat') == 0
+                            || l.toLowerCase().indexOf('mpo') == 0
+                            || l.toLowerCase().indexOf('timeline') == 0
+                            || l.toLowerCase().indexOf('tooltips') == 0) {
+                            return this.kv(`${q.Name} v${q.Version}`, this.blokplugin(q), { color: '#25c1b2' });
+                        }
+                        else {
+                            return this.kv(`${q.Name} v${q.Version}`, q);
+                        }
+                    })
+                }</div>
+                <hr />
+            </details>);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    blokplugin(q) {
+        return (<span>
+
+            <blockquote>{q.Description}</blockquote><ul>
+                {this.lv('PluginURI', <a href={q.PluginURI} target="_blank">{q.PluginURI}</a>)}
+                {this.lv('Author', q.Author)}
+                {this.lv('AuthorURI', <a href={q.AuthorURI} target="_blank">{q.AuthorURI}</a>)}
+            </ul>
+        </span>);
+    }
+    lv(l, v) {
+        return (<li><label>{l}</label><span style={{ float: 'right', paddingRight: '50px' }}>{v}</span></li>);
+
+    }
     kv(k, v, s) {
-        return (<details><summary><label style={s}>{k}</label></summary><pre style={{ fontSize: '0.8em' }}>{JSON.stringify(v, null, 3)}</pre></details>);
+        let cnt = v;
+        if (typeof v === 'object') {
+            try {
+                cnt = <pre style={{ fontSize: '0.8em' }}>{JSON.stringify(v, null, 3)}</pre>;
+            } catch (err) { }
+        }
+        return (<details><summary><label style={s}>{k}</label></summary>{cnt}</details>);
     }
 
     render() {
@@ -304,6 +352,7 @@ class RUI extends React.PureComponent {
 
             {this.blokoption('Options', this.state.availableOptions)}
 
+            {this.blokplugins('Plugins', plugins)}
         </div>);
     }
 }

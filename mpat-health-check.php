@@ -43,9 +43,12 @@ class HealthCheck {
 			return;
 		}
 
-        wp_enqueue_script('wp-api');
-		wp_enqueue_script('mpat-newpage-wizard', plugin_dir_url(__FILE__) . 'public/rui.js', array('wp-api'), 1.0, true );
-		//wp_enqueue_script('mpat-newpage-wizard', 'http://localhost:8000/rui.js', array('wp-api'), 1.0, true );
+		wp_enqueue_script('wp-api');
+
+		wp_localize_script('wp-api','plugins', get_plugins());
+		
+		wp_enqueue_script('mpat-hc', plugin_dir_url(__FILE__) . 'public/rui.js', array('wp-api'), 1.0, true );
+		//wp_enqueue_script('mpat-hc', 'http://localhost:8000/rui.js', array('wp-api'), 1.0, true );
 		
 		wp_enqueue_style( 'mpat-health-check', plugins_url( '/assets/css/health-check.css', __FILE__ ), array(), MPAT_CHECK_PLUGIN_VERSION );
 
