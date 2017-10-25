@@ -50,9 +50,6 @@ class HealthCheck {
 		wp_enqueue_style( 'mpat-health-check', plugins_url( '/assets/css/health-check.css', __FILE__ ), array(), MPAT_CHECK_PLUGIN_VERSION );
 
 		wp_enqueue_script( 'mpat-health-check', plugins_url( '/assets/javascript/health-check.js', __FILE__ ), array( 'jquery' ), MPAT_CHECK_PLUGIN_VERSION, true );
-
-  
-
 	}
 
 	public function action_admin_menu() {

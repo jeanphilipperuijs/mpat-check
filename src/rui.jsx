@@ -2,14 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CRUD from './crud';
 
-/**
-1 Choose if it's a PageModel (PM) or PageLayout (PL) you want to base your page upon
-2 Choose/create PM or PL.
-  - option to edit the type of page template (PM/PL) after creation/selection.
-3 Choose page title
-  - when back, only newly created templates will be deleted
-  - else go to page editor
-*/
 class RUI extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -20,8 +12,13 @@ class RUI extends React.PureComponent {
         this.restUrlPageModel = `${window.wpApiSettings.root}mpat/v1/model`; //custom REST
         this.restUrlOptions = `${window.wpApiSettings.root}mpat/v1/option`; //custom REST
         this.isRestOk = true;
-        this.state = { errMsg: 'no errors' };
-        console.log('hi');
+        this.state = {
+            errMsg: null,
+            availableLayouts: [],
+            availableModels: [],
+            availablePages: [],
+            availableOptions: []
+        };
     }
 
     componentWillMount() {
@@ -54,27 +51,19 @@ class RUI extends React.PureComponent {
     loadPages() {
         this.pageIO.get(
             (result) => {
-                const urls = [];
-                for (const item of result) {
-                    const obj = {};
-                    obj.id = item.ID;
-                    obj.key = `page://${item.ID}`;
-                    obj.label = item.post_title !== '' ? item.post_title : 'no title';
-                    obj.disabled = false;
-                    urls.push(obj);
-                }
-                this.setState({ availablePags: urls });
+                //                console.log(result);
+                this.setState({ availablePages: result });
             },
             (e) => {
                 console.log('loadPages', e);
                 if (e.toString().indexOf('404') > -1) {
                     this.isRestOk = false;
                     this.setState({
-                        errMsg: `Missing the custom REST for Page Models ${this.restUrlPageModel}. Have you installed "mpat-core-plugin" ?`
+                        errMsg: `Missing the custom REST for Page Models ${this.restUrlPages}. Have you installed "mpat-core-plugin" ?`
                     });
                 } else {
                     this.setState({
-                        errMsg: `${this.restUrlPageModel} gave ${e.toString()}`
+                        errMsg: `${this.restUrlPages} gave ${e.toString()}`
                     });
                 }
             });
@@ -85,6 +74,7 @@ class RUI extends React.PureComponent {
     loadOptions() {
         this.optionIO.get(
             (result) => {
+                console.log('loadOptions rseult', result);
                 this.setState({ availableOptions: result });
             },
             (e) => {
@@ -95,7 +85,7 @@ class RUI extends React.PureComponent {
                         this.setState({
                             errMsg: `Missing the custom REST for Page Models ${this.restUrlOptions}. Have you installed "mpat-core-plugin" ?`
                         });
-                    }
+                    } else { this.setState({ errMsg: e }) };
                 } catch (err) {
                     this.setState({
                         errMsg: `${this.restUrlOptions} gave ${e.toString()}`
@@ -239,8 +229,7 @@ class RUI extends React.PureComponent {
                 this.setState(
                     {
                         stepTag: 'done'
-                    },
-                    this.waitForChildEdited(this.state.newPageTitle, id)
+                    }
                 );
             },
             (e) => {
@@ -249,42 +238,59 @@ class RUI extends React.PureComponent {
                 });
             });
     }
+    errorblock() {
+        if (this.state.errMsg) {
+            return (<div><h4>Errors</h4>
+                <strong>{this.state.errMsg}</strong>
+            </div>);
+        } return null;
+    }
+
+    blok(t, o) {
+        try {
+            return (<div>
+                <h4>{o.length} {t}</h4>
+                <ul>{o.map((l) => { return (<li>{l.id} {l.label || l.title.rendered}</li>) })} </ul>
+                <hr />
+
+            </div>);
+        } catch (err) {
+
+        }
+        return null;
+    }
+
+    blokoption(t, o) {
+        try {
+            return (<div>
+                <h4>{Object.keys(o).length} {t}</h4>
+                <ul>{
+                    Object.keys(o).forEach((l) => {
+                        let v = o[l];
+                        let t = (typeof v);
+                        console.log(l, t, v);
+                        return (<li>{l} {v}</li>);
+                    })}</ul>
+                <hr />
+
+            </div>);
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     render() {
-        let htmlL = null;
-        let countL = -1;
-        try {
-            htmlL = (<ul>{this.state.availableLayouts.map((l) => { return (<li><label>Label:</label><input readonly value={l.label} /></li>) })} </ul>);
-            //countL = <span>Layouts counts {this.state.availableLayouts.length}</span>;
-            countL = <span><label>Count</label><input readonly value={this.state.availableLayouts.length} /></span>;
-        } catch (err) {
-
-        }
-        let htmlM = null;
-        let countM = -1;
-        try {
-            htmlM = (<ul>{this.state.availableModels.map((l) => { return (<li><label>Label:</label><input readonly value={l.label} /></li>) })} </ul>);
-            countM = <span><label>Count</label><input readonly value={this.state.availableModels.length} /></span>;
-        } catch (err) {
-
-        }
 
         return (<div>
-            <h4>MPAT REST API</h4>
-            <strong>{this.state.errMsg}</strong>
-            <div>
-                <h5>Layouts</h5>
-                {countL}
-                {htmlL}
-            </div>
-            <div
-            ><h5>Models</h5>
-                {countM}
-                {htmlM}
-            </div>
-            {
-                <textarea readonly style={{ fontSize: '0.6em', width: '100%', height: '128px' }}>{JSON.stringify(this.state, null, 3)}</textarea>
-            }
+            {this.errorblock()}
+
+            {this.blok('Pages', this.state.availablePages)}
+
+            {this.blok('Layouts', this.state.availableLayouts)}
+
+            {this.blok('Models', this.state.availableModels)}
+
+            {this.blokoption('Options', this.state.availableOptions)}
 
         </div>);
     }

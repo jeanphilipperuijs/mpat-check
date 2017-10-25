@@ -172,14 +172,14 @@ foreach ( $info AS $section => $details ) {
 		<?php
 		foreach ( $details['fields'] AS $field ) {
 			$label = $field['label'];
-			if(strpos($label, 'MPAT')!==false){
+			$value = esc_html($field['value']);
+			if(strpos($label, 'MPAT')!==false || 
+			strpos($value, 'MPAT')!==false || 
+			strpos($value, 'Fincons')!==false || 
+			strpos($value, 'Jean-Philippe Ruijs') !==false ){
 				$label ='<span style="color: #25c1b2;">'.esc_html($field['label']).'</strong>';
 			}
-			printf(
-				'<tr><td>%s</td><td>%s</td></tr>',
-				 $label ,
-				esc_html( $field['value'] )
-			);
+			printf('<tr><td>%s</td><td>%s</td></tr>', $label ,$value );
 		}
 		?>
 		</tbody>

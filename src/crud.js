@@ -17,15 +17,17 @@ export default class CRUD {
       .then((v) => {
         //FIXME because there may be irrelevant wordpress errors prefixing the response, so we strip them
         let w = v.data;
-        if (v.data.indexOf('>') > -1) {
-          let li = v.data.lastIndexOf('>');
-          w = v.data.substr(li + 1);
-          console.log('stripping alert');
-        }
+        try {
+          if (w.indexOf('>') > -1) {
+            let li = w.lastIndexOf('>');
+            w = w.substr(li + 1);
+            console.log('stripping alert');
+          }
+        } catch (err) { }
         if (typeof w === 'string') {
           w = JSON.parse(w);
         }
-        console.log(this.restRootUrl, 'data', w);
+        //console.log(this.restRootUrl, 'data', w);
         onSuccess.call(null, w);
       })
       .catch((e) => {

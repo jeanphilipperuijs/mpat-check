@@ -9824,6 +9824,8 @@ module.exports = canDefineProperty;
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(196);
@@ -9846,14 +9848,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/**
-1 Choose if it's a PageModel (PM) or PageLayout (PL) you want to base your page upon
-2 Choose/create PM or PL.
-  - option to edit the type of page template (PM/PL) after creation/selection.
-3 Choose page title
-  - when back, only newly created templates will be deleted
-  - else go to page editor
-*/
 var RUI = function (_React$PureComponent) {
     _inherits(RUI, _React$PureComponent);
 
@@ -9868,8 +9862,13 @@ var RUI = function (_React$PureComponent) {
         _this.restUrlPageModel = window.wpApiSettings.root + 'mpat/v1/model'; //custom REST
         _this.restUrlOptions = window.wpApiSettings.root + 'mpat/v1/option'; //custom REST
         _this.isRestOk = true;
-        _this.state = { errMsg: 'no errors' };
-        console.log('hi');
+        _this.state = {
+            errMsg: null,
+            availableLayouts: [],
+            availableModels: [],
+            availablePages: [],
+            availableOptions: []
+        };
         return _this;
     }
 
@@ -9909,6 +9908,60 @@ var RUI = function (_React$PureComponent) {
             var _this2 = this;
 
             this.pageIO.get(function (result) {
+                //                console.log(result);
+                _this2.setState({ availablePages: result });
+            }, function (e) {
+                console.log('loadPages', e);
+                if (e.toString().indexOf('404') > -1) {
+                    _this2.isRestOk = false;
+                    _this2.setState({
+                        errMsg: 'Missing the custom REST for Page Models ' + _this2.restUrlPages + '. Have you installed "mpat-core-plugin" ?'
+                    });
+                } else {
+                    _this2.setState({
+                        errMsg: _this2.restUrlPages + ' gave ' + e.toString()
+                    });
+                }
+            });
+        }
+
+        /** options */
+
+    }, {
+        key: 'loadOptions',
+        value: function loadOptions() {
+            var _this3 = this;
+
+            this.optionIO.get(function (result) {
+                console.log('loadOptions rseult', result);
+                _this3.setState({ availableOptions: result });
+            }, function (e) {
+                console.log('loadOptions', e);
+                try {
+                    if (e.toString().indexOf('404') > -1) {
+                        _this3.isRestOk = false;
+                        _this3.setState({
+                            errMsg: 'Missing the custom REST for Page Models ' + _this3.restUrlOptions + '. Have you installed "mpat-core-plugin" ?'
+                        });
+                    } else {
+                        _this3.setState({ errMsg: e });
+                    };
+                } catch (err) {
+                    _this3.setState({
+                        errMsg: _this3.restUrlOptions + ' gave ' + e.toString()
+                    });
+                }
+            });
+        }
+
+        /** model */
+
+    }, {
+        key: 'loadPageModels',
+        value: function loadPageModels() {
+            var _this4 = this;
+
+            this.modelIO.get(function (result) {
                 var urls = [];
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
@@ -9940,56 +9993,30 @@ var RUI = function (_React$PureComponent) {
                     }
                 }
 
-                _this2.setState({ availablePags: urls });
+                _this4.setState({ availableModels: urls });
             }, function (e) {
-                console.log('loadPages', e);
+                console.log('loadPageModels', e);
                 if (e.toString().indexOf('404') > -1) {
-                    _this2.isRestOk = false;
-                    _this2.setState({
-                        errMsg: 'Missing the custom REST for Page Models ' + _this2.restUrlPageModel + '. Have you installed "mpat-core-plugin" ?'
+                    _this4.isRestOk = false;
+                    _this4.setState({
+                        errMsg: 'Missing the custom REST for Page Models ' + _this4.restUrlPageModel + '. Have you installed "mpat-core-plugin" ?'
                     });
                 } else {
-                    _this2.setState({
-                        errMsg: _this2.restUrlPageModel + ' gave ' + e.toString()
+                    _this4.setState({
+                        errMsg: _this4.restUrlPageModel + ' gave ' + e.toString()
                     });
                 }
             });
         }
 
-        /** options */
+        /** layout */
 
     }, {
-        key: 'loadOptions',
-        value: function loadOptions() {
-            var _this3 = this;
+        key: 'loadPageLayouts',
+        value: function loadPageLayouts() {
+            var _this5 = this;
 
-            this.optionIO.get(function (result) {
-                _this3.setState({ availableOptions: result });
-            }, function (e) {
-                console.log('loadOptions', e);
-                try {
-                    if (e.toString().indexOf('404') > -1) {
-                        _this3.isRestOk = false;
-                        _this3.setState({
-                            errMsg: 'Missing the custom REST for Page Models ' + _this3.restUrlOptions + '. Have you installed "mpat-core-plugin" ?'
-                        });
-                    }
-                } catch (err) {
-                    _this3.setState({
-                        errMsg: _this3.restUrlOptions + ' gave ' + e.toString()
-                    });
-                }
-            });
-        }
-
-        /** model */
-
-    }, {
-        key: 'loadPageModels',
-        value: function loadPageModels() {
-            var _this4 = this;
-
-            this.modelIO.get(function (result) {
+            this.layoutIO.get(function (result) {
                 var urls = [];
                 var _iteratorNormalCompletion2 = true;
                 var _didIteratorError2 = false;
@@ -10017,61 +10044,6 @@ var RUI = function (_React$PureComponent) {
                     } finally {
                         if (_didIteratorError2) {
                             throw _iteratorError2;
-                        }
-                    }
-                }
-
-                _this4.setState({ availableModels: urls });
-            }, function (e) {
-                console.log('loadPageModels', e);
-                if (e.toString().indexOf('404') > -1) {
-                    _this4.isRestOk = false;
-                    _this4.setState({
-                        errMsg: 'Missing the custom REST for Page Models ' + _this4.restUrlPageModel + '. Have you installed "mpat-core-plugin" ?'
-                    });
-                } else {
-                    _this4.setState({
-                        errMsg: _this4.restUrlPageModel + ' gave ' + e.toString()
-                    });
-                }
-            });
-        }
-
-        /** layout */
-
-    }, {
-        key: 'loadPageLayouts',
-        value: function loadPageLayouts() {
-            var _this5 = this;
-
-            this.layoutIO.get(function (result) {
-                var urls = [];
-                var _iteratorNormalCompletion3 = true;
-                var _didIteratorError3 = false;
-                var _iteratorError3 = undefined;
-
-                try {
-                    for (var _iterator3 = result[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                        var item = _step3.value;
-
-                        var obj = {};
-                        obj.id = item.ID;
-                        obj.key = 'page://' + item.ID;
-                        obj.label = item.post_title !== '' ? item.post_title : 'no title';
-                        obj.disabled = false;
-                        urls.push(obj);
-                    }
-                } catch (err) {
-                    _didIteratorError3 = true;
-                    _iteratorError3 = err;
-                } finally {
-                    try {
-                        if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                            _iterator3.return();
-                        }
-                    } finally {
-                        if (_didIteratorError3) {
-                            throw _iteratorError3;
                         }
                     }
                 }
@@ -10166,7 +10138,7 @@ var RUI = function (_React$PureComponent) {
                 var id = Number(a.data.id);
                 _this8.setState({
                     stepTag: 'done'
-                }, _this8.waitForChildEdited(_this8.state.newPageTitle, id));
+                });
             }, function (e) {
                 _this8.setState({
                     errMsg: e
@@ -10174,112 +10146,106 @@ var RUI = function (_React$PureComponent) {
             });
         }
     }, {
+        key: 'errorblock',
+        value: function errorblock() {
+            if (this.state.errMsg) {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'h4',
+                        null,
+                        'Errors'
+                    ),
+                    _react2.default.createElement(
+                        'strong',
+                        null,
+                        this.state.errMsg
+                    )
+                );
+            }return null;
+        }
+    }, {
+        key: 'blok',
+        value: function blok(t, o) {
+            try {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'h4',
+                        null,
+                        o.length,
+                        ' ',
+                        t
+                    ),
+                    _react2.default.createElement(
+                        'ul',
+                        null,
+                        o.map(function (l) {
+                            return _react2.default.createElement(
+                                'li',
+                                null,
+                                l.id,
+                                ' ',
+                                l.label || l.title.rendered
+                            );
+                        }),
+                        ' '
+                    ),
+                    _react2.default.createElement('hr', null)
+                );
+            } catch (err) {}
+            return null;
+        }
+    }, {
+        key: 'blokoption',
+        value: function blokoption(t, o) {
+            try {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'h4',
+                        null,
+                        Object.keys(o).length,
+                        ' ',
+                        t
+                    ),
+                    _react2.default.createElement(
+                        'ul',
+                        null,
+                        Object.keys(o).forEach(function (l) {
+                            var v = o[l];
+                            var t = typeof v === 'undefined' ? 'undefined' : _typeof(v);
+                            console.log(l, t, v);
+                            return _react2.default.createElement(
+                                'li',
+                                null,
+                                l,
+                                ' ',
+                                v
+                            );
+                        })
+                    ),
+                    _react2.default.createElement('hr', null)
+                );
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var htmlL = null;
-            var countL = -1;
-            try {
-                htmlL = _react2.default.createElement(
-                    'ul',
-                    null,
-                    this.state.availableLayouts.map(function (l) {
-                        return _react2.default.createElement(
-                            'li',
-                            null,
-                            _react2.default.createElement(
-                                'label',
-                                null,
-                                'Label:'
-                            ),
-                            _react2.default.createElement('input', { readonly: true, value: l.label })
-                        );
-                    }),
-                    ' '
-                );
-                //countL = <span>Layouts counts {this.state.availableLayouts.length}</span>;
-                countL = _react2.default.createElement(
-                    'span',
-                    null,
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Count'
-                    ),
-                    _react2.default.createElement('input', { readonly: true, value: this.state.availableLayouts.length })
-                );
-            } catch (err) {}
-            var htmlM = null;
-            var countM = -1;
-            try {
-                htmlM = _react2.default.createElement(
-                    'ul',
-                    null,
-                    this.state.availableModels.map(function (l) {
-                        return _react2.default.createElement(
-                            'li',
-                            null,
-                            _react2.default.createElement(
-                                'label',
-                                null,
-                                'Label:'
-                            ),
-                            _react2.default.createElement('input', { readonly: true, value: l.label })
-                        );
-                    }),
-                    ' '
-                );
-                countM = _react2.default.createElement(
-                    'span',
-                    null,
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Count'
-                    ),
-                    _react2.default.createElement('input', { readonly: true, value: this.state.availableModels.length })
-                );
-            } catch (err) {}
 
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(
-                    'h4',
-                    null,
-                    'MPAT REST API'
-                ),
-                _react2.default.createElement(
-                    'strong',
-                    null,
-                    this.state.errMsg
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(
-                        'h5',
-                        null,
-                        'Layouts'
-                    ),
-                    countL,
-                    htmlL
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(
-                        'h5',
-                        null,
-                        'Models'
-                    ),
-                    countM,
-                    htmlM
-                ),
-                _react2.default.createElement(
-                    'textarea',
-                    { readonly: true, style: { fontSize: '0.6em', width: '100%', height: '128px' } },
-                    JSON.stringify(this.state, null, 3)
-                )
+                this.errorblock(),
+                this.blok('Pages', this.state.availablePages),
+                this.blok('Layouts', this.state.availableLayouts),
+                this.blok('Models', this.state.availableModels),
+                this.blokoption('Options', this.state.availableOptions)
             );
         }
     }]);
@@ -11188,20 +11154,20 @@ var CRUD = function () {
   _createClass(CRUD, [{
     key: 'get',
     value: function get(onSuccess, onError) {
-      var _this = this;
-
       _axios2.default.get(this.restRootUrl, {}).then(function (v) {
         //FIXME because there may be irrelevant wordpress errors prefixing the response, so we strip them
         var w = v.data;
-        if (v.data.indexOf('>') > -1) {
-          var li = v.data.lastIndexOf('>');
-          w = v.data.substr(li + 1);
-          console.log('stripping alert');
-        }
+        try {
+          if (w.indexOf('>') > -1) {
+            var li = w.lastIndexOf('>');
+            w = w.substr(li + 1);
+            console.log('stripping alert');
+          }
+        } catch (err) {}
         if (typeof w === 'string') {
           w = JSON.parse(w);
         }
-        console.log(_this.restRootUrl, 'data', w);
+        //console.log(this.restRootUrl, 'data', w);
         onSuccess.call(null, w);
       }).catch(function (e) {
         onError.call(null, e);
