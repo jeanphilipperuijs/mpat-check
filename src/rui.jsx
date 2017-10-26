@@ -49,10 +49,7 @@ class RUI extends React.PureComponent {
                 "Name": "WP Crontrol", "PluginURI": "https://wordpress.org/plugins/wp-crontrol/", "Version": "1.3.1", "Description": "WP Crontrol lets you view and control what's happening in the WP-Cron system.", "Author": "<a href=\"https://johnblackbourn.com/\">John Blackbourn</a> & <a href=\"http://www.scompt.com/\">Edward Dale</a>", "AuthorURI": "", "TextDomain": "wp-crontrol", "DomainPath": "/languages/", "Network": false, "Title": "WP Crontrol", "AuthorName": "<a href=\"https://johnblackbourn.com/\">John Blackbourn</a> & <a href=\"http://www.scompt.com/\">Edward Dale</a>"
             }
         };
-        this.mandatory = {
-            cpo: { pluginUrl: 'https://github.com/MPAT-eu/cpo', mandatory: false },
-            cpo: { pluginUrl: 'https://github.com/MPAT-eu/cpo', mandatory: false },
-        }
+        this.noConfirm = true;
         //WP REST API
         this.restUrlPage = `${window.wpApiSettings.root}${window.wpApiSettings.versionString}pages`; //default REST
         this.restUrlPageLayout = `${window.wpApiSettings.root}mpat/v1/layout`; //custom REST
@@ -413,7 +410,11 @@ class RUI extends React.PureComponent {
                 <summary>
                     <span style={Object.assign(s, { fontSize: '0.9em' })}>{k}</span>
                 </summary>
-                <button className="button" title={`Delete option ${k}`} onClick={() => { if(confirm(`Are you sure you want to option "${k}"?`))crud.remove(k, () => { this.loadOptions() }, this.loadOptions) }}>X</button>
+                <button className="button" title={`Delete option ${k}`} onClick={() => {
+                    if (this.noConfirm || confirm(`Are you sure you want to option "${k}"?`)) {
+                        crud.remove(k, () => { this.loadOptions() }, this.loadOptions);
+                    }
+                }}>X</button>
 
                 {cnt}
 

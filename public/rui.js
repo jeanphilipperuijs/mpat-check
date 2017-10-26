@@ -9842,8 +9842,6 @@ var _crud2 = _interopRequireDefault(_crud);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -9902,9 +9900,7 @@ var RUI = function (_React$PureComponent) {
                 "Name": "WP Crontrol", "PluginURI": "https://wordpress.org/plugins/wp-crontrol/", "Version": "1.3.1", "Description": "WP Crontrol lets you view and control what's happening in the WP-Cron system.", "Author": "<a href=\"https://johnblackbourn.com/\">John Blackbourn</a> & <a href=\"http://www.scompt.com/\">Edward Dale</a>", "AuthorURI": "", "TextDomain": "wp-crontrol", "DomainPath": "/languages/", "Network": false, "Title": "WP Crontrol", "AuthorName": "<a href=\"https://johnblackbourn.com/\">John Blackbourn</a> & <a href=\"http://www.scompt.com/\">Edward Dale</a>"
             }
         };
-        _this.mandatory = _defineProperty({
-            cpo: { pluginUrl: 'https://github.com/MPAT-eu/cpo', mandatory: false }
-        }, 'cpo', { pluginUrl: 'https://github.com/MPAT-eu/cpo', mandatory: false });
+        _this.noConfirm = true;
         //WP REST API
         _this.restUrlPage = '' + window.wpApiSettings.root + window.wpApiSettings.versionString + 'pages'; //default REST
         _this.restUrlPageLayout = window.wpApiSettings.root + 'mpat/v1/layout'; //custom REST
@@ -10441,9 +10437,11 @@ var RUI = function (_React$PureComponent) {
                     _react2.default.createElement(
                         'button',
                         { className: 'button', title: 'Delete option ' + k, onClick: function onClick() {
-                                if (confirm('Are you sure you want to option "' + k + '"?')) crud.remove(k, function () {
-                                    _this11.loadOptions();
-                                }, _this11.loadOptions);
+                                if (_this11.noConfirm || confirm('Are you sure you want to option "' + k + '"?')) {
+                                    crud.remove(k, function () {
+                                        _this11.loadOptions();
+                                    }, _this11.loadOptions);
+                                }
                             } },
                         'X'
                     ),
