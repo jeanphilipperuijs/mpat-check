@@ -1,13 +1,14 @@
 <?php
-/*
-	Plugin Name: MPAT Health Check
-	Plugin URI: https://github.com/jeanphilipperuijs/mpat-health-check
-	Description: Checks the health of your WordPress install.
-	Author: The WordPress.org community
-	Version: 0.5.0
-	Author URI: https://github.com/jeanphilipperuijs/mpat-health-check
-	Text Domain: mpat-health-check
- */
+/**
+* Plugin Name: MPAT Health Check
+* Plugin URI: https://github.com/jeanphilipperuijs/mpat-health-check
+* Description: Checks the health of your WordPress install.
+* Author: The WordPress.org community
+* Version: 0.5.0
+* Author URI: https://github.com/jeanphilipperuijs/mpat-health-check
+* Text Domain: mpat-health-check
+*/
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you can not directly access this file.' );
 }
