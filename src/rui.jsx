@@ -15,9 +15,6 @@ class RUI extends React.PureComponent {
             "mbop-remover/mbop-remover.php": {
                 "Name": "MBOP remover", "PluginURI": "/mbop", "Version": "1.0.1", "Description": "Delete current user meta's 'meta-box-order_page'", "Author": "Jean-Philippe Ruijs", "AuthorURI": "https://github.com/MPAT-eu", "TextDomain": "mbop-remover", "DomainPath": "/languages", "Network": false, "Title": "MBOP remover", "AuthorName": "Jean-Philippe Ruijs"
             },
-            "-mbop/mbop-remover.php": {
-                "Name": "MBOP remover", "PluginURI": "/mbop", "Version": "1.0.1", "Description": "Delete current user meta's 'meta-box-order_page'", "Author": "Jean-Philippe Ruijs", "AuthorURI": "https://github.com/MPAT-eu", "TextDomain": "mbop-remover", "DomainPath": "/languages", "Network": false, "Title": "MBOP remover", "AuthorName": "Jean-Philippe Ruijs"
-            },
             "members/members.php": {
                 "Name": "Members", "PluginURI": "http://themehybrid.com/plugins/members", "Version": "1.1.1", "Description": "A user and role management plugin that puts you in full control of your site's permissions. This plugin allows you to edit your roles and their capabilities, clone existing roles, assign multiple roles per user, block post content, or even make your site completely private.", "Author": "Justin Tadlock", "AuthorURI": "http://themehybrid.com", "TextDomain": "members", "DomainPath": "/languages", "Network": false, "Title": "Members", "AuthorName": "Justin Tadlock"
             },
@@ -27,22 +24,22 @@ class RUI extends React.PureComponent {
             "mpat-plugins/mpat-core.php": {
                 "Name": "MPAT core plugin", "PluginURI": "http://www.mpat.eu", "Version": "1.0.0", "Description": "Main MPAT plugins which includes the most of core modules.", "Author": "MPAT", "AuthorURI": "http://www.mpat.eu", "TextDomain": "mpat", "DomainPath": "", "Network": false, "Title": "MPAT core plugin", "AuthorName": "MPAT"
             },
-            "-cpo/mpat-cpo.php": {
+            "cpo/mpat-cpo.php": {
                 "Name": "MPAT Custom Posts Order", "PluginURI": "https://github.com/MPAT-eu/cpo", "Version": "1.1.1", "Description": "Settingless Custom Post Order", "Author": "Jean-Philippe Ruijs", "AuthorURI": "https://github.com/MPAT-eu/", "TextDomain": "mpat-cpo", "DomainPath": "/languages", "Network": false, "Title": "MPAT Custom Posts Order", "AuthorName": "Jean-Philippe Ruijs"
             },
-            "-explorer/Explorer.php": {
+            "mpat-explorer/Explorer.php": {
                 "Name": "MPAT Explorer", "PluginURI": "https://github.com/MPAT-eu/mpat-explorer/", "Version": "1.0.2", "Description": "Explorer MPAT sites", "Author": "Jean-Claude Dufourd", "AuthorURI": "https://github.com/MPAT-eu/", "TextDomain": "mpat-explorer", "DomainPath": "/languages", "Network": false, "Title": "MPAT Explorer", "AuthorName": "Jean-Claude Dufourd"
             },
             "mpat-health-check/mpat-health-check.php": {
                 "Name": "MPAT Health Check", "PluginURI": "https://github.com/jeanphilipperuijs/mpat-health-check", "Version": "0.5.0", "Description": "Checks the health of your WordPress install.", "Author": "The WordPress.org community", "AuthorURI": "https://github.com/jeanphilipperuijs/mpat-health-check", "TextDomain": "mpat-health-check", "DomainPath": "", "Network": false, "Title": "MPAT Health Check", "AuthorName": "The WordPress.org community"
             },
-            "-importexport/ImportExport.php": {
+            "mpat-importexport/ImportExport.php": {
                 "Name": "MPAT ImportExport", "PluginURI": "https://github.com/aureliendavid/mpat-importexport/", "Version": "1.0.beta", "Description": "Import and export MPAT pages and layout", "Author": "Aurelien David", "AuthorURI": "https://github.com/aureliendavid/", "TextDomain": "mpat-importexport", "DomainPath": "/languages", "Network": false, "Title": "MPAT ImportExport", "AuthorName": "Aurelien David"
             },
-            "-newpage-wizard/NewPage.php": {
+            "mpat-newpage-wizard/NewPage.php": {
                 "Name": "MPAT New Page Wizard", "PluginURI": "https://github.com/jeanphilipperuijs/mpat-newpage-wizard/", "Version": "2.0.3", "Description": "Wizard for creating new pages for MPAT", "Author": "Jean-Philippe Ruijs", "AuthorURI": "https://github.com/jeanphilipperuijs/", "TextDomain": "mpat-newpage-wizard", "DomainPath": "/languages", "Network": false, "Title": "MPAT New Page Wizard", "AuthorName": "Jean-Philippe Ruijs"
             },
-            "_360/mpat_360.php": {
+            "mpat-360/mpat_360.php": {
                 "Name": "MPAT_360", "PluginURI": "http://www.mpat.eu", "Version": "1.0.0", "Description": "video360 component", "Author": "MPAT", "AuthorURI": "http://www.mpat.eu", "TextDomain": "mpat-360", "DomainPath": "/languages", "Network": false, "Title": "MPAT_360", "AuthorName": "MPAT"
             },
             "rewrite-rules-inspector/rewrite-rules-inspector.php": {
@@ -89,6 +86,10 @@ class RUI extends React.PureComponent {
     }
 
     componentDidMount() {
+        console.log('constructor',
+            JSON.stringify(Object.keys(this.compare), null, 3),
+            JSON.stringify(Object.keys(plugins), null, 3),
+        );
         // when the render() is done, load the content
         this.loadPageModels();
         this.loadPageLayouts();
@@ -300,7 +301,7 @@ class RUI extends React.PureComponent {
     blok(t, o) {
         try {
             return (<details>
-                <summary>{o.length} {t.toLowerCase()} </summary>
+                <summary>{o.length || 'No'} {t.toLowerCase()} </summary>
                 <ul>{o.map((l) => { return (<li>{l.id} {l.label || l.title.rendered}</li>) })} </ul>
                 <hr />
 
@@ -323,10 +324,10 @@ class RUI extends React.PureComponent {
                             || l.toLowerCase().indexOf('mpo') == 0
                             || l.toLowerCase().indexOf('timeline') == 0
                             || l.toLowerCase().indexOf('tooltips') == 0) {
-                            return this.kv(l, o[l], { color: '#25c1b2' });
+                            return this.kv(l, o[l], { color: '#25c1b2' }, this.optionIO);
                         }
                         else {
-                            return this.kv(l, o[l], { color: 'gray' });
+                            return this.kv(l, o[l], { color: 'gray' }, this.optionIO);
                         }
                     })
                 }</div>
@@ -352,7 +353,9 @@ class RUI extends React.PureComponent {
                         let msgs = []
                         let cmprNm = undefined;
                         try { cmprNm = this.compare[p].Name; }
-                        catch (err) { }
+                        catch (err) {
+                            //console.log(err);
+                        }
 
                         if (cmprNm != undefined && cmprNm == q.Name) {
                             let updateAvailable = 'Latest version';
@@ -398,12 +401,23 @@ class RUI extends React.PureComponent {
         return (<li><label>{l}</label><span style={{ float: 'right', paddingRight: '50px' }}>{v}</span></li>);
 
     }
-    kv(k, v, s) {
+    kv(k, v, s, crud) {
         let cnt = v;
         if (typeof v === 'object') {
             try {
                 cnt = <pre style={{ fontSize: '0.8em' }}>{JSON.stringify(v, null, 3)}</pre>;
             } catch (err) { }
+        }
+        if (crud) {
+            return (<details>
+                <summary>
+                    <span style={Object.assign(s, { fontSize: '0.9em' })}>{k}</span>
+                </summary>
+                <button className="button" title={`Delete option ${k}`} onClick={() => { if(confirm(`Are you sure you want to option "${k}"?`))crud.remove(k, () => { this.loadOptions() }, this.loadOptions) }}>X</button>
+
+                {cnt}
+
+            </details>);
         }
         return (<details><summary><label style={s}>{k}</label></summary>{cnt}</details>);
     }

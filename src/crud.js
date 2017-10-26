@@ -43,7 +43,7 @@ export default class CRUD {
 
   remove(pageId, onSuccess, onError) {
     axios.delete(`${this.restRootUrl}/${pageId}`).then(onSuccess).catch((e) => {
-      onError.call(null, e);
+       onError.call(null, e);
       if (e.response) {
         console.log('Error', e.response.status);
         console.log(e.response.data.message);

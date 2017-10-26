@@ -47,8 +47,8 @@ class HealthCheck {
 
 		wp_localize_script('wp-api','plugins', get_plugins());
 		
-		wp_enqueue_script('mpat-hc', plugin_dir_url(__FILE__) . 'public/rui.js', array('wp-api'), 1.0, true );
-	//	wp_enqueue_script('mpat-hc', 'http://localhost:8000/rui.js', array('wp-api'), 1.0, true );
+	//	wp_enqueue_script('mpat-hc', plugin_dir_url(__FILE__) . 'public/rui.js', array('wp-api'), 1.0, true );
+		wp_enqueue_script('mpat-hc', 'http://localhost:8000/rui.js', array('wp-api'), 1.0, true );
 		
 		wp_enqueue_style( 'mpat-health-check', plugins_url( '/assets/css/health-check.css', __FILE__ ), array(), MPAT_CHECK_PLUGIN_VERSION );
 
@@ -76,7 +76,7 @@ class HealthCheck {
 
 			<?php
 			$tabs = array(
-				'mpat' => esc_html__( 'MPAT', 'mpat-health-check'),
+				'mpat' => esc_html__( 'Integrity', 'mpat-health-check'),
 				/*'mpat-health-check' => esc_html__( 'MPAT Health Check', 'mpat-health-check' ),*/
 				'debug' => esc_html__( 'Debug information', 'mpat-health-check' )
 				/*,
