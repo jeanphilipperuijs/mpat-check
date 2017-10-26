@@ -5,7 +5,57 @@ import CRUD from './crud';
 class RUI extends React.PureComponent {
     constructor(props) {
         super(props);
-
+        this.compare = {
+            "enhanced-media-library/enhanced-media-library.php": {
+                "Name": "Enhanced Media Library", "PluginURI": "http://wpUXsolutions.com", "Version": "2.4.5", "Description": "This plugin will be handy for those who need to manage a lot of media files.", "Author": "wpUXsolutions", "AuthorURI": "http://wpUXsolutions.com", "TextDomain": "enhanced-media-library", "DomainPath": "/languages", "Network": false, "Title": "Enhanced Media Library", "AuthorName": "wpUXsolutions"
+            },
+            "basic-auth/basic-auth.php": {
+                "Name": "JSON Basic Authentication", "PluginURI": "https://github.com/WP-API/Basic-Auth", "Version": "0.1", "Description": "Basic Authentication handler for the JSON API, used for development and debugging purposes", "Author": "WordPress API Team", "AuthorURI": "https://github.com/WP-API", "TextDomain": "basic-auth", "DomainPath": "", "Network": false, "Title": "JSON Basic Authentication", "AuthorName": "WordPress API Team"
+            },
+            "mbop-remover/mbop-remover.php": {
+                "Name": "MBOP remover", "PluginURI": "/mbop", "Version": "1.0.1", "Description": "Delete current user meta's 'meta-box-order_page'", "Author": "Jean-Philippe Ruijs", "AuthorURI": "https://github.com/MPAT-eu", "TextDomain": "mbop-remover", "DomainPath": "/languages", "Network": false, "Title": "MBOP remover", "AuthorName": "Jean-Philippe Ruijs"
+            },
+            "-mbop/mbop-remover.php": {
+                "Name": "MBOP remover", "PluginURI": "/mbop", "Version": "1.0.1", "Description": "Delete current user meta's 'meta-box-order_page'", "Author": "Jean-Philippe Ruijs", "AuthorURI": "https://github.com/MPAT-eu", "TextDomain": "mbop-remover", "DomainPath": "/languages", "Network": false, "Title": "MBOP remover", "AuthorName": "Jean-Philippe Ruijs"
+            },
+            "members/members.php": {
+                "Name": "Members", "PluginURI": "http://themehybrid.com/plugins/members", "Version": "1.1.1", "Description": "A user and role management plugin that puts you in full control of your site's permissions. This plugin allows you to edit your roles and their capabilities, clone existing roles, assign multiple roles per user, block post content, or even make your site completely private.", "Author": "Justin Tadlock", "AuthorURI": "http://themehybrid.com", "TextDomain": "members", "DomainPath": "/languages", "Network": false, "Title": "Members", "AuthorName": "Justin Tadlock"
+            },
+            "mpat-asset-api/AssetAPI.php": {
+                "Name": "Mpat-asset-api", "PluginURI": "http://www.finconsgroup.com/", "Version": "0.1-alpha", "Description": "This plugin manage the integration of MPAT with intial external repositories, namely the MPAT asset converter and a TVAnytime repository", "Author": "Fincons Group", "AuthorURI": "http://www.finconsgroup.com/", "TextDomain": "mpat", "DomainPath": "/languages", "Network": false, "Title": "Mpat-asset-api", "AuthorName": "Fincons Group"
+            },
+            "mpat-plugins/mpat-core.php": {
+                "Name": "MPAT core plugin", "PluginURI": "http://www.mpat.eu", "Version": "1.0.0", "Description": "Main MPAT plugins which includes the most of core modules.", "Author": "MPAT", "AuthorURI": "http://www.mpat.eu", "TextDomain": "mpat", "DomainPath": "", "Network": false, "Title": "MPAT core plugin", "AuthorName": "MPAT"
+            },
+            "-cpo/mpat-cpo.php": {
+                "Name": "MPAT Custom Posts Order", "PluginURI": "https://github.com/MPAT-eu/cpo", "Version": "1.1.1", "Description": "Settingless Custom Post Order", "Author": "Jean-Philippe Ruijs", "AuthorURI": "https://github.com/MPAT-eu/", "TextDomain": "mpat-cpo", "DomainPath": "/languages", "Network": false, "Title": "MPAT Custom Posts Order", "AuthorName": "Jean-Philippe Ruijs"
+            },
+            "-explorer/Explorer.php": {
+                "Name": "MPAT Explorer", "PluginURI": "https://github.com/MPAT-eu/mpat-explorer/", "Version": "1.0.2", "Description": "Explorer MPAT sites", "Author": "Jean-Claude Dufourd", "AuthorURI": "https://github.com/MPAT-eu/", "TextDomain": "mpat-explorer", "DomainPath": "/languages", "Network": false, "Title": "MPAT Explorer", "AuthorName": "Jean-Claude Dufourd"
+            },
+            "mpat-health-check/mpat-health-check.php": {
+                "Name": "MPAT Health Check", "PluginURI": "https://github.com/jeanphilipperuijs/mpat-health-check", "Version": "0.5.0", "Description": "Checks the health of your WordPress install.", "Author": "The WordPress.org community", "AuthorURI": "https://github.com/jeanphilipperuijs/mpat-health-check", "TextDomain": "mpat-health-check", "DomainPath": "", "Network": false, "Title": "MPAT Health Check", "AuthorName": "The WordPress.org community"
+            },
+            "-importexport/ImportExport.php": {
+                "Name": "MPAT ImportExport", "PluginURI": "https://github.com/aureliendavid/mpat-importexport/", "Version": "1.0.beta", "Description": "Import and export MPAT pages and layout", "Author": "Aurelien David", "AuthorURI": "https://github.com/aureliendavid/", "TextDomain": "mpat-importexport", "DomainPath": "/languages", "Network": false, "Title": "MPAT ImportExport", "AuthorName": "Aurelien David"
+            },
+            "-newpage-wizard/NewPage.php": {
+                "Name": "MPAT New Page Wizard", "PluginURI": "https://github.com/jeanphilipperuijs/mpat-newpage-wizard/", "Version": "2.0.3", "Description": "Wizard for creating new pages for MPAT", "Author": "Jean-Philippe Ruijs", "AuthorURI": "https://github.com/jeanphilipperuijs/", "TextDomain": "mpat-newpage-wizard", "DomainPath": "/languages", "Network": false, "Title": "MPAT New Page Wizard", "AuthorName": "Jean-Philippe Ruijs"
+            },
+            "_360/mpat_360.php": {
+                "Name": "MPAT_360", "PluginURI": "http://www.mpat.eu", "Version": "1.0.0", "Description": "video360 component", "Author": "MPAT", "AuthorURI": "http://www.mpat.eu", "TextDomain": "mpat-360", "DomainPath": "/languages", "Network": false, "Title": "MPAT_360", "AuthorName": "MPAT"
+            },
+            "rewrite-rules-inspector/rewrite-rules-inspector.php": {
+                "Name": "Rewrite Rules Inspector", "PluginURI": "http://wordpress.org/extend/plugins/rewrite-rules-inspector/", "Version": "1.2.1", "Description": "Simple WordPress Admin view for inspecting your rewrite rules", "Author": "Daniel Bachhuber, Automattic", "AuthorURI": "http://automattic.com/", "TextDomain": "rewrite-rules-inspector", "DomainPath": "", "Network": false, "Title": "Rewrite Rules Inspector", "AuthorName": "Daniel Bachhuber, Automattic"
+            },
+            "wp-crontrol/wp-crontrol.php": {
+                "Name": "WP Crontrol", "PluginURI": "https://wordpress.org/plugins/wp-crontrol/", "Version": "1.3.1", "Description": "WP Crontrol lets you view and control what's happening in the WP-Cron system.", "Author": "<a href=\"https://johnblackbourn.com/\">John Blackbourn</a> & <a href=\"http://www.scompt.com/\">Edward Dale</a>", "AuthorURI": "", "TextDomain": "wp-crontrol", "DomainPath": "/languages/", "Network": false, "Title": "WP Crontrol", "AuthorName": "<a href=\"https://johnblackbourn.com/\">John Blackbourn</a> & <a href=\"http://www.scompt.com/\">Edward Dale</a>"
+            }
+        };
+        this.mandatory = {
+            cpo: { pluginUrl: 'https://github.com/MPAT-eu/cpo', mandatory: false },
+            cpo: { pluginUrl: 'https://github.com/MPAT-eu/cpo', mandatory: false },
+        }
         //WP REST API
         this.restUrlPage = `${window.wpApiSettings.root}${window.wpApiSettings.versionString}pages`; //default REST
         this.restUrlPageLayout = `${window.wpApiSettings.root}mpat/v1/layout`; //custom REST
@@ -296,13 +346,24 @@ class RUI extends React.PureComponent {
                 <div>{
                     keyz.map((p) => {
                         let q = o[p];
-                        console.log(q);
+                        //console.log(p,q);
+
                         let l = q.Name;
-                        if (l.toLowerCase().indexOf('mpat') == 0
-                            || l.toLowerCase().indexOf('mpo') == 0
-                            || l.toLowerCase().indexOf('timeline') == 0
-                            || l.toLowerCase().indexOf('tooltips') == 0) {
-                            return this.kv(`${q.Name} v${q.Version}`, this.blokplugin(q), { color: '#25c1b2' });
+                        let msgs = []
+                        if (this.compare[p].Name == q.Name) {
+                            let updateAvailable = 'Latest version';
+                            let bgcolor = null;
+                            if (+this.compare[p].Version > +q.Version) {
+                                bgcolor = 'red';
+                                updateAvailable = `Update to ${this.compare[p].Version}`;
+                            }
+                            let pluginURI = <span style={{ color: 'red' }}>Plugin is not hosted on MPAT github</span>;
+                            if (q.PluginURI.indexOf('github.com/MPAT-eu') > -1) {
+                                pluginURI = 'Is correctly hosted';
+                            }
+                            msgs.push(updateAvailable);
+                            msgs.push(pluginURI);
+                            return this.kv(`${q.Name} v${q.Version}`, this.blokplugin(q, msgs), { color: '#25c1b2', backgroundColor: bgcolor });
                         }
                         else {
                             return this.kv(`${q.Name} v${q.Version}`, q);
@@ -310,14 +371,18 @@ class RUI extends React.PureComponent {
                     })
                 }</div>
                 <hr />
+                <textarea>{JSON.stringify(plugins)}</textarea>}
             </details>);
         } catch (err) {
             console.log(err);
         }
-    }
-    blokplugin(q) {
-        return (<span>
 
+    }
+    blokplugin(q, msgs) {
+        return (<span>
+            <sl>
+                {msgs.map((msg) => { return <li>{msg}</li> })}
+            </sl>
             <blockquote>{q.Description}</blockquote><ul>
                 {this.lv('PluginURI', <a href={q.PluginURI} target="_blank">{q.PluginURI}</a>)}
                 {this.lv('Author', q.Author)}
@@ -340,7 +405,6 @@ class RUI extends React.PureComponent {
     }
 
     render() {
-
         return (<div>
             {this.errorblock()}
 
