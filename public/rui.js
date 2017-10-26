@@ -9900,6 +9900,7 @@ var RUI = function (_React$PureComponent) {
                 "Name": "WP Crontrol", "PluginURI": "https://wordpress.org/plugins/wp-crontrol/", "Version": "1.3.1", "Description": "WP Crontrol lets you view and control what's happening in the WP-Cron system.", "Author": "<a href=\"https://johnblackbourn.com/\">John Blackbourn</a> & <a href=\"http://www.scompt.com/\">Edward Dale</a>", "AuthorURI": "", "TextDomain": "wp-crontrol", "DomainPath": "/languages/", "Network": false, "Title": "WP Crontrol", "AuthorName": "<a href=\"https://johnblackbourn.com/\">John Blackbourn</a> & <a href=\"http://www.scompt.com/\">Edward Dale</a>"
             }
         };
+        _this.mpatgithub = 'https://github.com/MPAT-eu';
         _this.noConfirm = true;
         _this.mpatColor = '#25c1b2';
         //WP REST API
@@ -10278,72 +10279,70 @@ var RUI = function (_React$PureComponent) {
         value: function getInfoPlugins(t, o) {
             var _this10 = this;
 
-            var keyz = Object.keys(o);
-            keyz.sort();
+            var pluginsPaths = Object.keys(o);
+            pluginsPaths.sort();
             return _react2.default.createElement(
                 'details',
                 null,
                 _react2.default.createElement(
                     'summary',
                     null,
-                    keyz.length,
+                    pluginsPaths.length,
                     ' ',
                     t.toLowerCase()
                 ),
                 _react2.default.createElement(
                     'div',
                     null,
-                    keyz.map(function (pluginPath) {
-                        var q = o[pluginPath];
-                        var l = q.Name;
+                    pluginsPaths.map(function (pluginPath) {
+                        var data = o[pluginPath];
                         var msgs = [];
                         var msg = null;
-                        var ok = true;
-                        var cmprNm = undefined;
+                        var compareName = undefined;
                         try {
-                            cmprNm = _this10.pluginCompare[pluginPath].Name;
+                            compareName = _this10.pluginCompare[pluginPath].Name;
                             msg = 'PluginPath ' + pluginPath;
-                            ok = true;
+                            msgs.push({ msg: msg, ok: true });
                         } catch (err) {
                             //console.error(err);
                             msg = pluginPath + ' not found';
-                            ok = false;
+                            msgs.push({ msg: msg, ok: false });
                         }
-                        msgs.push({ msg: msg, ok: ok });
 
-                        if (cmprNm != undefined && cmprNm == q.Name) {
+                        if (compareName != undefined && compareName == data.Name) {
                             var bgcolor = null;
 
                             /* version check */
-                            var updateAvailable = 'Latest version';
-                            ok = true;
-                            if (+_this10.pluginCompare[pluginPath].Version > +q.Version) {
-                                bgcolor = 'red';
-                                updateAvailable = 'Update to ' + _this10.pluginCompare[pluginPath].Version + ' ';
-                                ok = false;
+                            var ok = void 0;
+                            try {
+                                msg = 'Latest version';
+                                ok = true;
+                                if (+_this10.pluginCompare[pluginPath].Version > +data.Version) {
+                                    bgcolor = 'red';
+                                    msg = 'Update to ' + _this10.pluginCompare[pluginPath].Version + ' ';
+                                    ok = false;
+                                }
+                                msgs.push({ msg: msg, ok: ok });
+                            } catch (err) {
+                                console.log('v', err);
                             }
-                            msgs.push({ msg: updateAvailable, ok: ok });
 
                             /* host repo check */
-                            var pluginURI = _react2.default.createElement(
-                                'span',
-                                { style: { color: 'red' } },
-                                'Plugin is not hosted on MPAT github'
-                            );
-                            ok = false;
-                            if (q.PluginURI.indexOf('github.com/MPAT-eu') > -1) {
-                                pluginURI = _react2.default.createElement(
-                                    'span',
-                                    { style: { color: _this10.mpatColor } },
-                                    'Is correctly hosted'
-                                );
-                                ok = true;
+                            try {
+                                msg = 'Check hosting "' + _this10.mpatgithub + '" or verify PluginURI';
+                                ok = false;
+                                if (data.PluginURI.indexOf('github.com/MPAT-eu') > -1) {
+                                    msg = 'Is correctly hosted';
+                                    ok = true;
+                                }
+                                msgs.push({ msg: msg, ok: ok });
+                            } catch (err) {
+                                console.log('v', err);
                             }
-                            msgs.push({ msg: pluginURI, ok: ok });
 
-                            return _this10.metaDataInfo(q.Name + ' v' + q.Version + ' ', _this10.getPluginInfo(q, msgs), { color: _this10.mpatColor, backgroundColor: bgcolor });
+                            return _this10.metaDataInfo(data.Name + ' v' + data.Version + ' ', _this10.getPluginInfo(data, msgs), { color: _this10.mpatColor, backgroundColor: bgcolor });
                         } else {
-                            return _this10.metaDataInfo(q.Name + ' v' + q.Version + ' ', _this10.getPluginInfo(q, [_react2.default.createElement(
+                            return _this10.metaDataInfo(data.Name + ' v' + data.Version + ' ', _this10.getPluginInfo(data, [_react2.default.createElement(
                                 'span',
                                 { style: { color: 'red' } },
                                 'Exotic PluginPath $',
@@ -10363,6 +10362,8 @@ var RUI = function (_React$PureComponent) {
     }, {
         key: 'getPluginInfo',
         value: function getPluginInfo(q, msgs) {
+            var _this11 = this;
+
             return _react2.default.createElement(
                 'div',
                 null,
@@ -10372,49 +10373,40 @@ var RUI = function (_React$PureComponent) {
                     q.Description
                 ),
                 _react2.default.createElement(
-                    'p',
-                    { style: { position: 'relative', left: '50px', width: '90%' } },
-                    _react2.default.createElement(
-                        'ul',
-                        null,
-                        msgs.map(function (msg) {
-                            //return this.pluginMetaData(msg.msg, msg.ok);
-                            return _react2.default.createElement(
-                                'li',
-                                { style: { color: msg.ok ? 'green' : 'red' } },
-                                _react2.default.createElement(
-                                    'label',
-                                    null,
-                                    msg.msg
-                                ),
-                                _react2.default.createElement(
-                                    'span',
-                                    { style: { float: 'right', paddingRight: '50px' } },
-                                    msg.ok ? 'ok' : 'ko'
-                                )
-                            );
-                        }),
-                        this.pluginMetaData('PluginURI', _react2.default.createElement(
-                            'a',
-                            { href: q.PluginURI, target: '_blank' },
-                            q.PluginURI
-                        )),
-                        this.pluginMetaData('AuthorURI', _react2.default.createElement(
-                            'a',
-                            { href: q.AuthorURI, target: '_blank' },
-                            q.AuthorURI
-                        )),
-                        this.pluginMetaData('Author', q.Author)
-                    )
+                    'ul',
+                    { style: { width: '90%', left: '50px' } },
+                    msgs.map(function (msg) {
+                        return _this11.pluginMetaData(msg.msg, msg.ok ? 'Passed' : 'Verify', { color: msg.ok ? 'green' : 'red' });
+                        /*return (<li style={{ color: msg.ok ? 'green' : 'red' }}>
+                            <label>{msg.msg}</label>
+                            <span style={{ float: 'right', width: '90%', paddingRight: '50px' }}>{msg.ok ? 'Passed' : 'Verify'}</span>
+                        </li>);*/
+                    }),
+                    this.pluginMetaData('PluginURI', this.makelink(q.PluginURI)),
+                    this.pluginMetaData('AuthorURI', this.makelink(q.AuthorURI)),
+                    this.pluginMetaData('Author', q.Author)
                 )
+            );
+        }
+    }, {
+        key: 'makelink',
+        value: function makelink(src) {
+            var target = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '_blank';
+
+            return _react2.default.createElement(
+                'a',
+                { href: src, target: target },
+                src
             );
         }
     }, {
         key: 'pluginMetaData',
         value: function pluginMetaData(k, v) {
+            var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
             return _react2.default.createElement(
                 'li',
-                null,
+                { style: style },
                 _react2.default.createElement(
                     'label',
                     null,
@@ -10430,7 +10422,7 @@ var RUI = function (_React$PureComponent) {
     }, {
         key: 'metaDataInfo',
         value: function metaDataInfo(key, value) {
-            var _this11 = this;
+            var _this12 = this;
 
             var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
             var crudCallback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
@@ -10470,10 +10462,10 @@ var RUI = function (_React$PureComponent) {
                     _react2.default.createElement(
                         'button',
                         { className: 'button', title: 'Delete option ' + key + ' ', onClick: function onClick() {
-                                if (_this11.noConfirm || confirm('Are you sure you want to option "' + key + '" ? ')) {
+                                if (_this12.noConfirm || confirm('Are you sure you want to option "' + key + '" ? ')) {
                                     crudCallback.remove(key, function () {
-                                        _this11.loadOptions();
-                                    }, _this11.loadOptions);
+                                        _this12.loadOptions();
+                                    }, _this12.loadOptions);
                                 }
                             } },
                         'X'

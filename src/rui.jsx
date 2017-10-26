@@ -49,6 +49,7 @@ class RUI extends React.PureComponent {
                 "Name": "WP Crontrol", "PluginURI": "https://wordpress.org/plugins/wp-crontrol/", "Version": "1.3.1", "Description": "WP Crontrol lets you view and control what's happening in the WP-Cron system.", "Author": "<a href=\"https://johnblackbourn.com/\">John Blackbourn</a> & <a href=\"http://www.scompt.com/\">Edward Dale</a>", "AuthorURI": "", "TextDomain": "wp-crontrol", "DomainPath": "/languages/", "Network": false, "Title": "WP Crontrol", "AuthorName": "<a href=\"https://johnblackbourn.com/\">John Blackbourn</a> & <a href=\"http://www.scompt.com/\">Edward Dale</a>"
             }
         };
+        this.mpatgithub = 'https://github.com/MPAT-eu';
         this.noConfirm = true;
         this.mpatColor = '#25c1b2';
         //WP REST API
@@ -323,56 +324,62 @@ class RUI extends React.PureComponent {
     }
 
     getInfoPlugins(t, o) {
-        let keyz = Object.keys(o);
-        keyz.sort();
+        let pluginsPaths = Object.keys(o);
+        pluginsPaths.sort();
         return (<details>
-            <summary>{keyz.length} {t.toLowerCase()}</summary>
+            <summary>{pluginsPaths.length} {t.toLowerCase()}</summary>
             <div>{
-                keyz.map((pluginPath) => {
-                    let q = o[pluginPath];
-                    let l = q.Name;
+                pluginsPaths.map((pluginPath) => {
+                    let data = o[pluginPath];
                     let msgs = [];
                     let msg = null;
-                    let ok = true;
-                    let cmprNm = undefined;
+                    let compareName = undefined;
                     try {
-                        cmprNm = this.pluginCompare[pluginPath].Name;
+                        compareName = this.pluginCompare[pluginPath].Name;
                         msg = `PluginPath ${pluginPath}`;
-                        ok = true;
+                        msgs.push({ msg: msg, ok: true });
                     }
                     catch (err) {
                         //console.error(err);
                         msg = `${pluginPath} not found`;
-                        ok = false;
+                        msgs.push({ msg: msg, ok: false });
                     }
-                    msgs.push({ msg: msg, ok: ok });
 
-                    if (cmprNm != undefined && cmprNm == q.Name) {
+                    if (compareName != undefined && compareName == data.Name) {
                         let bgcolor = null;
 
                         /* version check */
-                        let updateAvailable = 'Latest version';
-                        ok = true;
-                        if (+this.pluginCompare[pluginPath].Version > +q.Version) {
-                            bgcolor = 'red';
-                            updateAvailable = `Update to ${this.pluginCompare[pluginPath].Version} `;
-                            ok = false;
+                        let ok;
+                        try {
+                            msg = 'Latest version';
+                            ok = true;
+                            if (+this.pluginCompare[pluginPath].Version > +data.Version) {
+                                bgcolor = 'red';
+                                msg = `Update to ${this.pluginCompare[pluginPath].Version} `;
+                                ok = false;
+                            }
+                            msgs.push({ msg: msg, ok: ok });
+                        } catch (err) {
+                            console.log('v', err);
                         }
-                        msgs.push({ msg: updateAvailable, ok: ok });
 
                         /* host repo check */
-                        let pluginURI = <span style={{ color: 'red' }}>Plugin is not hosted on MPAT github</span>;
-                        ok = false;
-                        if (q.PluginURI.indexOf('github.com/MPAT-eu') > -1) {
-                            pluginURI = <span style={{ color: this.mpatColor }}>Is correctly hosted</span>;
-                            ok = true;
+                        try {
+                            msg = `Check hosting "${this.mpatgithub}" or verify PluginURI`;
+                            ok = false;
+                            if (data.PluginURI.indexOf('github.com/MPAT-eu') > -1) {
+                                msg = 'Is correctly hosted';
+                                ok = true;
+                            }
+                            msgs.push({ msg: msg, ok: ok });
+                        } catch (err) {
+                            console.log('v', err);
                         }
-                        msgs.push({ msg: pluginURI, ok: ok });
 
-                        return this.metaDataInfo(`${q.Name} v${q.Version} `, this.getPluginInfo(q, msgs), { color: this.mpatColor, backgroundColor: bgcolor });
+                        return this.metaDataInfo(`${data.Name} v${data.Version} `, this.getPluginInfo(data, msgs), { color: this.mpatColor, backgroundColor: bgcolor });
                     }
                     else {
-                        return this.metaDataInfo(`${q.Name} v${q.Version} `, this.getPluginInfo(q, [(<span style={{ color: 'red' }}>Exotic PluginPath ${pluginPath}</span>)]));
+                        return this.metaDataInfo(`${data.Name} v${data.Version} `, this.getPluginInfo(data, [(<span style={{ color: 'red' }}>Exotic PluginPath ${pluginPath}</span>)]));
                     }
                 })
             }</div>
@@ -387,22 +394,25 @@ class RUI extends React.PureComponent {
         return (
             <div>
                 <blockquote>{q.Description}</blockquote>
-                <p style={{ position: 'relative', left: '50px', width: '90%' }}>
-                    <ul>
-                        {msgs.map((msg) => {
-                            //return this.pluginMetaData(msg.msg, msg.ok);
-                            return (<li style={{ color: msg.ok ? 'green' : 'red' }}><label>{msg.msg}</label><span style={{ float: 'right', paddingRight: '50px' }}>{msg.ok ? 'ok' : 'ko'}</span></li>);
-                        })}
-                        {this.pluginMetaData('PluginURI', <a href={q.PluginURI} target="_blank">{q.PluginURI}</a>)}
-                        {this.pluginMetaData('AuthorURI', <a href={q.AuthorURI} target="_blank">{q.AuthorURI}</a>)}
-                        {this.pluginMetaData('Author', q.Author)}
-                    </ul>
-                </p>
+                <ul style={{ width: '90%', left: '50px' }}>
+                    {msgs.map((msg) => {
+                        return this.pluginMetaData(msg.msg, msg.ok ? 'Passed' : 'Verify', { color: msg.ok ? 'green' : 'red' });
+                        /*return (<li style={{ color: msg.ok ? 'green' : 'red' }}>
+                            <label>{msg.msg}</label>
+                            <span style={{ float: 'right', width: '90%', paddingRight: '50px' }}>{msg.ok ? 'Passed' : 'Verify'}</span>
+                        </li>);*/
+                    })}
+                    {this.pluginMetaData('PluginURI', this.makelink(q.PluginURI))}
+                    {this.pluginMetaData('AuthorURI', this.makelink(q.AuthorURI))}
+                    {this.pluginMetaData('Author', q.Author)}
+                </ul>
             </div>);
     }
-
-    pluginMetaData(k, v) {
-        return (<li><label>{k}</label><span style={{ float: 'right', paddingRight: '50px' }}>{v}</span></li>);
+    makelink(src, target = '_blank') {
+        return (<a href={src} target={target}>{src}</a>);
+    }
+    pluginMetaData(k, v, style = {}) {
+        return (<li style={style}><label>{k}</label><span style={{ float: 'right', paddingRight: '50px' }}>{v}</span></li>);
     }
 
     metaDataInfo(key, value, style = {}, crudCallback = undefined) {
