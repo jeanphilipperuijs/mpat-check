@@ -350,7 +350,9 @@ class RUI extends React.PureComponent {
 
                         let l = q.Name;
                         let msgs = []
-                        if (this.compare[p].Name == q.Name) {
+                        let cmprNm = this.compare[p].Name;
+
+                        if (cmprNm != undefined && cmprNm == q.Name) {
                             let updateAvailable = 'Latest version';
                             let bgcolor = null;
                             if (+this.compare[p].Version > +q.Version) {

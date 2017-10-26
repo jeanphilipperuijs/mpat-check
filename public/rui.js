@@ -10313,7 +10313,9 @@ var RUI = function (_React$PureComponent) {
 
                             var l = q.Name;
                             var msgs = [];
-                            if (_this10.compare[p].Name == q.Name) {
+                            var cmprNm = _this10.compare[p].Name;
+
+                            if (cmprNm != undefined && cmprNm == q.Name) {
                                 var updateAvailable = 'Latest version';
                                 var bgcolor = null;
                                 if (+_this10.compare[p].Version > +q.Version) {
