@@ -9856,7 +9856,7 @@ var RUI = function (_React$PureComponent) {
 
         var _this = _possibleConstructorReturn(this, (RUI.__proto__ || Object.getPrototypeOf(RUI)).call(this, props));
 
-        _this.compare = {
+        _this.pluginCompare = {
             "enhanced-media-library/enhanced-media-library.php": {
                 "Name": "Enhanced Media Library", "PluginURI": "http://wpUXsolutions.com", "Version": "2.4.5", "Description": "This plugin will be handy for those who need to manage a lot of media files.", "Author": "wpUXsolutions", "AuthorURI": "http://wpUXsolutions.com", "TextDomain": "enhanced-media-library", "DomainPath": "/languages", "Network": false, "Title": "Enhanced Media Library", "AuthorName": "wpUXsolutions"
             },
@@ -9939,7 +9939,7 @@ var RUI = function (_React$PureComponent) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            console.log('constructor', JSON.stringify(Object.keys(this.compare), null, 3), JSON.stringify(Object.keys(plugins), null, 3));
+            console.log('constructor', JSON.stringify(Object.keys(this.pluginCompare), null, 3), JSON.stringify(Object.keys(plugins), null, 3));
             // when the render() is done, load the content
             this.loadPageModels();
             this.loadPageLayouts();
@@ -9955,9 +9955,10 @@ var RUI = function (_React$PureComponent) {
             var _this2 = this;
 
             this.pageIO.get(function (result) {
+                console.log('loadPages', result);
                 _this2.setState({ availablePages: result });
             }, function (e) {
-                console.log('loadPages', e);
+                console.error('loadPages', e);
                 if (e.toString().indexOf('404') > -1) {
                     _this2.isRestOk = false;
                     _this2.setState({
@@ -9979,10 +9980,10 @@ var RUI = function (_React$PureComponent) {
             var _this3 = this;
 
             this.optionIO.get(function (result) {
-                console.log('loadOptions rseult', result);
+                console.log('loadOptions', result);
                 _this3.setState({ availableOptions: result });
             }, function (e) {
-                console.log('loadOptions', e);
+                console.error('loadOptions', e);
                 try {
                     if (e.toString().indexOf('404') > -1) {
                         _this3.isRestOk = false;
@@ -10008,6 +10009,7 @@ var RUI = function (_React$PureComponent) {
             var _this4 = this;
 
             this.modelIO.get(function (result) {
+                console.log('loadPageModels', result);
                 var urls = [];
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
@@ -10041,7 +10043,7 @@ var RUI = function (_React$PureComponent) {
 
                 _this4.setState({ availableModels: urls });
             }, function (e) {
-                console.log('loadPageModels', e);
+                console.error('loadPageModels', e);
                 if (e.toString().indexOf('404') > -1) {
                     _this4.isRestOk = false;
                     _this4.setState({
@@ -10063,6 +10065,7 @@ var RUI = function (_React$PureComponent) {
             var _this5 = this;
 
             this.layoutIO.get(function (result) {
+                console.log('loadPageLayouts', result);
                 var urls = [];
                 var _iteratorNormalCompletion2 = true;
                 var _didIteratorError2 = false;
@@ -10096,7 +10099,7 @@ var RUI = function (_React$PureComponent) {
 
                 _this5.setState({ availableLayouts: urls });
             }, function (e) {
-                console.log('loadPageLayouts', e);
+                console.error('loadPageLayouts', e);
                 if (e.toString().indexOf('404') > -1) {
                     _this5.isRestOk = false;
                     _this5.setState({
@@ -10117,7 +10120,7 @@ var RUI = function (_React$PureComponent) {
             console.log('createNewLayout');
             this.layoutIO.post({
                 post_type: 'page_layout',
-                post_status: 'publish',
+                post_status: 'draft',
                 post_title: this.state.newPageLayoutTitle,
                 mpat_content: {
                     layout: this.state.layout
@@ -10212,174 +10215,197 @@ var RUI = function (_React$PureComponent) {
             }return null;
         }
     }, {
-        key: 'getBlock',
-        value: function getBlock(t, o) {
-            try {
-                return _react2.default.createElement(
-                    'details',
+        key: 'getInfoPost',
+        value: function getInfoPost(t, o) {
+            return _react2.default.createElement(
+                'details',
+                null,
+                _react2.default.createElement(
+                    'summary',
                     null,
-                    _react2.default.createElement(
-                        'summary',
-                        null,
-                        o.length || 'No',
-                        ' ',
-                        t.toLowerCase(),
-                        ' '
-                    ),
-                    _react2.default.createElement(
-                        'ul',
-                        null,
-                        o.map(function (l) {
-                            return _react2.default.createElement(
-                                'li',
-                                null,
-                                l.id,
-                                ' ',
-                                l.label || l.title.rendered
-                            );
-                        }),
-                        ' '
-                    ),
-                    _react2.default.createElement('hr', null)
-                );
-            } catch (err) {}
+                    o.length || 'No',
+                    ' ',
+                    t.toLowerCase(),
+                    ' '
+                ),
+                _react2.default.createElement(
+                    'ul',
+                    null,
+                    o.map(function (l) {
+                        return _react2.default.createElement(
+                            'li',
+                            null,
+                            l.id,
+                            ' ',
+                            l.label || l.title.rendered
+                        );
+                    }),
+                    ' '
+                ),
+                _react2.default.createElement('hr', null)
+            );
             return null;
         }
     }, {
-        key: 'getOptionInfo',
-        value: function getOptionInfo(t, o) {
+        key: 'getInfoOptions',
+        value: function getInfoOptions(t, o) {
             var _this9 = this;
 
-            try {
-                var keyz = Object.keys(o);
-                keyz.sort();
-                return _react2.default.createElement(
-                    'details',
+            var keyz = Object.keys(o);
+            keyz.sort();
+            return _react2.default.createElement(
+                'details',
+                null,
+                _react2.default.createElement(
+                    'summary',
                     null,
-                    _react2.default.createElement(
-                        'summary',
-                        null,
-                        keyz.length,
-                        ' ',
-                        t.toLowerCase()
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        keyz.map(function (l) {
-                            return _this9.metaDataInfo(l, o[l], { color: 'gray' }, _this9.optionIO);
-                        })
-                    ),
-                    _react2.default.createElement('hr', null)
-                );
-            } catch (err) {
-                console.log(err);
-            }
+                    keyz.length,
+                    ' ',
+                    t.toLowerCase()
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    keyz.map(function (l) {
+                        return _this9.metaDataInfo(l, o[l], { color: 'gray' }, _this9.optionIO);
+                    })
+                ),
+                _react2.default.createElement('hr', null)
+            );
         }
     }, {
-        key: 'getPlugins',
-        value: function getPlugins(t, o) {
+        key: 'getInfoPlugins',
+        value: function getInfoPlugins(t, o) {
             var _this10 = this;
 
-            try {
-                var keyz = Object.keys(o);
-                keyz.sort();
-                return _react2.default.createElement(
-                    'details',
+            var keyz = Object.keys(o);
+            keyz.sort();
+            return _react2.default.createElement(
+                'details',
+                null,
+                _react2.default.createElement(
+                    'summary',
                     null,
-                    _react2.default.createElement(
-                        'summary',
-                        null,
-                        keyz.length,
-                        ' ',
-                        t.toLowerCase()
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        keyz.map(function (p) {
-                            var q = o[p];
-                            //console.log(p,q);
+                    keyz.length,
+                    ' ',
+                    t.toLowerCase()
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    keyz.map(function (pluginPath) {
+                        var q = o[pluginPath];
+                        var l = q.Name;
+                        var msgs = [];
+                        var msg = null;
+                        var ok = true;
+                        var cmprNm = undefined;
+                        try {
+                            cmprNm = _this10.pluginCompare[pluginPath].Name;
+                            msg = 'PluginPath ' + pluginPath;
+                            ok = true;
+                        } catch (err) {
+                            //console.error(err);
+                            msg = pluginPath + ' not found';
+                            ok = false;
+                        }
+                        msgs.push({ msg: msg, ok: ok });
 
-                            var l = q.Name;
-                            var msgs = [];
-                            var cmprNm = undefined;
-                            try {
-                                cmprNm = _this10.compare[p].Name;
-                            } catch (err) {
-                                //console.log(err);
+                        if (cmprNm != undefined && cmprNm == q.Name) {
+                            var bgcolor = null;
+
+                            /* version check */
+                            var updateAvailable = 'Latest version';
+                            ok = true;
+                            if (+_this10.pluginCompare[pluginPath].Version > +q.Version) {
+                                bgcolor = 'red';
+                                updateAvailable = 'Update to ' + _this10.pluginCompare[pluginPath].Version + ' ';
+                                ok = false;
                             }
+                            msgs.push({ msg: updateAvailable, ok: ok });
 
-                            if (cmprNm != undefined && cmprNm == q.Name) {
-                                var updateAvailable = 'Latest version';
-                                var bgcolor = null;
-                                if (+_this10.compare[p].Version > +q.Version) {
-                                    bgcolor = 'red';
-                                    updateAvailable = 'Update to ' + _this10.compare[p].Version;
-                                }
-                                var pluginURI = _react2.default.createElement(
+                            /* host repo check */
+                            var pluginURI = _react2.default.createElement(
+                                'span',
+                                { style: { color: 'red' } },
+                                'Plugin is not hosted on MPAT github'
+                            );
+                            ok = false;
+                            if (q.PluginURI.indexOf('github.com/MPAT-eu') > -1) {
+                                pluginURI = _react2.default.createElement(
                                     'span',
-                                    { style: { color: 'red' } },
-                                    'Plugin is not hosted on MPAT github'
+                                    { style: { color: _this10.mpatColor } },
+                                    'Is correctly hosted'
                                 );
-                                if (q.PluginURI.indexOf('github.com/MPAT-eu') > -1) {
-                                    pluginURI = 'Is correctly hosted';
-                                }
-                                msgs.push(updateAvailable);
-                                msgs.push(pluginURI);
-                                return _this10.metaDataInfo(q.Name + ' v' + q.Version, _this10.getPluginInfo(q, msgs), { color: _this10.mpatColor, backgroundColor: bgcolor });
-                            } else {
-                                return _this10.metaDataInfo(q.Name + ' v' + q.Version, q);
+                                ok = true;
                             }
-                        })
-                    ),
-                    _react2.default.createElement('hr', null),
-                    _react2.default.createElement(
-                        'textarea',
-                        null,
-                        JSON.stringify(plugins)
-                    )
-                );
-            } catch (err) {
-                console.log(err);
-            }
+                            msgs.push({ msg: pluginURI, ok: ok });
+
+                            return _this10.metaDataInfo(q.Name + ' v' + q.Version + ' ', _this10.getPluginInfo(q, msgs), { color: _this10.mpatColor, backgroundColor: bgcolor });
+                        } else {
+                            return _this10.metaDataInfo(q.Name + ' v' + q.Version + ' ', _this10.getPluginInfo(q, [_react2.default.createElement(
+                                'span',
+                                { style: { color: 'red' } },
+                                'Exotic PluginPath $',
+                                pluginPath
+                            )]));
+                        }
+                    })
+                ),
+                _react2.default.createElement('hr', null),
+                _react2.default.createElement(
+                    'textarea',
+                    null,
+                    JSON.stringify(plugins)
+                )
+            );
         }
     }, {
         key: 'getPluginInfo',
         value: function getPluginInfo(q, msgs) {
             return _react2.default.createElement(
-                'span',
+                'div',
                 null,
-                _react2.default.createElement(
-                    'sl',
-                    null,
-                    msgs.map(function (msg) {
-                        return _react2.default.createElement(
-                            'li',
-                            null,
-                            msg
-                        );
-                    })
-                ),
                 _react2.default.createElement(
                     'blockquote',
                     null,
                     q.Description
                 ),
                 _react2.default.createElement(
-                    'ul',
-                    null,
-                    this.pluginMetaData('PluginURI', _react2.default.createElement(
-                        'a',
-                        { href: q.PluginURI, target: '_blank' },
-                        q.PluginURI
-                    )),
-                    this.pluginMetaData('Author', q.Author),
-                    this.pluginMetaData('AuthorURI', _react2.default.createElement(
-                        'a',
-                        { href: q.AuthorURI, target: '_blank' },
-                        q.AuthorURI
-                    ))
+                    'p',
+                    { style: { position: 'relative', left: '50px', width: '90%' } },
+                    _react2.default.createElement(
+                        'ul',
+                        null,
+                        msgs.map(function (msg) {
+                            //return this.pluginMetaData(msg.msg, msg.ok);
+                            return _react2.default.createElement(
+                                'li',
+                                { style: { color: msg.ok ? 'green' : 'red' } },
+                                _react2.default.createElement(
+                                    'label',
+                                    null,
+                                    msg.msg
+                                ),
+                                _react2.default.createElement(
+                                    'span',
+                                    { style: { float: 'right', paddingRight: '50px' } },
+                                    msg.ok ? 'ok' : 'ko'
+                                )
+                            );
+                        }),
+                        this.pluginMetaData('PluginURI', _react2.default.createElement(
+                            'a',
+                            { href: q.PluginURI, target: '_blank' },
+                            q.PluginURI
+                        )),
+                        this.pluginMetaData('AuthorURI', _react2.default.createElement(
+                            'a',
+                            { href: q.AuthorURI, target: '_blank' },
+                            q.AuthorURI
+                        )),
+                        this.pluginMetaData('Author', q.Author)
+                    )
                 )
             );
         }
@@ -10409,33 +10435,31 @@ var RUI = function (_React$PureComponent) {
             var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
             var crudCallback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
 
+            var styleSheet = Object.assign({}, style);
 
             if (key.toLowerCase().indexOf('mpat') == 0 || key.toLowerCase().indexOf('mpo') == 0 || key.toLowerCase().indexOf('timeline') == 0 || key.toLowerCase().indexOf('tooltips') == 0) {
-                style = Object.assign(style, { color: this.mpatColor });
+                styleSheet = Object.assign(styleSheet, { color: this.mpatColor });
             }
 
             var cnt = value;
             var summary = _react2.default.createElement(
                 'span',
-                { style: style },
+                { style: styleSheet },
                 key
             );
             if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
                 try {
                     var jsn = JSON.stringify(value, null, 3);
                     if (jsn.toLocaleLowerCase().indexOf('mpat') > -1) {
-                        style = Object.assign(style, { color: this.mpatColor });
+                        styleSheet = Object.assign(Object.assign({}, style), { color: this.mpatColor });
                     }
-                    /*       var regex = new RegExp('(mpat)', 'ig');
-                            console.log(regex);
-                            jsn = jsn.replace(regex, '<span style="color: #25c1b2;">$1</span>');*/
                     cnt = _react2.default.createElement(
                         'pre',
-                        { style: style },
+                        { style: styleSheet },
                         jsn
                     );
                 } catch (err) {
-                    console.log(err);
+                    //    console.log(err);
                 }
             }
 
@@ -10445,8 +10469,8 @@ var RUI = function (_React$PureComponent) {
                     null,
                     _react2.default.createElement(
                         'button',
-                        { className: 'button', title: 'Delete option ' + key, onClick: function onClick() {
-                                if (_this11.noConfirm || confirm('Are you sure you want to option "' + key + '"?')) {
+                        { className: 'button', title: 'Delete option ' + key + ' ', onClick: function onClick() {
+                                if (_this11.noConfirm || confirm('Are you sure you want to option "' + key + '" ? ')) {
                                     crudCallback.remove(key, function () {
                                         _this11.loadOptions();
                                     }, _this11.loadOptions);
@@ -10482,11 +10506,11 @@ var RUI = function (_React$PureComponent) {
                 'div',
                 null,
                 this.errorblock(),
-                this.getBlock('Pages', this.state.availablePages),
-                this.getBlock('Layouts', this.state.availableLayouts),
-                this.getBlock('Models', this.state.availableModels),
-                this.getOptionInfo('Options', this.state.availableOptions),
-                this.getPlugins('Plugins', plugins)
+                this.getInfoPost('Pages', this.state.availablePages),
+                this.getInfoPost('Layouts', this.state.availableLayouts),
+                this.getInfoPost('Models', this.state.availableModels),
+                this.getInfoOptions('Options', this.state.availableOptions),
+                this.getInfoPlugins('Plugins', plugins)
             );
         }
     }]);

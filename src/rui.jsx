@@ -5,7 +5,7 @@ import CRUD from './crud';
 class RUI extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.compare = {
+        this.pluginCompare = {
             "enhanced-media-library/enhanced-media-library.php": {
                 "Name": "Enhanced Media Library", "PluginURI": "http://wpUXsolutions.com", "Version": "2.4.5", "Description": "This plugin will be handy for those who need to manage a lot of media files.", "Author": "wpUXsolutions", "AuthorURI": "http://wpUXsolutions.com", "TextDomain": "enhanced-media-library", "DomainPath": "/languages", "Network": false, "Title": "Enhanced Media Library", "AuthorName": "wpUXsolutions"
             },
@@ -85,7 +85,7 @@ class RUI extends React.PureComponent {
 
     componentDidMount() {
         console.log('constructor',
-            JSON.stringify(Object.keys(this.compare), null, 3),
+            JSON.stringify(Object.keys(this.pluginCompare), null, 3),
             JSON.stringify(Object.keys(plugins), null, 3),
         );
         // when the render() is done, load the content
@@ -100,10 +100,11 @@ class RUI extends React.PureComponent {
     loadPages() {
         this.pageIO.get(
             (result) => {
+                console.log('loadPages', result);
                 this.setState({ availablePages: result });
             },
             (e) => {
-                console.log('loadPages', e);
+                console.error('loadPages', e);
                 if (e.toString().indexOf('404') > -1) {
                     this.isRestOk = false;
                     this.setState({
@@ -122,11 +123,11 @@ class RUI extends React.PureComponent {
     loadOptions() {
         this.optionIO.get(
             (result) => {
-                console.log('loadOptions rseult', result);
+                console.log('loadOptions', result);
                 this.setState({ availableOptions: result });
             },
             (e) => {
-                console.log('loadOptions', e);
+                console.error('loadOptions', e);
                 try {
                     if (e.toString().indexOf('404') > -1) {
                         this.isRestOk = false;
@@ -146,6 +147,7 @@ class RUI extends React.PureComponent {
     loadPageModels() {
         this.modelIO.get(
             (result) => {
+                console.log('loadPageModels', result);
                 const urls = [];
                 for (const item of result) {
                     const obj = {};
@@ -158,7 +160,7 @@ class RUI extends React.PureComponent {
                 this.setState({ availableModels: urls });
             },
             (e) => {
-                console.log('loadPageModels', e);
+                console.error('loadPageModels', e);
                 if (e.toString().indexOf('404') > -1) {
                     this.isRestOk = false;
                     this.setState({
@@ -177,6 +179,7 @@ class RUI extends React.PureComponent {
     loadPageLayouts() {
         this.layoutIO.get(
             (result) => {
+                console.log('loadPageLayouts', result);
                 const urls = [];
                 for (const item of result) {
                     const obj = {};
@@ -189,7 +192,7 @@ class RUI extends React.PureComponent {
                 this.setState({ availableLayouts: urls });
             },
             (e) => {
-                console.log('loadPageLayouts', e);
+                console.error('loadPageLayouts', e);
                 if (e.toString().indexOf('404') > -1) {
                     this.isRestOk = false;
                     this.setState({
@@ -208,7 +211,7 @@ class RUI extends React.PureComponent {
         this.layoutIO.post(
             {
                 post_type: 'page_layout',
-                post_status: 'publish',
+                post_status: 'draft',
                 post_title: this.state.newPageLayoutTitle,
                 mpat_content: {
                     layout: this.state.layout
@@ -295,97 +298,107 @@ class RUI extends React.PureComponent {
         } return null;
     }
 
-    getBlock(t, o) {
-        try {
-            return (<details>
-                <summary>{o.length || 'No'} {t.toLowerCase()} </summary>
-                <ul>{o.map((l) => { return (<li>{l.id} {l.label || l.title.rendered}</li>) })} </ul>
-                <hr />
+    getInfoPost(t, o) {
+        return (<details>
+            <summary>{o.length || 'No'} {t.toLowerCase()} </summary>
+            <ul>{o.map((l) => { return (<li>{l.id} {l.label || l.title.rendered}</li>) })} </ul>
+            <hr />
 
-            </details>);
-        } catch (err) {
-
-        }
+        </details>);
         return null;
     }
 
-    getOptionInfo(t, o) {
-        try {
-            let keyz = Object.keys(o);
-            keyz.sort();
-            return (<details>
-                <summary>{keyz.length} {t.toLowerCase()}</summary>
-                <div>{
-                    keyz.map((l) => {
-                        return this.metaDataInfo(l, o[l], { color: 'gray' }, this.optionIO);
-                    })
-                }</div>
-                <hr />
-            </details>);
-        } catch (err) {
-            console.log(err);
-        }
+    getInfoOptions(t, o) {
+        let keyz = Object.keys(o);
+        keyz.sort();
+        return (<details>
+            <summary>{keyz.length} {t.toLowerCase()}</summary>
+            <div>{
+                keyz.map((l) => {
+                    return this.metaDataInfo(l, o[l], { color: 'gray' }, this.optionIO);
+                })
+            }</div>
+            <hr />
+        </details>);
     }
 
-    getPlugins(t, o) {
-        try {
-            let keyz = Object.keys(o);
-            keyz.sort();
-            return (<details>
-                <summary>{keyz.length} {t.toLowerCase()}</summary>
-                <div>{
-                    keyz.map((p) => {
-                        let q = o[p];
-                        //console.log(p,q);
+    getInfoPlugins(t, o) {
+        let keyz = Object.keys(o);
+        keyz.sort();
+        return (<details>
+            <summary>{keyz.length} {t.toLowerCase()}</summary>
+            <div>{
+                keyz.map((pluginPath) => {
+                    let q = o[pluginPath];
+                    let l = q.Name;
+                    let msgs = [];
+                    let msg = null;
+                    let ok = true;
+                    let cmprNm = undefined;
+                    try {
+                        cmprNm = this.pluginCompare[pluginPath].Name;
+                        msg = `PluginPath ${pluginPath}`;
+                        ok = true;
+                    }
+                    catch (err) {
+                        //console.error(err);
+                        msg = `${pluginPath} not found`;
+                        ok = false;
+                    }
+                    msgs.push({ msg: msg, ok: ok });
 
-                        let l = q.Name;
-                        let msgs = []
-                        let cmprNm = undefined;
-                        try { cmprNm = this.compare[p].Name; }
-                        catch (err) {
-                            //console.log(err);
-                        }
+                    if (cmprNm != undefined && cmprNm == q.Name) {
+                        let bgcolor = null;
 
-                        if (cmprNm != undefined && cmprNm == q.Name) {
-                            let updateAvailable = 'Latest version';
-                            let bgcolor = null;
-                            if (+this.compare[p].Version > +q.Version) {
-                                bgcolor = 'red';
-                                updateAvailable = `Update to ${this.compare[p].Version}`;
-                            }
-                            let pluginURI = <span style={{ color: 'red' }}>Plugin is not hosted on MPAT github</span>;
-                            if (q.PluginURI.indexOf('github.com/MPAT-eu') > -1) {
-                                pluginURI = 'Is correctly hosted';
-                            }
-                            msgs.push(updateAvailable);
-                            msgs.push(pluginURI);
-                            return this.metaDataInfo(`${q.Name} v${q.Version}`, this.getPluginInfo(q, msgs), { color: this.mpatColor, backgroundColor: bgcolor });
+                        /* version check */
+                        let updateAvailable = 'Latest version';
+                        ok = true;
+                        if (+this.pluginCompare[pluginPath].Version > +q.Version) {
+                            bgcolor = 'red';
+                            updateAvailable = `Update to ${this.pluginCompare[pluginPath].Version} `;
+                            ok = false;
                         }
-                        else {
-                            return this.metaDataInfo(`${q.Name} v${q.Version}`, q);
+                        msgs.push({ msg: updateAvailable, ok: ok });
+
+                        /* host repo check */
+                        let pluginURI = <span style={{ color: 'red' }}>Plugin is not hosted on MPAT github</span>;
+                        ok = false;
+                        if (q.PluginURI.indexOf('github.com/MPAT-eu') > -1) {
+                            pluginURI = <span style={{ color: this.mpatColor }}>Is correctly hosted</span>;
+                            ok = true;
                         }
-                    })
-                }</div>
-                <hr />
-                <textarea>{JSON.stringify(plugins)}</textarea>
-            </details>);
-        } catch (err) {
-            console.log(err);
-        }
+                        msgs.push({ msg: pluginURI, ok: ok });
+
+                        return this.metaDataInfo(`${q.Name} v${q.Version} `, this.getPluginInfo(q, msgs), { color: this.mpatColor, backgroundColor: bgcolor });
+                    }
+                    else {
+                        return this.metaDataInfo(`${q.Name} v${q.Version} `, this.getPluginInfo(q, [(<span style={{ color: 'red' }}>Exotic PluginPath ${pluginPath}</span>)]));
+                    }
+                })
+            }</div>
+            <hr />
+            <textarea>{JSON.stringify(plugins)}</textarea>
+        </details>);
+
 
     }
 
     getPluginInfo(q, msgs) {
-        return (<span>
-            <sl>
-                {msgs.map((msg) => { return <li>{msg}</li> })}
-            </sl>
-            <blockquote>{q.Description}</blockquote><ul>
-                {this.pluginMetaData('PluginURI', <a href={q.PluginURI} target="_blank">{q.PluginURI}</a>)}
-                {this.pluginMetaData('Author', q.Author)}
-                {this.pluginMetaData('AuthorURI', <a href={q.AuthorURI} target="_blank">{q.AuthorURI}</a>)}
-            </ul>
-        </span>);
+        return (
+            <div>
+                <blockquote>{q.Description}</blockquote>
+                <p style={{ position: 'relative', left: '50px', width: '90%' }}>
+                    <ul>
+                        {msgs.map((msg) => {
+                            //return this.pluginMetaData(msg.msg, msg.ok);
+                            return (<li style={{ color: msg.ok ? 'green' : 'red' }}><label>{msg.msg}</label><span style={{ float: 'right', paddingRight: '50px' }}>{msg.ok ? 'ok' : 'ko'}</span></li>);
+                        })}
+                        {this.pluginMetaData('PluginURI', <a href={q.PluginURI} target="_blank">{q.PluginURI}</a>)}
+                        {this.pluginMetaData('AuthorURI', <a href={q.AuthorURI} target="_blank">{q.AuthorURI}</a>)}
+                        {this.pluginMetaData('Author', q.Author)}
+                    </ul>
+                </p>
+            </div>);
     }
 
     pluginMetaData(k, v) {
@@ -393,32 +406,32 @@ class RUI extends React.PureComponent {
     }
 
     metaDataInfo(key, value, style = {}, crudCallback = undefined) {
+        let styleSheet = Object.assign({}, style);
 
         if (key.toLowerCase().indexOf('mpat') == 0
             || key.toLowerCase().indexOf('mpo') == 0
             || key.toLowerCase().indexOf('timeline') == 0
             || key.toLowerCase().indexOf('tooltips') == 0) {
-            style = Object.assign(style, { color: this.mpatColor });
+            styleSheet = Object.assign(styleSheet, { color: this.mpatColor });
         }
 
         let cnt = value;
-        let summary = <span style={style}>{key}</span>;
+        let summary = <span style={styleSheet}>{key}</span>;
         if (typeof value === 'object') {
             try {
                 let jsn = JSON.stringify(value, null, 3);
                 if (jsn.toLocaleLowerCase().indexOf('mpat') > -1) {
-                    style = Object.assign(style, { color: this.mpatColor });
+                    styleSheet = Object.assign(Object.assign({}, style), { color: this.mpatColor });
                 }
-        /*       var regex = new RegExp('(mpat)', 'ig');
-                console.log(regex);
-                jsn = jsn.replace(regex, '<span style="color: #25c1b2;">$1</span>');*/
-                cnt = <pre style={style}>{jsn}</pre>;
-            } catch (err) { console.log(err); }
+                cnt = <pre style={styleSheet}>{jsn}</pre>;
+            } catch (err) {
+                //    console.log(err);
+            }
         }
 
         if (crudCallback) {
-            let content = (<span><button className="button" title={`Delete option ${key}`} onClick={() => {
-                if (this.noConfirm || confirm(`Are you sure you want to option "${key}"?`)) {
+            let content = (<span><button className="button" title={`Delete option ${key} `} onClick={() => {
+                if (this.noConfirm || confirm(`Are you sure you want to option "${key}" ? `)) {
                     crudCallback.remove(key, () => { this.loadOptions() }, this.loadOptions);
                 }
             }}>X</button>{cnt}</span>);
@@ -435,14 +448,13 @@ class RUI extends React.PureComponent {
     render() {
         return (<div>
             {this.errorblock()}
-            {this.getBlock('Pages', this.state.availablePages)}
-            {this.getBlock('Layouts', this.state.availableLayouts)}
-            {this.getBlock('Models', this.state.availableModels)}
-            {this.getOptionInfo('Options', this.state.availableOptions)}
-            {this.getPlugins('Plugins', plugins)}
+            {this.getInfoPost('Pages', this.state.availablePages)}
+            {this.getInfoPost('Layouts', this.state.availableLayouts)}
+            {this.getInfoPost('Models', this.state.availableModels)}
+            {this.getInfoOptions('Options', this.state.availableOptions)}
+            {this.getInfoPlugins('Plugins', plugins)}
         </div>);
     }
 }
-
 
 ReactDOM.render(<RUI />, document.getElementById('rui'));
