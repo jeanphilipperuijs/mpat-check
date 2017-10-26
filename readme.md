@@ -1,14 +1,6 @@
 # MPAT MPAT Health Check #
 Tags: mpat health check
 
-## Based on WordPress Health-Check ##
-```
-Contributors: westi, pento, Clorith
-Requires at least: 3.8
-Tested up to: 4.8
-Stable tag: 0.5.0
-```
-
 ## Description ##
 
 This plugin will perform a number of checks on your MPAT WordPress install to detect common configuration errors and known issues.
