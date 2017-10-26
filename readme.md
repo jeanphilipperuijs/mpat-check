@@ -18,4 +18,5 @@ In the future we may introduce more checks at [GitHub project page](https://gith
 1. This shows the plugin in action.  When you activate it you get a message at the top of the plugins page.
 
 ## Changelog ##
+* Added possibilty to detete an option (carefull!)
 * Added MPAT REST javascript rest test
