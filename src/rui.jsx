@@ -50,6 +50,7 @@ class RUI extends React.PureComponent {
             }
         };
         this.noConfirm = true;
+        this.mpatColor = '#25c1b2';
         //WP REST API
         this.restUrlPage = `${window.wpApiSettings.root}${window.wpApiSettings.versionString}pages`; //default REST
         this.restUrlPageLayout = `${window.wpApiSettings.root}mpat/v1/layout`; //custom REST
@@ -99,7 +100,6 @@ class RUI extends React.PureComponent {
     loadPages() {
         this.pageIO.get(
             (result) => {
-                //                console.log(result);
                 this.setState({ availablePages: result });
             },
             (e) => {
@@ -295,7 +295,7 @@ class RUI extends React.PureComponent {
         } return null;
     }
 
-    blok(t, o) {
+    getBlock(t, o) {
         try {
             return (<details>
                 <summary>{o.length || 'No'} {t.toLowerCase()} </summary>
@@ -309,7 +309,7 @@ class RUI extends React.PureComponent {
         return null;
     }
 
-    blokoption(t, o) {
+    getOptionInfo(t, o) {
         try {
             let keyz = Object.keys(o);
             keyz.sort();
@@ -317,15 +317,7 @@ class RUI extends React.PureComponent {
                 <summary>{keyz.length} {t.toLowerCase()}</summary>
                 <div>{
                     keyz.map((l) => {
-                        if (l.toLowerCase().indexOf('mpat') == 0
-                            || l.toLowerCase().indexOf('mpo') == 0
-                            || l.toLowerCase().indexOf('timeline') == 0
-                            || l.toLowerCase().indexOf('tooltips') == 0) {
-                            return this.kv(l, o[l], { color: '#25c1b2' }, this.optionIO);
-                        }
-                        else {
-                            return this.kv(l, o[l], { color: 'gray' }, this.optionIO);
-                        }
+                        return this.metaDataInfo(l, o[l], { color: 'gray' }, this.optionIO);
                     })
                 }</div>
                 <hr />
@@ -335,7 +327,7 @@ class RUI extends React.PureComponent {
         }
     }
 
-    blokplugins(t, o) {
+    getPlugins(t, o) {
         try {
             let keyz = Object.keys(o);
             keyz.sort();
@@ -367,75 +359,87 @@ class RUI extends React.PureComponent {
                             }
                             msgs.push(updateAvailable);
                             msgs.push(pluginURI);
-                            return this.kv(`${q.Name} v${q.Version}`, this.blokplugin(q, msgs), { color: '#25c1b2', backgroundColor: bgcolor });
+                            return this.metaDataInfo(`${q.Name} v${q.Version}`, this.getPluginInfo(q, msgs), { color: this.mpatColor, backgroundColor: bgcolor });
                         }
                         else {
-                            return this.kv(`${q.Name} v${q.Version}`, q);
+                            return this.metaDataInfo(`${q.Name} v${q.Version}`, q);
                         }
                     })
                 }</div>
                 <hr />
-                <textarea>{JSON.stringify(plugins)}</textarea>}
+                <textarea>{JSON.stringify(plugins)}</textarea>
             </details>);
         } catch (err) {
             console.log(err);
         }
 
     }
-    blokplugin(q, msgs) {
+
+    getPluginInfo(q, msgs) {
         return (<span>
             <sl>
                 {msgs.map((msg) => { return <li>{msg}</li> })}
             </sl>
             <blockquote>{q.Description}</blockquote><ul>
-                {this.lv('PluginURI', <a href={q.PluginURI} target="_blank">{q.PluginURI}</a>)}
-                {this.lv('Author', q.Author)}
-                {this.lv('AuthorURI', <a href={q.AuthorURI} target="_blank">{q.AuthorURI}</a>)}
+                {this.pluginMetaData('PluginURI', <a href={q.PluginURI} target="_blank">{q.PluginURI}</a>)}
+                {this.pluginMetaData('Author', q.Author)}
+                {this.pluginMetaData('AuthorURI', <a href={q.AuthorURI} target="_blank">{q.AuthorURI}</a>)}
             </ul>
         </span>);
     }
-    lv(l, v) {
-        return (<li><label>{l}</label><span style={{ float: 'right', paddingRight: '50px' }}>{v}</span></li>);
 
+    pluginMetaData(k, v) {
+        return (<li><label>{k}</label><span style={{ float: 'right', paddingRight: '50px' }}>{v}</span></li>);
     }
-    kv(k, v, s, crud) {
-        let cnt = v;
-        if (typeof v === 'object') {
+
+    metaDataInfo(key, value, style = {}, crudCallback = undefined) {
+
+        if (key.toLowerCase().indexOf('mpat') == 0
+            || key.toLowerCase().indexOf('mpo') == 0
+            || key.toLowerCase().indexOf('timeline') == 0
+            || key.toLowerCase().indexOf('tooltips') == 0) {
+            style = Object.assign(style, { color: this.mpatColor });
+        }
+
+        let cnt = value;
+        let summary = <span style={style}>{key}</span>;
+        if (typeof value === 'object') {
             try {
-                cnt = <pre style={{ fontSize: '0.8em' }}>{JSON.stringify(v, null, 3)}</pre>;
-            } catch (err) { }
+                let jsn = JSON.stringify(value, null, 3);
+                if (jsn.toLocaleLowerCase().indexOf('mpat') > -1) {
+                    style = Object.assign(style, { color: this.mpatColor });
+                }
+        /*       var regex = new RegExp('(mpat)', 'ig');
+                console.log(regex);
+                jsn = jsn.replace(regex, '<span style="color: #25c1b2;">$1</span>');*/
+                cnt = <pre style={style}>{jsn}</pre>;
+            } catch (err) { console.log(err); }
         }
-        if (crud) {
-            return (<details>
-                <summary>
-                    <span style={Object.assign(s, { fontSize: '0.9em' })}>{k}</span>
-                </summary>
-                <button className="button" title={`Delete option ${k}`} onClick={() => {
-                    if (this.noConfirm || confirm(`Are you sure you want to option "${k}"?`)) {
-                        crud.remove(k, () => { this.loadOptions() }, this.loadOptions);
-                    }
-                }}>X</button>
 
-                {cnt}
+        if (crudCallback) {
+            let content = (<span><button className="button" title={`Delete option ${key}`} onClick={() => {
+                if (this.noConfirm || confirm(`Are you sure you want to option "${key}"?`)) {
+                    crudCallback.remove(key, () => { this.loadOptions() }, this.loadOptions);
+                }
+            }}>X</button>{cnt}</span>);
 
-            </details>);
+            return this.ds(summary, content);
         }
-        return (<details><summary><label style={s}>{k}</label></summary>{cnt}</details>);
+        return this.ds(summary, cnt);
     }
 
+    ds(summary, content) {
+        return (<details><summary>{summary}</summary>{content}</details>);
+
+    }
     render() {
         return (<div>
             {this.errorblock()}
-
-            {this.blok('Pages', this.state.availablePages)}
-
-            {this.blok('Layouts', this.state.availableLayouts)}
-
-            {this.blok('Models', this.state.availableModels)}
-
-            {this.blokoption('Options', this.state.availableOptions)}
-
-            {this.blokplugins('Plugins', plugins)}
+            {this.getBlock('Pages', this.state.availablePages)}
+            {this.getBlock('Layouts', this.state.availableLayouts)}
+            {this.getBlock('Models', this.state.availableModels)}
+            {this.getOptionInfo('Options', this.state.availableOptions)}
+            {this.getPlugins('Plugins', plugins)}
         </div>);
     }
 }

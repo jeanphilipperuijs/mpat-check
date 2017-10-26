@@ -9901,6 +9901,7 @@ var RUI = function (_React$PureComponent) {
             }
         };
         _this.noConfirm = true;
+        _this.mpatColor = '#25c1b2';
         //WP REST API
         _this.restUrlPage = '' + window.wpApiSettings.root + window.wpApiSettings.versionString + 'pages'; //default REST
         _this.restUrlPageLayout = window.wpApiSettings.root + 'mpat/v1/layout'; //custom REST
@@ -9954,7 +9955,6 @@ var RUI = function (_React$PureComponent) {
             var _this2 = this;
 
             this.pageIO.get(function (result) {
-                //                console.log(result);
                 _this2.setState({ availablePages: result });
             }, function (e) {
                 console.log('loadPages', e);
@@ -10212,8 +10212,8 @@ var RUI = function (_React$PureComponent) {
             }return null;
         }
     }, {
-        key: 'blok',
-        value: function blok(t, o) {
+        key: 'getBlock',
+        value: function getBlock(t, o) {
             try {
                 return _react2.default.createElement(
                     'details',
@@ -10246,8 +10246,8 @@ var RUI = function (_React$PureComponent) {
             return null;
         }
     }, {
-        key: 'blokoption',
-        value: function blokoption(t, o) {
+        key: 'getOptionInfo',
+        value: function getOptionInfo(t, o) {
             var _this9 = this;
 
             try {
@@ -10267,11 +10267,7 @@ var RUI = function (_React$PureComponent) {
                         'div',
                         null,
                         keyz.map(function (l) {
-                            if (l.toLowerCase().indexOf('mpat') == 0 || l.toLowerCase().indexOf('mpo') == 0 || l.toLowerCase().indexOf('timeline') == 0 || l.toLowerCase().indexOf('tooltips') == 0) {
-                                return _this9.kv(l, o[l], { color: '#25c1b2' }, _this9.optionIO);
-                            } else {
-                                return _this9.kv(l, o[l], { color: 'gray' }, _this9.optionIO);
-                            }
+                            return _this9.metaDataInfo(l, o[l], { color: 'gray' }, _this9.optionIO);
                         })
                     ),
                     _react2.default.createElement('hr', null)
@@ -10281,8 +10277,8 @@ var RUI = function (_React$PureComponent) {
             }
         }
     }, {
-        key: 'blokplugins',
-        value: function blokplugins(t, o) {
+        key: 'getPlugins',
+        value: function getPlugins(t, o) {
             var _this10 = this;
 
             try {
@@ -10331,9 +10327,9 @@ var RUI = function (_React$PureComponent) {
                                 }
                                 msgs.push(updateAvailable);
                                 msgs.push(pluginURI);
-                                return _this10.kv(q.Name + ' v' + q.Version, _this10.blokplugin(q, msgs), { color: '#25c1b2', backgroundColor: bgcolor });
+                                return _this10.metaDataInfo(q.Name + ' v' + q.Version, _this10.getPluginInfo(q, msgs), { color: _this10.mpatColor, backgroundColor: bgcolor });
                             } else {
-                                return _this10.kv(q.Name + ' v' + q.Version, q);
+                                return _this10.metaDataInfo(q.Name + ' v' + q.Version, q);
                             }
                         })
                     ),
@@ -10342,16 +10338,15 @@ var RUI = function (_React$PureComponent) {
                         'textarea',
                         null,
                         JSON.stringify(plugins)
-                    ),
-                    '}'
+                    )
                 );
             } catch (err) {
                 console.log(err);
             }
         }
     }, {
-        key: 'blokplugin',
-        value: function blokplugin(q, msgs) {
+        key: 'getPluginInfo',
+        value: function getPluginInfo(q, msgs) {
             return _react2.default.createElement(
                 'span',
                 null,
@@ -10374,13 +10369,13 @@ var RUI = function (_React$PureComponent) {
                 _react2.default.createElement(
                     'ul',
                     null,
-                    this.lv('PluginURI', _react2.default.createElement(
+                    this.pluginMetaData('PluginURI', _react2.default.createElement(
                         'a',
                         { href: q.PluginURI, target: '_blank' },
                         q.PluginURI
                     )),
-                    this.lv('Author', q.Author),
-                    this.lv('AuthorURI', _react2.default.createElement(
+                    this.pluginMetaData('Author', q.Author),
+                    this.pluginMetaData('AuthorURI', _react2.default.createElement(
                         'a',
                         { href: q.AuthorURI, target: '_blank' },
                         q.AuthorURI
@@ -10389,15 +10384,15 @@ var RUI = function (_React$PureComponent) {
             );
         }
     }, {
-        key: 'lv',
-        value: function lv(l, v) {
+        key: 'pluginMetaData',
+        value: function pluginMetaData(k, v) {
             return _react2.default.createElement(
                 'li',
                 null,
                 _react2.default.createElement(
                     'label',
                     null,
-                    l
+                    k
                 ),
                 _react2.default.createElement(
                     'span',
@@ -10407,38 +10402,52 @@ var RUI = function (_React$PureComponent) {
             );
         }
     }, {
-        key: 'kv',
-        value: function kv(k, v, s, crud) {
+        key: 'metaDataInfo',
+        value: function metaDataInfo(key, value) {
             var _this11 = this;
 
-            var cnt = v;
-            if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') {
+            var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+            var crudCallback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
+
+
+            if (key.toLowerCase().indexOf('mpat') == 0 || key.toLowerCase().indexOf('mpo') == 0 || key.toLowerCase().indexOf('timeline') == 0 || key.toLowerCase().indexOf('tooltips') == 0) {
+                style = Object.assign(style, { color: this.mpatColor });
+            }
+
+            var cnt = value;
+            var summary = _react2.default.createElement(
+                'span',
+                { style: style },
+                key
+            );
+            if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
                 try {
+                    var jsn = JSON.stringify(value, null, 3);
+                    if (jsn.toLocaleLowerCase().indexOf('mpat') > -1) {
+                        style = Object.assign(style, { color: this.mpatColor });
+                    }
+                    /*       var regex = new RegExp('(mpat)', 'ig');
+                            console.log(regex);
+                            jsn = jsn.replace(regex, '<span style="color: #25c1b2;">$1</span>');*/
                     cnt = _react2.default.createElement(
                         'pre',
-                        { style: { fontSize: '0.8em' } },
-                        JSON.stringify(v, null, 3)
+                        { style: style },
+                        jsn
                     );
-                } catch (err) {}
+                } catch (err) {
+                    console.log(err);
+                }
             }
-            if (crud) {
-                return _react2.default.createElement(
-                    'details',
+
+            if (crudCallback) {
+                var content = _react2.default.createElement(
+                    'span',
                     null,
                     _react2.default.createElement(
-                        'summary',
-                        null,
-                        _react2.default.createElement(
-                            'span',
-                            { style: Object.assign(s, { fontSize: '0.9em' }) },
-                            k
-                        )
-                    ),
-                    _react2.default.createElement(
                         'button',
-                        { className: 'button', title: 'Delete option ' + k, onClick: function onClick() {
-                                if (_this11.noConfirm || confirm('Are you sure you want to option "' + k + '"?')) {
-                                    crud.remove(k, function () {
+                        { className: 'button', title: 'Delete option ' + key, onClick: function onClick() {
+                                if (_this11.noConfirm || confirm('Are you sure you want to option "' + key + '"?')) {
+                                    crudCallback.remove(key, function () {
                                         _this11.loadOptions();
                                     }, _this11.loadOptions);
                                 }
@@ -10447,20 +10456,23 @@ var RUI = function (_React$PureComponent) {
                     ),
                     cnt
                 );
+
+                return this.ds(summary, content);
             }
+            return this.ds(summary, cnt);
+        }
+    }, {
+        key: 'ds',
+        value: function ds(summary, content) {
             return _react2.default.createElement(
                 'details',
                 null,
                 _react2.default.createElement(
                     'summary',
                     null,
-                    _react2.default.createElement(
-                        'label',
-                        { style: s },
-                        k
-                    )
+                    summary
                 ),
-                cnt
+                content
             );
         }
     }, {
@@ -10470,11 +10482,11 @@ var RUI = function (_React$PureComponent) {
                 'div',
                 null,
                 this.errorblock(),
-                this.blok('Pages', this.state.availablePages),
-                this.blok('Layouts', this.state.availableLayouts),
-                this.blok('Models', this.state.availableModels),
-                this.blokoption('Options', this.state.availableOptions),
-                this.blokplugins('Plugins', plugins)
+                this.getBlock('Pages', this.state.availablePages),
+                this.getBlock('Layouts', this.state.availableLayouts),
+                this.getBlock('Models', this.state.availableModels),
+                this.getOptionInfo('Options', this.state.availableOptions),
+                this.getPlugins('Plugins', plugins)
             );
         }
     }]);
