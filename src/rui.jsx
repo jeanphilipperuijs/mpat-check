@@ -85,10 +85,11 @@ class RUI extends React.PureComponent {
     }
 
     componentDidMount() {
+        /*
         console.log('constructor',
             JSON.stringify(Object.keys(this.pluginCompare), null, 3),
             JSON.stringify(Object.keys(plugins), null, 3),
-        );
+        );*/
         // when the render() is done, load the content
         this.loadPageModels();
         this.loadPageLayouts();
@@ -101,7 +102,7 @@ class RUI extends React.PureComponent {
     loadPages() {
         this.pageIO.get(
             (result) => {
-                console.log('loadPages', result);
+                //console.log('loadPages', result);
                 this.setState({ availablePages: result });
             },
             (e) => {
@@ -124,7 +125,7 @@ class RUI extends React.PureComponent {
     loadOptions() {
         this.optionIO.get(
             (result) => {
-                console.log('loadOptions', result);
+                //console.log('loadOptions', result);
                 this.setState({ availableOptions: result });
             },
             (e) => {
@@ -148,7 +149,7 @@ class RUI extends React.PureComponent {
     loadPageModels() {
         this.modelIO.get(
             (result) => {
-                console.log('loadPageModels', result);
+                //console.log('loadPageModels', result);
                 const urls = [];
                 for (const item of result) {
                     const obj = {};
@@ -180,7 +181,7 @@ class RUI extends React.PureComponent {
     loadPageLayouts() {
         this.layoutIO.get(
             (result) => {
-                console.log('loadPageLayouts', result);
+                //console.log('loadPageLayouts', result);
                 const urls = [];
                 for (const item of result) {
                     const obj = {};
@@ -208,7 +209,7 @@ class RUI extends React.PureComponent {
     }
 
     createNewLayout() {
-        console.log('createNewLayout');
+        //console.log('createNewLayout');
         this.layoutIO.post(
             {
                 post_type: 'page_layout',
@@ -236,7 +237,7 @@ class RUI extends React.PureComponent {
     };
 
     createNewModel() {
-        console.log('createNewModel');
+        //console.log('createNewModel');
         this.modelIO.post(
             {
                 post_type: 'page_model',
@@ -265,7 +266,7 @@ class RUI extends React.PureComponent {
     }
 
     createNewPage() {
-        console.log('createNewPage');
+        //console.log('createNewPage');
         this.pageIO.post(
             {
                 type: 'page',
@@ -359,7 +360,7 @@ class RUI extends React.PureComponent {
                             }
                             msgs.push({ msg: msg, ok: ok });
                         } catch (err) {
-                            console.log('v', err);
+                            //console.log('v', err);
                         }
 
                         /* host repo check */
@@ -372,7 +373,7 @@ class RUI extends React.PureComponent {
                             }
                             msgs.push({ msg: msg, ok: ok });
                         } catch (err) {
-                            console.log('v', err);
+                            //console.log('v', err);
                         }
 
                         return this.metaDataInfo(`${data.Name} v${data.Version} `, this.getPluginInfo(data, msgs), { color: this.mpatColor, backgroundColor: bgcolor });
@@ -387,12 +388,12 @@ class RUI extends React.PureComponent {
         </details>);
     }
     getInfoThemes(t, o) {
-        console.log(o);
+        //console.log(o);
         let themeNames = Object.keys(o);
         themeNames.sort();
         return this.ds(`${themeNames.length} ${t}`, themeNames.map((theme) => {
             let skeys = Object.keys(o[theme]);
-            //console.log(valuse);
+            ////console.log(valuse);
 
             return this.ds(theme, skeys.map((k) => { return (<li>{k} : {o[k] ? i18.yes : i18n.no}</li>); }, null, 3))
         }));
@@ -444,7 +445,7 @@ class RUI extends React.PureComponent {
                 }
                 cnt = <pre style={styleSheet}>{jsn}</pre>;
             } catch (err) {
-                //    console.log(err);
+                //    //console.log(err);
             }
         }
 
@@ -465,7 +466,7 @@ class RUI extends React.PureComponent {
 
     }
         showLabelFields(o, s = {}) {
-            console.log('showLabelFields', o);
+            //console.log('showLabelFields', o);
             let label = o.label;
             let fields = o.fields;
             let desc = o.description;
@@ -482,7 +483,7 @@ class RUI extends React.PureComponent {
         }
     
         showLabelValue(f) {
-            console.log('showLabelValue',f);
+            //console.log('showLabelValue',f);
             return (<div style={{columnCount:2}}>
                 {/*<span style={{ fontWeight: 'bold' }}>{f.label}</span>
                 <span style={{ float: 'right' }}>{f.value}</span>*/}
@@ -500,8 +501,7 @@ class RUI extends React.PureComponent {
             {this.getInfoOptions(i18n.options, this.state.availableOptions)}
             {this.getInfoPlugins(i18n.plugins, plugins)}
             {this.getInfoThemes(i18n.themes, themes)}
-            <div><h4>Debug</h4>
-            {
+            {this.ds(i18n.debug,
                 Object.keys(debugInfo).map((i) => { 
                     let o = debugInfo[i];
                     if(o.fields !== undefined){
@@ -510,10 +510,10 @@ class RUI extends React.PureComponent {
                     else{
                         return this.showLabelValue(o);
                     }
-                })
-            }
-            </div>
-        </div>);
+                }
+            )
+            )}
+            </div>)
     }
 }
 

@@ -60,6 +60,7 @@ class HealthCheck {
 			'yes' => esc_html__( 'Yes', 'mpat-health-check'),
 			'no' => esc_html__( 'No', 'mpat-health-check'),
 			'hostOK' => esc_html__('Is correctly hosted', 'mpat-health-check'),
+			'debug' => esc_html__('Debug', 'mpat-health-check'),
 			
 		));
 		

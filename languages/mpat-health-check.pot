@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MPAT Health Check 0.5.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mpat-health-"
 "check\n"
-"POT-Creation-Date: 2017-10-27 10:42:00+00:00\n"
+"POT-Creation-Date: 2017-10-27 11:54:51+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -46,7 +46,7 @@ msgstr ""
 #: includes/class-health-check-debug-data.php:53
 #: includes/class-health-check-debug-data.php:61
 #: includes/class-health-check-debug-data.php:328
-#: includes/class-health-check-debug-data.php:333 mpat-health-check.php:59
+#: includes/class-health-check-debug-data.php:333 mpat-health-check.php:60
 msgid "Yes"
 msgstr ""
 
@@ -54,7 +54,7 @@ msgstr ""
 #: includes/class-health-check-debug-data.php:53
 #: includes/class-health-check-debug-data.php:61
 #: includes/class-health-check-debug-data.php:328
-#: includes/class-health-check-debug-data.php:333 mpat-health-check.php:60
+#: includes/class-health-check-debug-data.php:333 mpat-health-check.php:61
 msgid "No"
 msgstr ""
 
@@ -415,46 +415,46 @@ msgstr ""
 msgid "The Must Use Plugins directory"
 msgstr ""
 
-#: mpat-health-check.php:53
+#: mpat-health-check.php:54
 msgid "Pages"
 msgstr ""
 
-#: mpat-health-check.php:54
+#: mpat-health-check.php:55
 msgid "Layouts"
 msgstr ""
 
-#: mpat-health-check.php:55
+#: mpat-health-check.php:56
 msgid "Models"
 msgstr ""
 
-#: mpat-health-check.php:56
+#: mpat-health-check.php:57
 msgid "Options"
 msgstr ""
 
-#: mpat-health-check.php:57
+#: mpat-health-check.php:58
 msgid "Plugins"
 msgstr ""
 
-#: mpat-health-check.php:58
+#: mpat-health-check.php:59
 msgid "Themes"
 msgstr ""
 
-#: mpat-health-check.php:61
+#: mpat-health-check.php:62
 msgid "Is correctly hosted"
+msgstr ""
+
+#: mpat-health-check.php:63
+msgid "Debug"
 msgstr ""
 
 #. #-#-#-#-#  mpat-health-check.pot (MPAT Health Check 0.5.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: mpat-health-check.php:74 mpat-health-check.php:79 mpat-health-check.php:89
+#: mpat-health-check.php:76 mpat-health-check.php:81 mpat-health-check.php:91
 msgid "MPAT Health Check"
 msgstr ""
 
-#: mpat-health-check.php:94
-msgid "Integrity"
-msgstr ""
-
 #: mpat-health-check.php:96
-msgid "Debug information"
+msgid "Integrity"
 msgstr ""
 
 #: pages/debug-data.php:12

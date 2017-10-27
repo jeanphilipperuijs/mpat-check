@@ -9940,7 +9940,11 @@ var RUI = function (_React$PureComponent) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            console.log('constructor', JSON.stringify(Object.keys(this.pluginCompare), null, 3), JSON.stringify(Object.keys(plugins), null, 3));
+            /*
+            console.log('constructor',
+                JSON.stringify(Object.keys(this.pluginCompare), null, 3),
+                JSON.stringify(Object.keys(plugins), null, 3),
+            );*/
             // when the render() is done, load the content
             this.loadPageModels();
             this.loadPageLayouts();
@@ -9956,7 +9960,7 @@ var RUI = function (_React$PureComponent) {
             var _this2 = this;
 
             this.pageIO.get(function (result) {
-                console.log('loadPages', result);
+                //console.log('loadPages', result);
                 _this2.setState({ availablePages: result });
             }, function (e) {
                 console.error('loadPages', e);
@@ -9981,7 +9985,7 @@ var RUI = function (_React$PureComponent) {
             var _this3 = this;
 
             this.optionIO.get(function (result) {
-                console.log('loadOptions', result);
+                //console.log('loadOptions', result);
                 _this3.setState({ availableOptions: result });
             }, function (e) {
                 console.error('loadOptions', e);
@@ -10010,7 +10014,7 @@ var RUI = function (_React$PureComponent) {
             var _this4 = this;
 
             this.modelIO.get(function (result) {
-                console.log('loadPageModels', result);
+                //console.log('loadPageModels', result);
                 var urls = [];
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
@@ -10066,7 +10070,7 @@ var RUI = function (_React$PureComponent) {
             var _this5 = this;
 
             this.layoutIO.get(function (result) {
-                console.log('loadPageLayouts', result);
+                //console.log('loadPageLayouts', result);
                 var urls = [];
                 var _iteratorNormalCompletion2 = true;
                 var _didIteratorError2 = false;
@@ -10118,7 +10122,7 @@ var RUI = function (_React$PureComponent) {
         value: function createNewLayout() {
             var _this6 = this;
 
-            console.log('createNewLayout');
+            //console.log('createNewLayout');
             this.layoutIO.post({
                 post_type: 'page_layout',
                 post_status: 'draft',
@@ -10146,7 +10150,7 @@ var RUI = function (_React$PureComponent) {
         value: function createNewModel() {
             var _this7 = this;
 
-            console.log('createNewModel');
+            //console.log('createNewModel');
             this.modelIO.post({
                 post_type: 'page_model',
                 post_status: 'publish',
@@ -10175,7 +10179,7 @@ var RUI = function (_React$PureComponent) {
         value: function createNewPage() {
             var _this8 = this;
 
-            console.log('createNewPage');
+            //console.log('createNewPage');
             this.pageIO.post({
                 type: 'page',
                 status: 'publish',
@@ -10322,9 +10326,9 @@ var RUI = function (_React$PureComponent) {
                                     ok = false;
                                 }
                                 msgs.push({ msg: msg, ok: ok });
-                            } catch (err) {
-                                console.log('v', err);
-                            }
+                            } catch (err) {}
+                            //console.log('v', err);
+
 
                             /* host repo check */
                             try {
@@ -10336,7 +10340,7 @@ var RUI = function (_React$PureComponent) {
                                 }
                                 msgs.push({ msg: msg, ok: ok });
                             } catch (err) {
-                                console.log('v', err);
+                                //console.log('v', err);
                             }
 
                             return _this10.metaDataInfo(data.Name + ' v' + data.Version + ' ', _this10.getPluginInfo(data, msgs), { color: _this10.mpatColor, backgroundColor: bgcolor });
@@ -10363,12 +10367,12 @@ var RUI = function (_React$PureComponent) {
         value: function getInfoThemes(t, o) {
             var _this11 = this;
 
-            console.log(o);
+            //console.log(o);
             var themeNames = Object.keys(o);
             themeNames.sort();
             return this.ds(themeNames.length + ' ' + t, themeNames.map(function (theme) {
                 var skeys = Object.keys(o[theme]);
-                //console.log(valuse);
+                ////console.log(valuse);
 
                 return _this11.ds(theme, skeys.map(function (k) {
                     return _react2.default.createElement(
@@ -10473,7 +10477,7 @@ var RUI = function (_React$PureComponent) {
                         jsn
                     );
                 } catch (err) {
-                    //    console.log(err);
+                    //    //console.log(err);
                 }
             }
 
@@ -10520,7 +10524,7 @@ var RUI = function (_React$PureComponent) {
 
             var s = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-            console.log('showLabelFields', o);
+            //console.log('showLabelFields', o);
             var label = o.label;
             var fields = o.fields;
             var desc = o.description;
@@ -10554,7 +10558,7 @@ var RUI = function (_React$PureComponent) {
     }, {
         key: 'showLabelValue',
         value: function showLabelValue(f) {
-            console.log('showLabelValue', f);
+            //console.log('showLabelValue',f);
             return _react2.default.createElement(
                 'div',
                 { style: { columnCount: 2 } },
@@ -10585,23 +10589,14 @@ var RUI = function (_React$PureComponent) {
                 this.getInfoOptions(i18n.options, this.state.availableOptions),
                 this.getInfoPlugins(i18n.plugins, plugins),
                 this.getInfoThemes(i18n.themes, themes),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(
-                        'h4',
-                        null,
-                        'Debug'
-                    ),
-                    Object.keys(debugInfo).map(function (i) {
-                        var o = debugInfo[i];
-                        if (o.fields !== undefined) {
-                            return _this15.showLabelFields(o);
-                        } else {
-                            return _this15.showLabelValue(o);
-                        }
-                    })
-                )
+                this.ds(i18n.debug, Object.keys(debugInfo).map(function (i) {
+                    var o = debugInfo[i];
+                    if (o.fields !== undefined) {
+                        return _this15.showLabelFields(o);
+                    } else {
+                        return _this15.showLabelValue(o);
+                    }
+                }))
             );
         }
     }]);

@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: MPAT MPAT Health Check 0.5.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mpat-health-"
 "check\n"
-"POT-Creation-Date: 2017-10-27 12:42+0200\n"
-"PO-Revision-Date: 2017-10-27 12:43+0200\n"
+"POT-Creation-Date: 2017-10-27 13:54+0200\n"
+"PO-Revision-Date: 2017-10-27 13:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -49,7 +49,7 @@ msgstr "Ce site utilise HTTPS?"
 #: includes/class-health-check-debug-data.php:53
 #: includes/class-health-check-debug-data.php:61
 #: includes/class-health-check-debug-data.php:328
-#: includes/class-health-check-debug-data.php:333 mpat-health-check.php:59
+#: includes/class-health-check-debug-data.php:333 mpat-health-check.php:60
 msgid "Yes"
 msgstr "Oui"
 
@@ -57,7 +57,7 @@ msgstr "Oui"
 #: includes/class-health-check-debug-data.php:53
 #: includes/class-health-check-debug-data.php:61
 #: includes/class-health-check-debug-data.php:328
-#: includes/class-health-check-debug-data.php:333 mpat-health-check.php:60
+#: includes/class-health-check-debug-data.php:333 mpat-health-check.php:61
 msgid "No"
 msgstr "Non"
 
@@ -418,46 +418,46 @@ msgstr ""
 msgid "The Must Use Plugins directory"
 msgstr ""
 
-#: mpat-health-check.php:53
+#: mpat-health-check.php:54
 msgid "Pages"
 msgstr ""
 
-#: mpat-health-check.php:54
+#: mpat-health-check.php:55
 msgid "Layouts"
 msgstr "Mise-en-Page"
 
-#: mpat-health-check.php:55
+#: mpat-health-check.php:56
 msgid "Models"
 msgstr "Modèles"
 
-#: mpat-health-check.php:56
+#: mpat-health-check.php:57
 msgid "Options"
 msgstr "Options"
 
-#: mpat-health-check.php:57
+#: mpat-health-check.php:58
 msgid "Plugins"
 msgstr "Extensions"
 
-#: mpat-health-check.php:58
+#: mpat-health-check.php:59
 msgid "Themes"
 msgstr "Thèmes"
 
-#: mpat-health-check.php:61
+#: mpat-health-check.php:62
 msgid "Is correctly hosted"
 msgstr "L'extension est correctement hébergé"
 
+#: mpat-health-check.php:63
+msgid "Debug"
+msgstr "Débogage"
+
 #. Plugin Name of the plugin/theme
-#: mpat-health-check.php:74 mpat-health-check.php:79 mpat-health-check.php:89
+#: mpat-health-check.php:76 mpat-health-check.php:81 mpat-health-check.php:91
 msgid "MPAT Health Check"
 msgstr "MPAT Check-Up"
 
-#: mpat-health-check.php:94
+#: mpat-health-check.php:96
 msgid "Integrity"
 msgstr "Intégrité"
-
-#: mpat-health-check.php:96
-msgid "Debug information"
-msgstr "Debug"
 
 #: pages/debug-data.php:12
 msgid ""
@@ -520,3 +520,6 @@ msgstr "Vérifier l'état de santé de l'environnement MPAT"
 #. Author of the plugin/theme
 msgid "The WordPress.org community"
 msgstr ""
+
+#~ msgid "Debug information"
+#~ msgstr "Debug"
