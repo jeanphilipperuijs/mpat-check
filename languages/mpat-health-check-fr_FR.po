@@ -3,130 +3,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPAT MPAT Health Check 0.5.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/health-check\n"
-"POT-Creation-Date: 2017-10-24 16:25+0200\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mpat-health-"
+"check\n"
+"POT-Creation-Date: 2017-10-27 12:42+0200\n"
+"PO-Revision-Date: 2017-10-27 12:43+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-10-24 16:25+0200\n"
-"Language-Team: \n"
 "X-Generator: Poedit 1.8.11\n"
-"Last-Translator: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_FR\n"
-
-#: includes/class-health-check-auto-updates.php:42
-#: includes/class-health-check-auto-updates.php:54
-#: includes/class-health-check-auto-updates.php:66
-msgid "The %s constant is defined and enabled."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:78
-msgid "A plugin has prevented updates by disabling %s."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:90
-msgid "The %s filter is enabled."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:106
-msgid ""
-"A previous automatic background update ended with a critical failure, so "
-"updates are now disabled."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:107
-#: includes/class-health-check-auto-updates.php:121
-msgid "You would have received an email because of this."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:108
-msgid ""
-"When you've been able to update using the \"Update Now\" button on Dashboard "
-"> Updates, we'll clear this error for future update attempts."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:110
-#: includes/class-health-check-auto-updates.php:126
-msgid "The error code was %s."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:119
-msgid "A previous automatic background update could not occur."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:124
-msgid "We'll try again with the next release."
-msgstr ""
-
-#. translators: %1$s: Folder name. %2$s: Version control directory. %3$s:
-#. Filter name.
-#: includes/class-health-check-auto-updates.php:168
-msgid ""
-"The folder %1$s was detected as being under version control (%2$s), but the "
-"%3$s filter is allowing updates."
-msgstr ""
-
-#. translators: %1$s: Folder name. %2$s: Version control directory.
-#: includes/class-health-check-auto-updates.php:181
-msgid "The folder %1$s was detected as being under version control (%2$s)."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:190
-msgid "No version control systems were detected."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:205
-msgid ""
-"Your installation of WordPress prompts for FTP credentials to perform "
-"updates."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:206
-msgid ""
-"(Your site is performing updates over FTP due to file ownership. Talk to "
-"your hosting company.)"
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:215
-msgid ""
-"Your installation of WordPress doesn't require FTP credentials to perform "
-"updates."
-msgstr ""
-
-#. translators: %s: WordPress version
-#: includes/class-health-check-auto-updates.php:249
-msgid "Couldn't retrieve a list of the checksums for WordPress %s."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:252
-msgid "This could mean that connections are failing to WordPress.org."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:278
-msgid "Some files are not writable by WordPress:"
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:283
-msgid "All of your WordPress files are writable."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:299
-msgid "WordPress development updates are blocked by the %s constant."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:309
-msgid "WordPress development updates are blocked by the %s filter."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:321
-msgid "WordPress security and maintenance releases are blocked by %s."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:331
-msgid ""
-"WordPress security and maintenance releases are blocked by the %s filter."
-msgstr ""
 
 #: includes/class-health-check-debug-data.php:23
 msgid "WordPress"
@@ -139,15 +27,15 @@ msgstr ""
 
 #: includes/class-health-check-debug-data.php:30
 msgid "Language"
-msgstr ""
+msgstr "Langage"
 
 #: includes/class-health-check-debug-data.php:34
 msgid "Home URL"
-msgstr ""
+msgstr "URL de l'application racine"
 
 #: includes/class-health-check-debug-data.php:39
 msgid "Site URL"
-msgstr ""
+msgstr "URL du site racine"
 
 #: includes/class-health-check-debug-data.php:44
 msgid "Permalink structure"
@@ -155,23 +43,23 @@ msgstr ""
 
 #: includes/class-health-check-debug-data.php:48
 msgid "Is this site using HTTPS?"
-msgstr ""
+msgstr "Ce site utilise HTTPS?"
 
 #: includes/class-health-check-debug-data.php:49
 #: includes/class-health-check-debug-data.php:53
 #: includes/class-health-check-debug-data.php:61
 #: includes/class-health-check-debug-data.php:328
-#: includes/class-health-check-debug-data.php:333
+#: includes/class-health-check-debug-data.php:333 mpat-health-check.php:59
 msgid "Yes"
-msgstr ""
+msgstr "Oui"
 
 #: includes/class-health-check-debug-data.php:49
 #: includes/class-health-check-debug-data.php:53
 #: includes/class-health-check-debug-data.php:61
 #: includes/class-health-check-debug-data.php:328
-#: includes/class-health-check-debug-data.php:333
+#: includes/class-health-check-debug-data.php:333 mpat-health-check.php:60
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: includes/class-health-check-debug-data.php:52
 msgid "Can anyone register on this site?"
@@ -183,7 +71,7 @@ msgstr ""
 
 #: includes/class-health-check-debug-data.php:60
 msgid "Is this a multisite?"
-msgstr ""
+msgstr "Est-ce un multisite?"
 
 #: includes/class-health-check-debug-data.php:66
 msgid "Drop-ins"
@@ -209,11 +97,11 @@ msgstr ""
 
 #: includes/class-health-check-debug-data.php:85
 msgid "MPAT Active Plugins"
-msgstr ""
+msgstr "Extension MPAT actives"
 
 #: includes/class-health-check-debug-data.php:90
 msgid "MPAT Inactive Plugins"
-msgstr ""
+msgstr "Extension MPAT inactives"
 
 #: includes/class-health-check-debug-data.php:95
 msgid "Active Plugins"
@@ -351,7 +239,7 @@ msgid "Network Count"
 msgstr ""
 
 #: includes/class-health-check-debug-data.php:239
-#: includes/class-health-check-debug-data.php:246 pages/health-check.php:242
+#: includes/class-health-check-debug-data.php:246
 msgid "Communication with WordPress.org"
 msgstr ""
 
@@ -361,7 +249,7 @@ msgstr ""
 
 #. translators: %1$s: The IP address WordPress.org resolves to. %2$s: The error
 #. returned by the lookup.
-#: includes/class-health-check-debug-data.php:249 pages/health-check.php:257
+#: includes/class-health-check-debug-data.php:249
 msgid "Unable to reach WordPress.org at %1$s: %2$s"
 msgstr ""
 
@@ -373,7 +261,7 @@ msgstr ""
 msgid "Unable to determine server architecture"
 msgstr ""
 
-#: includes/class-health-check-debug-data.php:272 pages/health-check.php:46
+#: includes/class-health-check-debug-data.php:272
 msgid "PHP Version"
 msgstr ""
 
@@ -530,22 +418,46 @@ msgstr ""
 msgid "The Must Use Plugins directory"
 msgstr ""
 
-#: includes/class-health-check-wp-cron.php:27
-msgid "No scheduled events exist on this site."
+#: mpat-health-check.php:53
+msgid "Pages"
 msgstr ""
 
-#: mpat-health-check.php:59 mpat-health-check.php:64 mpat-health-check.php:74
-#: mpat-health-check.php:79
+#: mpat-health-check.php:54
+msgid "Layouts"
+msgstr "Mise-en-Page"
+
+#: mpat-health-check.php:55
+msgid "Models"
+msgstr "Modèles"
+
+#: mpat-health-check.php:56
+msgid "Options"
+msgstr "Options"
+
+#: mpat-health-check.php:57
+msgid "Plugins"
+msgstr "Extensions"
+
+#: mpat-health-check.php:58
+msgid "Themes"
+msgstr "Thèmes"
+
+#: mpat-health-check.php:61
+msgid "Is correctly hosted"
+msgstr "L'extension est correctement hébergé"
+
+#. Plugin Name of the plugin/theme
+#: mpat-health-check.php:74 mpat-health-check.php:79 mpat-health-check.php:89
 msgid "MPAT Health Check"
-msgstr ""
+msgstr "MPAT Check-Up"
 
-#: mpat-health-check.php:80
+#: mpat-health-check.php:94
+msgid "Integrity"
+msgstr "Intégrité"
+
+#: mpat-health-check.php:96
 msgid "Debug information"
-msgstr ""
-
-#: mpat-health-check.php:81
-msgid "PHP Information"
-msgstr ""
+msgstr "Debug"
 
 #: pages/debug-data.php:12
 msgid ""
@@ -581,147 +493,6 @@ msgstr ""
 msgid "Return to table of contents"
 msgstr ""
 
-#: pages/health-check.php:39
-msgid ""
-"The health check shows critical information about your WordPress "
-"configuration and items that require your attention."
-msgstr ""
-
-#. translators: %s: Recommended PHP version
-#: pages/health-check.php:56
-msgid ""
-"For performance and security reasons, we strongly recommend running PHP "
-"version %s or higher."
-msgstr ""
-
-#. translators: %1$s: Current PHP version. %2$s: Recommended PHP version. %3$s:
-#. Minimum PHP version.
-#: pages/health-check.php:65
-msgid ""
-"Your version of PHP, %1$s, is very outdated and no longer receiving security "
-"updates. You should contact your host for an upgrade, WordPress recommends "
-"using PHP version %2$s, but will work with version %3$s or newer."
-msgstr ""
-
-#: pages/health-check.php:90
-msgid "MySQL Server version"
-msgstr ""
-
-#: pages/health-check.php:93
-msgid "MariaDB Server version"
-msgstr ""
-
-#. translators: %1$s: The database engine in use (MySQL or MariaDB). %2$s:
-#. Database server recommended version number.
-#: pages/health-check.php:106
-msgid ""
-"For performance and security reasons, we strongly recommend running %1$s "
-"version %2$s or higher."
-msgstr ""
-
-#. translators: %1$s: The database engine in use (MySQL or MariaDB). %2$s:
-#. Database server minimum version number.
-#: pages/health-check.php:116
-msgid "WordPress 3.2+ requires %1$s version %2$s or higher."
-msgstr ""
-
-#. translators: %s: The database engine in use (MySQL or MariaDB).
-#: pages/health-check.php:124
-msgid ""
-"You are using a <code>wp-content/db.php</code> drop-in which might mean that "
-"a %s database is not being used."
-msgstr ""
-
-#: pages/health-check.php:141
-msgid "JSON Extension"
-msgstr ""
-
-#: pages/health-check.php:150
-msgid ""
-"The PHP install on your server has the JSON extension disabled and is "
-"therefore not compatible with WordPress 3.2 or newer."
-msgstr ""
-
-#: pages/health-check.php:156
-msgid "Your PHP install supports JSON."
-msgstr ""
-
-#: pages/health-check.php:164
-msgid "MySQL utf8mb4 support"
-msgstr ""
-
-#: pages/health-check.php:172
-msgid "WordPress' utf8mb4 support requires MySQL version %s or greater"
-msgstr ""
-
-#: pages/health-check.php:179
-msgid "Your MySQL version supports utf8mb4"
-msgstr ""
-
-#: pages/health-check.php:189
-msgid "WordPress' utf8mb4 support requires MariaDB version %s or greater"
-msgstr ""
-
-#: pages/health-check.php:197
-msgid "Your MariaDB version supports utf8mb4"
-msgstr ""
-
-#: pages/health-check.php:218 pages/health-check.php:230
-msgid ""
-"WordPress' utf8mb4 support requires MySQL client library (%1$s) version %2$s "
-"or newer."
-msgstr ""
-
-#: pages/health-check.php:249
-msgid "WordPress.org is reachable from your server."
-msgstr ""
-
-#: pages/health-check.php:268
-msgid "HTTPS status"
-msgstr ""
-
-#: pages/health-check.php:274
-msgid "You are accessing this website using HTTPS."
-msgstr ""
-
-#: pages/health-check.php:280
-msgid "You are not using HTTPS to access this website."
-msgstr ""
-
-#: pages/health-check.php:288
-msgid "Secure communication"
-msgstr ""
-
-#: pages/health-check.php:296
-msgid "Your WordPress install can communicate securely with other services."
-msgstr ""
-
-#: pages/health-check.php:302
-msgid ""
-"Your WordPress install cannot communicate securely with other services. Talk "
-"to your web host about OpenSSL support for PHP."
-msgstr ""
-
-#: pages/health-check.php:310
-msgid "Scheduled events"
-msgstr ""
-
-#. translators: %s: The name of the failed cron event.
-#: pages/health-check.php:327
-msgid ""
-"A scheduled event (%s) has failed to run. Your site still works, but this "
-"may indicate that scheduling posts or automated updates may not work as "
-"intended."
-msgstr ""
-
-#: pages/health-check.php:335
-msgid "No scheduled events have been missed."
-msgstr ""
-
-#: pages/health-check.php:344
-msgid "Background updates"
-msgstr ""
-
 #: pages/phpinfo.php:11
 msgid ""
 "The phpinfo() function has been disabled by your host. Please contact the "
@@ -737,10 +508,6 @@ msgid ""
 "considered private."
 msgstr ""
 
-#. Plugin Name of the plugin/theme
-msgid "MPAT MPAT Health Check"
-msgstr ""
-
 #. Plugin URI of the plugin/theme
 #. Author URI of the plugin/theme
 msgid "https://github.com/jeanphilipperuijs/mpat-health-check"
@@ -748,7 +515,7 @@ msgstr ""
 
 #. Description of the plugin/theme
 msgid "Checks the health of your WordPress install."
-msgstr ""
+msgstr "Vérifier l'état de santé de l'environnement MPAT"
 
 #. Author of the plugin/theme
 msgid "The WordPress.org community"

@@ -47,9 +47,24 @@ class HealthCheck {
 		wp_enqueue_script('wp-api');
 
 		wp_localize_script('wp-api','plugins', get_plugins());
+		wp_localize_script('wp-api','themes', wp_get_themes());
+		wp_localize_script('wp-api','debugInfo', MPAT_CHECK_Debug_Data::debug_data());
 		
-		wp_enqueue_script('mpat-hc', plugin_dir_url(__FILE__) . 'public/rui.js', array('wp-api'), 1.0, true );
-	//	wp_enqueue_script('mpat-hc', 'http://localhost:8000/rui.js', array('wp-api'), 1.0, true );
+		wp_localize_script('wp-api','i18n', array(
+			'pages' => esc_html__( 'Pages', 'mpat-health-check'),
+			'layouts' => esc_html__( 'Layouts', 'mpat-health-check'),
+			'models' => esc_html__( 'Models', 'mpat-health-check'),
+			'options' => esc_html__( 'Options', 'mpat-health-check'),
+			'plugins' => esc_html__( 'Plugins', 'mpat-health-check'),
+			'themes' => esc_html__( 'Themes', 'mpat-health-check'),
+			'yes' => esc_html__( 'Yes', 'mpat-health-check'),
+			'no' => esc_html__( 'No', 'mpat-health-check'),
+			'hostOK' => esc_html__('Is correctly hosted', 'mpat-health-check'),
+			
+		));
+		
+	//	wp_enqueue_script('mpat-hc', plugin_dir_url(__FILE__) . 'public/rui.js', array('wp-api'), 1.0, true );
+		wp_enqueue_script('mpat-hc', 'http://localhost:8000/rui.js', array('wp-api'), 1.0, true );
 		
 		wp_enqueue_style( 'mpat-health-check', plugins_url( '/assets/css/health-check.css', __FILE__ ), array(), MPAT_CHECK_PLUGIN_VERSION );
 
@@ -79,7 +94,7 @@ class HealthCheck {
 			$tabs = array(
 				'mpat' => esc_html__( 'Integrity', 'mpat-health-check'),
 				/*'mpat-health-check' => esc_html__( 'MPAT Health Check', 'mpat-health-check' ),*/
-				'debug' => esc_html__( 'Debug information', 'mpat-health-check' )
+			//	'debug' => esc_html__( 'Debug information', 'mpat-health-check' )
 				/*,
 				'phpinfo' => esc_html__( 'PHP Information', 'mpat-health-check' )*/
 			);
@@ -133,6 +148,6 @@ class HealthCheck {
 new HealthCheck();
 
 // Include classes used by our plugin
-require_once( dirname( __FILE__ ) . '/includes/class-health-check-auto-updates.php' );
-require_once( dirname( __FILE__ ) . '/includes/class-health-check-wp-cron.php' );
+//require_once( dirname( __FILE__ ) . '/includes/class-health-check-auto-updates.php' );
+//require_once( dirname( __FILE__ ) . '/includes/class-health-check-wp-cron.php' );
 require_once( dirname( __FILE__ ) . '/includes/class-health-check-debug-data.php' );

@@ -3,127 +3,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MPAT Health Check 0.5.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/health-check\n"
-"POT-Creation-Date: 2017-10-26 08:40:41+00:00\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mpat-health-"
+"check\n"
+"POT-Creation-Date: 2017-10-27 10:42:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-
-#: includes/class-health-check-auto-updates.php:42
-#: includes/class-health-check-auto-updates.php:54
-#: includes/class-health-check-auto-updates.php:66
-msgid "The %s constant is defined and enabled."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:78
-msgid "A plugin has prevented updates by disabling %s."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:90
-msgid "The %s filter is enabled."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:106
-msgid ""
-"A previous automatic background update ended with a critical failure, so "
-"updates are now disabled."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:107
-#: includes/class-health-check-auto-updates.php:121
-msgid "You would have received an email because of this."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:108
-msgid ""
-"When you've been able to update using the \"Update Now\" button on Dashboard "
-"> Updates, we'll clear this error for future update attempts."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:110
-#: includes/class-health-check-auto-updates.php:126
-msgid "The error code was %s."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:119
-msgid "A previous automatic background update could not occur."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:124
-msgid "We'll try again with the next release."
-msgstr ""
-
-#. translators: %1$s: Folder name. %2$s: Version control directory. %3$s:
-#. Filter name.
-#: includes/class-health-check-auto-updates.php:168
-msgid ""
-"The folder %1$s was detected as being under version control (%2$s), but the "
-"%3$s filter is allowing updates."
-msgstr ""
-
-#. translators: %1$s: Folder name. %2$s: Version control directory.
-#: includes/class-health-check-auto-updates.php:181
-msgid "The folder %1$s was detected as being under version control (%2$s)."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:190
-msgid "No version control systems were detected."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:205
-msgid ""
-"Your installation of WordPress prompts for FTP credentials to perform "
-"updates."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:206
-msgid ""
-"(Your site is performing updates over FTP due to file ownership. Talk to "
-"your hosting company.)"
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:215
-msgid ""
-"Your installation of WordPress doesn't require FTP credentials to perform "
-"updates."
-msgstr ""
-
-#. translators: %s: WordPress version
-#: includes/class-health-check-auto-updates.php:249
-msgid "Couldn't retrieve a list of the checksums for WordPress %s."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:252
-msgid "This could mean that connections are failing to WordPress.org."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:278
-msgid "Some files are not writable by WordPress:"
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:283
-msgid "All of your WordPress files are writable."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:299
-msgid "WordPress development updates are blocked by the %s constant."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:309
-msgid "WordPress development updates are blocked by the %s filter."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:321
-msgid "WordPress security and maintenance releases are blocked by %s."
-msgstr ""
-
-#: includes/class-health-check-auto-updates.php:331
-msgid ""
-"WordPress security and maintenance releases are blocked by the %s filter."
-msgstr ""
 
 #: includes/class-health-check-debug-data.php:23
 msgid "WordPress"
@@ -158,7 +46,7 @@ msgstr ""
 #: includes/class-health-check-debug-data.php:53
 #: includes/class-health-check-debug-data.php:61
 #: includes/class-health-check-debug-data.php:328
-#: includes/class-health-check-debug-data.php:333
+#: includes/class-health-check-debug-data.php:333 mpat-health-check.php:59
 msgid "Yes"
 msgstr ""
 
@@ -166,7 +54,7 @@ msgstr ""
 #: includes/class-health-check-debug-data.php:53
 #: includes/class-health-check-debug-data.php:61
 #: includes/class-health-check-debug-data.php:328
-#: includes/class-health-check-debug-data.php:333
+#: includes/class-health-check-debug-data.php:333 mpat-health-check.php:60
 msgid "No"
 msgstr ""
 
@@ -527,21 +415,45 @@ msgstr ""
 msgid "The Must Use Plugins directory"
 msgstr ""
 
-#: includes/class-health-check-wp-cron.php:27
-msgid "No scheduled events exist on this site."
+#: mpat-health-check.php:53
+msgid "Pages"
+msgstr ""
+
+#: mpat-health-check.php:54
+msgid "Layouts"
+msgstr ""
+
+#: mpat-health-check.php:55
+msgid "Models"
+msgstr ""
+
+#: mpat-health-check.php:56
+msgid "Options"
+msgstr ""
+
+#: mpat-health-check.php:57
+msgid "Plugins"
+msgstr ""
+
+#: mpat-health-check.php:58
+msgid "Themes"
+msgstr ""
+
+#: mpat-health-check.php:61
+msgid "Is correctly hosted"
 msgstr ""
 
 #. #-#-#-#-#  mpat-health-check.pot (MPAT Health Check 0.5.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: mpat-health-check.php:59 mpat-health-check.php:64 mpat-health-check.php:74
+#: mpat-health-check.php:74 mpat-health-check.php:79 mpat-health-check.php:89
 msgid "MPAT Health Check"
 msgstr ""
 
-#: mpat-health-check.php:79
+#: mpat-health-check.php:94
 msgid "Integrity"
 msgstr ""
 
-#: mpat-health-check.php:81
+#: mpat-health-check.php:96
 msgid "Debug information"
 msgstr ""
 

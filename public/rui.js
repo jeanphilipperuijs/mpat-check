@@ -9867,7 +9867,7 @@ var RUI = function (_React$PureComponent) {
                 "Name": "MBOP remover", "PluginURI": "/mbop", "Version": "1.0.1", "Description": "Delete current user meta's 'meta-box-order_page'", "Author": "Jean-Philippe Ruijs", "AuthorURI": "https://github.com/MPAT-eu", "TextDomain": "mbop-remover", "DomainPath": "/languages", "Network": false, "Title": "MBOP remover", "AuthorName": "Jean-Philippe Ruijs"
             },
             "members/members.php": {
-                "Name": "Members", "PluginURI": "http://themehybrid.com/plugins/members", "Version": "1.1.1", "Description": "A user and role management plugin that puts you in full control of your site's permissions. This plugin allows you to edit your roles and their capabilities, clone existing roles, assign multiple roles per user, block post content, or even make your site completely private.", "Author": "Justin Tadlock", "AuthorURI": "http://themehybrid.com", "TextDomain": "members", "DomainPath": "/languages", "Network": false, "Title": "Members", "AuthorName": "Justin Tadlock"
+                "Name": "Members", "PluginURI": "http://themehybrid.com/plugins/members", "Version": "2.0.1", "Description": "A user and role management plugin that puts you in full control of your site's permissions. This plugin allows you to edit your roles and their capabilities, clone existing roles, assign multiple roles per user, block post content, or even make your site completely private.", "Author": "Justin Tadlock", "AuthorURI": "http://themehybrid.com", "TextDomain": "members", "DomainPath": "/languages", "Network": false, "Title": "Members", "AuthorName": "Justin Tadlock"
             },
             "mpat-asset-api/AssetAPI.php": {
                 "Name": "Mpat-asset-api", "PluginURI": "http://www.finconsgroup.com/", "Version": "0.1-alpha", "Description": "This plugin manage the integration of MPAT with intial external repositories, namely the MPAT asset converter and a TVAnytime repository", "Author": "Fincons Group", "AuthorURI": "http://www.finconsgroup.com/", "TextDomain": "mpat", "DomainPath": "/languages", "Network": false, "Title": "Mpat-asset-api", "AuthorName": "Fincons Group"
@@ -10245,7 +10245,6 @@ var RUI = function (_React$PureComponent) {
                 ),
                 _react2.default.createElement('hr', null)
             );
-            return null;
         }
     }, {
         key: 'getInfoOptions',
@@ -10309,7 +10308,7 @@ var RUI = function (_React$PureComponent) {
                             msgs.push({ msg: msg, ok: false });
                         }
 
-                        if (compareName != undefined && compareName == data.Name) {
+                        if (compareName != undefined && compareName.split('/')[1] == data.Name.split('/')[1]) {
                             var bgcolor = null;
 
                             /* version check */
@@ -10332,7 +10331,7 @@ var RUI = function (_React$PureComponent) {
                                 msg = 'Check hosting "' + _this10.mpatgithub + '" or verify PluginURI';
                                 ok = false;
                                 if (data.PluginURI.indexOf('github.com/MPAT-eu') > -1) {
-                                    msg = 'Is correctly hosted';
+                                    msg = i18n.hostOK;
                                     ok = true;
                                 }
                                 msgs.push({ msg: msg, ok: ok });
@@ -10360,9 +10359,32 @@ var RUI = function (_React$PureComponent) {
             );
         }
     }, {
+        key: 'getInfoThemes',
+        value: function getInfoThemes(t, o) {
+            var _this11 = this;
+
+            console.log(o);
+            var themeNames = Object.keys(o);
+            themeNames.sort();
+            return this.ds(themeNames.length + ' ' + t, themeNames.map(function (theme) {
+                var skeys = Object.keys(o[theme]);
+                //console.log(valuse);
+
+                return _this11.ds(theme, skeys.map(function (k) {
+                    return _react2.default.createElement(
+                        'li',
+                        null,
+                        k,
+                        ' : ',
+                        o[k] ? i18.yes : i18n.no
+                    );
+                }, null, 3));
+            }));
+        }
+    }, {
         key: 'getPluginInfo',
         value: function getPluginInfo(q, msgs) {
-            var _this11 = this;
+            var _this12 = this;
 
             return _react2.default.createElement(
                 'div',
@@ -10376,21 +10398,21 @@ var RUI = function (_React$PureComponent) {
                     'ul',
                     { style: { width: '90%', left: '50px' } },
                     msgs.map(function (msg) {
-                        return _this11.pluginMetaData(msg.msg, msg.ok ? 'Passed' : 'Verify', { color: msg.ok ? 'green' : 'red' });
+                        return _this12.listItem(msg.msg, msg.ok ? 'Passed' : 'Verify', { color: msg.ok ? 'green' : 'red' });
                         /*return (<li style={{ color: msg.ok ? 'green' : 'red' }}>
                             <label>{msg.msg}</label>
                             <span style={{ float: 'right', width: '90%', paddingRight: '50px' }}>{msg.ok ? 'Passed' : 'Verify'}</span>
                         </li>);*/
                     }),
-                    this.pluginMetaData('PluginURI', this.makelink(q.PluginURI)),
-                    this.pluginMetaData('AuthorURI', this.makelink(q.AuthorURI)),
-                    this.pluginMetaData('Author', q.Author)
+                    this.listItem('PluginURI', this.getLink(q.PluginURI)),
+                    this.listItem('AuthorURI', this.getLink(q.AuthorURI)),
+                    this.listItem('Author', q.Author)
                 )
             );
         }
     }, {
-        key: 'makelink',
-        value: function makelink(src) {
+        key: 'getLink',
+        value: function getLink(src) {
             var target = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '_blank';
 
             return _react2.default.createElement(
@@ -10400,8 +10422,8 @@ var RUI = function (_React$PureComponent) {
             );
         }
     }, {
-        key: 'pluginMetaData',
-        value: function pluginMetaData(k, v) {
+        key: 'listItem',
+        value: function listItem(k, v) {
             var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
             return _react2.default.createElement(
@@ -10422,7 +10444,7 @@ var RUI = function (_React$PureComponent) {
     }, {
         key: 'metaDataInfo',
         value: function metaDataInfo(key, value) {
-            var _this12 = this;
+            var _this13 = this;
 
             var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
             var crudCallback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
@@ -10462,10 +10484,10 @@ var RUI = function (_React$PureComponent) {
                     _react2.default.createElement(
                         'button',
                         { className: 'button', title: 'Delete option ' + key + ' ', onClick: function onClick() {
-                                if (_this12.noConfirm || confirm('Are you sure you want to option "' + key + '" ? ')) {
+                                if (_this13.noConfirm || confirm('Are you sure you want to option "' + key + '" ? ')) {
                                     crudCallback.remove(key, function () {
-                                        _this12.loadOptions();
-                                    }, _this12.loadOptions);
+                                        _this13.loadOptions();
+                                    }, _this13.loadOptions);
                                 }
                             } },
                         'X'
@@ -10492,17 +10514,94 @@ var RUI = function (_React$PureComponent) {
             );
         }
     }, {
+        key: 'showLabelFields',
+        value: function showLabelFields(o) {
+            var _this14 = this;
+
+            var s = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            console.log('showLabelFields', o);
+            var label = o.label;
+            var fields = o.fields;
+            var desc = o.description;
+            var teststyle = { float: 'right', backgroundColor: 'limegreen' };
+            return _react2.default.createElement(
+                'ul',
+                null,
+                _react2.default.createElement(
+                    'li',
+                    { style: Object.assign(s, { left: '30px' }) },
+                    _react2.default.createElement(
+                        'div',
+                        { style: { fontWeight: 'bold' } },
+                        label
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        desc
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        fields.map(function (field) {
+                            return _this14.showLabelValue(field);
+                        })
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'showLabelValue',
+        value: function showLabelValue(f) {
+            console.log('showLabelValue', f);
+            return _react2.default.createElement(
+                'div',
+                { style: { columnCount: 2 } },
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    f.label
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    f.value
+                )
+            );
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this15 = this;
+
             return _react2.default.createElement(
                 'div',
                 null,
                 this.errorblock(),
-                this.getInfoPost('Pages', this.state.availablePages),
-                this.getInfoPost('Layouts', this.state.availableLayouts),
-                this.getInfoPost('Models', this.state.availableModels),
-                this.getInfoOptions('Options', this.state.availableOptions),
-                this.getInfoPlugins('Plugins', plugins)
+                this.getInfoPost(i18n.pages, this.state.availablePages),
+                this.getInfoPost(i18n.layouts, this.state.availableLayouts),
+                this.getInfoPost(i18n.models, this.state.availableModels),
+                this.getInfoOptions(i18n.options, this.state.availableOptions),
+                this.getInfoPlugins(i18n.plugins, plugins),
+                this.getInfoThemes(i18n.themes, themes),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'h4',
+                        null,
+                        'Debug'
+                    ),
+                    Object.keys(debugInfo).map(function (i) {
+                        var o = debugInfo[i];
+                        if (o.fields !== undefined) {
+                            return _this15.showLabelFields(o);
+                        } else {
+                            return _this15.showLabelValue(o);
+                        }
+                    })
+                )
             );
         }
     }]);

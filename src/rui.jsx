@@ -16,7 +16,7 @@ class RUI extends React.PureComponent {
                 "Name": "MBOP remover", "PluginURI": "/mbop", "Version": "1.0.1", "Description": "Delete current user meta's 'meta-box-order_page'", "Author": "Jean-Philippe Ruijs", "AuthorURI": "https://github.com/MPAT-eu", "TextDomain": "mbop-remover", "DomainPath": "/languages", "Network": false, "Title": "MBOP remover", "AuthorName": "Jean-Philippe Ruijs"
             },
             "members/members.php": {
-                "Name": "Members", "PluginURI": "http://themehybrid.com/plugins/members", "Version": "1.1.1", "Description": "A user and role management plugin that puts you in full control of your site's permissions. This plugin allows you to edit your roles and their capabilities, clone existing roles, assign multiple roles per user, block post content, or even make your site completely private.", "Author": "Justin Tadlock", "AuthorURI": "http://themehybrid.com", "TextDomain": "members", "DomainPath": "/languages", "Network": false, "Title": "Members", "AuthorName": "Justin Tadlock"
+                "Name": "Members", "PluginURI": "http://themehybrid.com/plugins/members", "Version": "2.0.1", "Description": "A user and role management plugin that puts you in full control of your site's permissions. This plugin allows you to edit your roles and their capabilities, clone existing roles, assign multiple roles per user, block post content, or even make your site completely private.", "Author": "Justin Tadlock", "AuthorURI": "http://themehybrid.com", "TextDomain": "members", "DomainPath": "/languages", "Network": false, "Title": "Members", "AuthorName": "Justin Tadlock"
             },
             "mpat-asset-api/AssetAPI.php": {
                 "Name": "Mpat-asset-api", "PluginURI": "http://www.finconsgroup.com/", "Version": "0.1-alpha", "Description": "This plugin manage the integration of MPAT with intial external repositories, namely the MPAT asset converter and a TVAnytime repository", "Author": "Fincons Group", "AuthorURI": "http://www.finconsgroup.com/", "TextDomain": "mpat", "DomainPath": "/languages", "Network": false, "Title": "Mpat-asset-api", "AuthorName": "Fincons Group"
@@ -306,7 +306,6 @@ class RUI extends React.PureComponent {
             <hr />
 
         </details>);
-        return null;
     }
 
     getInfoOptions(t, o) {
@@ -345,7 +344,7 @@ class RUI extends React.PureComponent {
                         msgs.push({ msg: msg, ok: false });
                     }
 
-                    if (compareName != undefined && compareName == data.Name) {
+                    if (compareName != undefined && compareName.split('/')[1] == data.Name.split('/')[1]) {
                         let bgcolor = null;
 
                         /* version check */
@@ -368,7 +367,7 @@ class RUI extends React.PureComponent {
                             msg = `Check hosting "${this.mpatgithub}" or verify PluginURI`;
                             ok = false;
                             if (data.PluginURI.indexOf('github.com/MPAT-eu') > -1) {
-                                msg = 'Is correctly hosted';
+                                msg = i18n.hostOK;
                                 ok = true;
                             }
                             msgs.push({ msg: msg, ok: ok });
@@ -386,32 +385,42 @@ class RUI extends React.PureComponent {
             <hr />
             <textarea>{JSON.stringify(plugins)}</textarea>
         </details>);
-
-
     }
+    getInfoThemes(t, o) {
+        console.log(o);
+        let themeNames = Object.keys(o);
+        themeNames.sort();
+        return this.ds(`${themeNames.length} ${t}`, themeNames.map((theme) => {
+            let skeys = Object.keys(o[theme]);
+            //console.log(valuse);
 
+            return this.ds(theme, skeys.map((k) => { return (<li>{k} : {o[k] ? i18.yes : i18n.no}</li>); }, null, 3))
+        }));
+    }
     getPluginInfo(q, msgs) {
         return (
             <div>
                 <blockquote>{q.Description}</blockquote>
                 <ul style={{ width: '90%', left: '50px' }}>
                     {msgs.map((msg) => {
-                        return this.pluginMetaData(msg.msg, msg.ok ? 'Passed' : 'Verify', { color: msg.ok ? 'green' : 'red' });
+                        return this.listItem(msg.msg, msg.ok ? 'Passed' : 'Verify', { color: msg.ok ? 'green' : 'red' });
                         /*return (<li style={{ color: msg.ok ? 'green' : 'red' }}>
                             <label>{msg.msg}</label>
                             <span style={{ float: 'right', width: '90%', paddingRight: '50px' }}>{msg.ok ? 'Passed' : 'Verify'}</span>
                         </li>);*/
                     })}
-                    {this.pluginMetaData('PluginURI', this.makelink(q.PluginURI))}
-                    {this.pluginMetaData('AuthorURI', this.makelink(q.AuthorURI))}
-                    {this.pluginMetaData('Author', q.Author)}
+                    {this.listItem('PluginURI', this.getLink(q.PluginURI))}
+                    {this.listItem('AuthorURI', this.getLink(q.AuthorURI))}
+                    {this.listItem('Author', q.Author)}
                 </ul>
             </div>);
     }
-    makelink(src, target = '_blank') {
+
+    getLink(src, target = '_blank') {
         return (<a href={src} target={target}>{src}</a>);
     }
-    pluginMetaData(k, v, style = {}) {
+
+    listItem(k, v, style = {}) {
         return (<li style={style}><label>{k}</label><span style={{ float: 'right', paddingRight: '50px' }}>{v}</span></li>);
     }
 
@@ -455,14 +464,55 @@ class RUI extends React.PureComponent {
         return (<details><summary>{summary}</summary>{content}</details>);
 
     }
+        showLabelFields(o, s = {}) {
+            console.log('showLabelFields', o);
+            let label = o.label;
+            let fields = o.fields;
+            let desc = o.description;
+        let teststyle= { float: 'right', backgroundColor: 'limegreen' };
+        return (<ul>
+            <li style={Object.assign(s, { left: '30px' })}>
+                <div style={{ fontWeight: 'bold' }}>{label}</div>
+                <div>{desc}</div>
+                <div>
+                    {fields.map( (field) => { return (this.showLabelValue(field))})}
+                </div>
+            </li>
+        </ul>)
+        }
+    
+        showLabelValue(f) {
+            console.log('showLabelValue',f);
+            return (<div style={{columnCount:2}}>
+                {/*<span style={{ fontWeight: 'bold' }}>{f.label}</span>
+                <span style={{ float: 'right' }}>{f.value}</span>*/}
+                <div>{f.label}</div><div>{f.value}</div>
+            </div>);
+        }
+
     render() {
+
         return (<div>
             {this.errorblock()}
-            {this.getInfoPost('Pages', this.state.availablePages)}
-            {this.getInfoPost('Layouts', this.state.availableLayouts)}
-            {this.getInfoPost('Models', this.state.availableModels)}
-            {this.getInfoOptions('Options', this.state.availableOptions)}
-            {this.getInfoPlugins('Plugins', plugins)}
+            {this.getInfoPost(i18n.pages, this.state.availablePages)}
+            {this.getInfoPost(i18n.layouts, this.state.availableLayouts)}
+            {this.getInfoPost(i18n.models, this.state.availableModels)}
+            {this.getInfoOptions(i18n.options, this.state.availableOptions)}
+            {this.getInfoPlugins(i18n.plugins, plugins)}
+            {this.getInfoThemes(i18n.themes, themes)}
+            <div><h4>Debug</h4>
+            {
+                Object.keys(debugInfo).map((i) => { 
+                    let o = debugInfo[i];
+                    if(o.fields !== undefined){
+                        return this.showLabelFields(o)
+                    }
+                    else{
+                        return this.showLabelValue(o);
+                    }
+                })
+            }
+            </div>
         </div>);
     }
 }
