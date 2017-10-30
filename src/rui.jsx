@@ -401,7 +401,10 @@ class RUI extends React.PureComponent {
             let skeys = Object.keys(o[theme]);
             ////console.log(valuse);
 
-            return this.ds(theme, skeys.map((k) => { return (<li>{k} : {o[k] ? i18.yes : i18n.no}</li>); }, null, 3))
+            return this.ds(theme, skeys.map((k) => {
+                //    return (<li>{k} : {o[k] ? i18.yes : i18n.no}</li>);
+                return this.listItem(k,o[k] ? i18.yes : i18n.no);
+            }, null, 3))
         }));
     }
     getPluginInfo(q, msgs) {

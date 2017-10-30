@@ -143,7 +143,7 @@ class HealthCheck
                     include_once(dirname(__FILE__) . '/pages/mpat.php');
                     break;
                 default:
-                        include_once(dirname(__FILE__) . '/pages/mpat.php');
+                    include_once(dirname(__FILE__) . '/pages/mpat.php');
             }
             ?>
         </div>
