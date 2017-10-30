@@ -494,6 +494,7 @@ class RUI extends React.PureComponent {
     render() {
 
         return (<div>
+            <h1>test</h1>
             {this.errorblock()}
             {this.getInfoPost(i18n.pages, this.state.availablePages)}
             {this.getInfoPost(i18n.layouts, this.state.availableLayouts)}
