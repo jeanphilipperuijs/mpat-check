@@ -406,15 +406,13 @@ class RUI extends React.PureComponent {
     }
     getPluginInfo(q, msgs) {
         return (
-            <div style={{ fontSize: '0.8em' }}>
+            <div>
                 <blockquote>{q.Description}</blockquote>
-                <sl style={{ width: '90%', left: '35px', position: 'relative' }}>
+                <sl style={{ width: '90%' }}>
                     {msgs.map((msg) => {
-                        return this.listItem(msg.msg, msg.ok ? 'Passed' : 'Verify', { color: msg.ok ? 'green' : 'red' });
-                        /*return (<li style={{ color: msg.ok ? 'green' : 'red' }}>
-                            <label>{msg.msg}</label>
-                            <span style={{ float: 'right', width: '90%', paddingRight: '50px' }}>{msg.ok ? 'Passed' : 'Verify'}</span>
-                        </li>);*/
+                        return this.listItem(msg.msg, msg.ok ? 'Passed' : 'Verify', {
+                            color: msg.ok ? 'green' : 'red'
+                        });
                     })}
                     {this.listItem('PluginURI', this.getLink(q.PluginURI))}
                     {this.listItem('AuthorURI', this.getLink(q.AuthorURI))}
@@ -429,7 +427,12 @@ class RUI extends React.PureComponent {
     }
 
     listItem(k, v, style = {}) {
-        return (<li style={style}><label>{k}</label><span style={{ float: 'right', paddingRight: '50px' }}>{v}</span></li>);
+        return (<li style={Object.assign({
+            width: '77%',
+            fontSize: '0.8em',
+            left: '35px',
+            position: 'relative'
+        }, style)}><label>{k}</label><span style={{ float: 'right', paddingRight: '50px' }}>{v}</span></li>);
     }
 
     metaDataInfo(key, value, style = {}, crudCallback = undefined) {
@@ -448,7 +451,9 @@ class RUI extends React.PureComponent {
             try {
                 let jsn = JSON.stringify(value, null, 3);
                 if (jsn.toLocaleLowerCase().indexOf('mpat') > -1) {
-                    styleSheet = Object.assign(Object.assign({}, style), { color: this.mpatColor });
+                    styleSheet = Object.assign({
+                        color: this.mpatColor
+                    }, style);
                 }
                 cnt = <pre style={styleSheet}>{jsn}</pre>;
             } catch (err) {
@@ -478,25 +483,25 @@ class RUI extends React.PureComponent {
         let fields = o.fields;
         let desc = o.description;
         let teststyle = { float: 'right', backgroundColor: 'limegreen' };
-        return (<ul>
-            <li style={Object.assign(s, { left: '30px' })}>
-                <div style={{ fontWeight: 'bold' }}>{label}</div>
-                <div>{desc}</div>
-                <div>
-                    {fields.map((field) => { return (this.showLabelValue(field)) })}
-                </div>
-            </li>
-        </ul>)
+        /*  return (<ul>
+              <li style={Object.assign(s, { left: '30px' })}>
+                  <div style={{ fontWeight: 'bold' }}>{label}</div>
+                  <div>{desc}</div>
+                  <div>
+                      {fields.map((field) => { return (this.showLabelValue(field)) })}
+                  </div>
+              </li>
+          </ul>)*/
+        return this.ds(label, fields.map((field) => { return (this.showLabelValue(field)) }))
     }
 
     showLabelValue(f) {
+        return this.listItem(f.label, f.value);
         //console.log('showLabelValue',f);
-        return (<div style={{ columnCount: 2 }}>
-            {/*<span style={{ fontWeight: 'bold' }}>{f.label}</span>
-                <span style={{ float: 'right' }}>{f.value}</span>*/}
-            <div>{f.label}</div><div>{f.value}</div>
-        </div>);
+        //return (<div style={{ columnCount: 2 }}><div>{f.label}</div><div>{f.value}</div></div>);
+        //return this.ds(f.label,f.value);
     }
+
 
     render() {
 

@@ -83,7 +83,7 @@ class MPAT_CHECK_Debug_Data
                 'show_count' => true,
                 'fields'     => array()
             ),
-            'mpat-plugins-active'   => array(
+    /*        'mpat-plugins-active'   => array(
                 'label'      => __( 'MPAT Active Plugins', 'mpat-health-check' ),
                 'show_count' => true,
                 'fields'     => array()
@@ -92,7 +92,7 @@ class MPAT_CHECK_Debug_Data
                 'label'      => __( 'MPAT Inactive Plugins', 'mpat-health-check' ),
                 'show_count' => true,
                 'fields'     => array()
-            ),
+            ),*/
             'wp-plugins-active'   => array(
                 'label'      => __( 'Active Plugins', 'mpat-health-check' ),
                 'show_count' => true,
