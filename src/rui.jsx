@@ -50,7 +50,7 @@ class RUI extends React.PureComponent {
             }
         };
         this.mpatgithub = 'https://github.com/MPAT-eu';
-        this.noConfirm = true;
+        this.noConfirm = false;
         this.mpatColor = '#25c1b2';
         //WP REST API
         this.restUrlPage = `${window.wpApiSettings.root}${window.wpApiSettings.versionString}pages`; //default REST
@@ -95,6 +95,7 @@ class RUI extends React.PureComponent {
         this.loadPageLayouts();
         this.loadOptions();
         this.loadPages();
+        document.getElementById('loader').remove();
     }
 
 
@@ -300,15 +301,21 @@ class RUI extends React.PureComponent {
         } return null;
     }
 
-    getInfoPost(t, o) {
+    getInfoPost(l) {
+        //  return <li>{l.id} {l.label || l.title.rendered}</li>
+        return this.ds(l.label || l.title.rendered, (<div>
+            <pre style={{ fontSize: '0.6em' }}>{JSON.stringify(l, null, 2)}</pre>
+        </div>));
+    }
+
+    getInfoPosts(t, o) {
         return (<details>
             <summary>{o.length || 'No'} {t.toLowerCase()} </summary>
-            <ul>{o.map((l) => { return (<li>{l.id} {l.label || l.title.rendered}</li>) })} </ul>
+            <ul>{o.map((l) => { return this.getInfoPost(l) })} </ul>
             <hr />
 
         </details>);
     }
-
     getInfoOptions(t, o) {
         let keyz = Object.keys(o);
         keyz.sort();
@@ -319,7 +326,6 @@ class RUI extends React.PureComponent {
                     return this.metaDataInfo(l, o[l], { color: 'gray' }, this.optionIO);
                 })
             }</div>
-            <hr />
         </details>);
     }
 
@@ -391,7 +397,7 @@ class RUI extends React.PureComponent {
         //console.log(o);
         let themeNames = Object.keys(o);
         themeNames.sort();
-        return this.ds(`${themeNames.length} ${t}`, themeNames.map((theme) => {
+        return this.ds(`${themeNames.length} ${t.toLocaleLowerCase()}`, themeNames.map((theme) => {
             let skeys = Object.keys(o[theme]);
             ////console.log(valuse);
 
@@ -400,9 +406,9 @@ class RUI extends React.PureComponent {
     }
     getPluginInfo(q, msgs) {
         return (
-            <div>
+            <div style={{ fontSize: '0.8em' }}>
                 <blockquote>{q.Description}</blockquote>
-                <ul style={{ width: '90%', left: '50px' }}>
+                <sl style={{ width: '90%', left: '35px', position: 'relative' }}>
                     {msgs.map((msg) => {
                         return this.listItem(msg.msg, msg.ok ? 'Passed' : 'Verify', { color: msg.ok ? 'green' : 'red' });
                         /*return (<li style={{ color: msg.ok ? 'green' : 'red' }}>
@@ -413,7 +419,8 @@ class RUI extends React.PureComponent {
                     {this.listItem('PluginURI', this.getLink(q.PluginURI))}
                     {this.listItem('AuthorURI', this.getLink(q.AuthorURI))}
                     {this.listItem('Author', q.Author)}
-                </ul>
+
+                </sl>
             </div>);
     }
 
@@ -465,56 +472,58 @@ class RUI extends React.PureComponent {
         return (<details><summary>{summary}</summary>{content}</details>);
 
     }
-        showLabelFields(o, s = {}) {
-            //console.log('showLabelFields', o);
-            let label = o.label;
-            let fields = o.fields;
-            let desc = o.description;
-        let teststyle= { float: 'right', backgroundColor: 'limegreen' };
+    showLabelFields(o, s = {}) {
+        //console.log('showLabelFields', o);
+        let label = o.label;
+        let fields = o.fields;
+        let desc = o.description;
+        let teststyle = { float: 'right', backgroundColor: 'limegreen' };
         return (<ul>
             <li style={Object.assign(s, { left: '30px' })}>
                 <div style={{ fontWeight: 'bold' }}>{label}</div>
                 <div>{desc}</div>
                 <div>
-                    {fields.map( (field) => { return (this.showLabelValue(field))})}
+                    {fields.map((field) => { return (this.showLabelValue(field)) })}
                 </div>
             </li>
         </ul>)
-        }
-    
-        showLabelValue(f) {
-            //console.log('showLabelValue',f);
-            return (<div style={{columnCount:2}}>
-                {/*<span style={{ fontWeight: 'bold' }}>{f.label}</span>
+    }
+
+    showLabelValue(f) {
+        //console.log('showLabelValue',f);
+        return (<div style={{ columnCount: 2 }}>
+            {/*<span style={{ fontWeight: 'bold' }}>{f.label}</span>
                 <span style={{ float: 'right' }}>{f.value}</span>*/}
-                <div>{f.label}</div><div>{f.value}</div>
-            </div>);
-        }
+            <div>{f.label}</div><div>{f.value}</div>
+        </div>);
+    }
 
     render() {
 
         return (<div>
-            <h1>test</h1>
             {this.errorblock()}
-            {this.getInfoPost(i18n.pages, this.state.availablePages)}
-            {this.getInfoPost(i18n.layouts, this.state.availableLayouts)}
-            {this.getInfoPost(i18n.models, this.state.availableModels)}
-            {this.getInfoOptions(i18n.options, this.state.availableOptions)}
+            <details>
+                <summary>REST</summary>
+                {this.getInfoPosts(i18n.pages, this.state.availablePages)}
+                {this.getInfoPosts(i18n.layouts, this.state.availableLayouts)}
+                {this.getInfoPosts(i18n.models, this.state.availableModels)}
+                {this.getInfoOptions(i18n.options, this.state.availableOptions)}
+            </details>
             {this.getInfoPlugins(i18n.plugins, plugins)}
             {this.getInfoThemes(i18n.themes, themes)}
             {this.ds(i18n.debug,
-                Object.keys(debugInfo).map((i) => { 
+                Object.keys(debugInfo).map((i) => {
                     let o = debugInfo[i];
-                    if(o.fields !== undefined){
+                    if (o.fields !== undefined) {
                         return this.showLabelFields(o)
                     }
-                    else{
+                    else {
                         return this.showLabelValue(o);
                     }
                 }
-            )
+                )
             )}
-            </div>)
+        </div>)
     }
 }
 
